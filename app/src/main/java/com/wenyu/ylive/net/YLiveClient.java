@@ -6,13 +6,6 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.wenyu.ylive.BuildConfig;
 
-
-import java.io.IOException;
-import java.net.CookieHandler;
-import java.net.URI;
-import java.util.List;
-import java.util.Map;
-
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
