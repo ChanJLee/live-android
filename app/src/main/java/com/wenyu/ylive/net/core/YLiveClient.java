@@ -1,4 +1,4 @@
-package com.wenyu.ylive.net;
+package com.wenyu.ylive.net.core;
 
 
 import android.content.Context;
@@ -49,7 +49,7 @@ public class YLiveClient {
 		return sYLiveClient;
 	}
 
-	public Retrofit getClient() {
+	public Retrofit getCore() {
 		return mRetrofit;
 	}
 }

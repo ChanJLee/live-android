@@ -1,4 +1,4 @@
-package com.wenyu.ylive.net;
+package com.wenyu.ylive.net.core;
 
 import java.util.ArrayList;
 import java.util.List;

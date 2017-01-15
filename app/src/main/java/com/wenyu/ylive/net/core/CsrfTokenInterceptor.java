@@ -1,4 +1,4 @@
-package com.wenyu.ylive.net;
+package com.wenyu.ylive.net.core;
 
 import android.text.TextUtils;
 
