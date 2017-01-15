@@ -20,7 +20,7 @@ public class MainActivity extends YLiveActivity {
 	@Override
 	public void onBackPressed() {
 		long currentTag = System.currentTimeMillis();
-		if (currentTag - mLastClickedTag > MIN_DURATION) {
+		if (currentTag - mLastClickedTag < MIN_DURATION) {
 			finish();
 			return;
 		}

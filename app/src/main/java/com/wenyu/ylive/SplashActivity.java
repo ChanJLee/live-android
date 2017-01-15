@@ -23,7 +23,7 @@ public class SplashActivity extends YLiveActivity {
 		window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_splash);
 
-		Observable.timer(3, TimeUnit.SECONDS)
+		Observable.timer(1, TimeUnit.SECONDS)
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Action1<Long>() {
