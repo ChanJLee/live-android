@@ -5,7 +5,7 @@ package com.wenyu.ylive.net.core;
  * Copyright © 2016年 扇贝网(shanbay.com).
  * All rights reserved.
  */
-public class BaseResponse<T> {
+public class YResponse<T> {
 	public int statusCode;
 	public String message;
 	public T data;
