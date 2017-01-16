@@ -1,7 +1,5 @@
 package com.wenyu.ylive.net.api.service;
 
-import android.support.annotation.NonNull;
-
 import com.google.gson.JsonElement;
 import com.wenyu.ylive.net.api.AccountApi;
 import com.wenyu.ylive.net.core.BaseApiService;
