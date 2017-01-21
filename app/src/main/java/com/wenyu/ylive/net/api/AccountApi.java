@@ -6,6 +6,7 @@ import com.wenyu.ylive.net.model.User;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import rx.Observable;
@@ -24,4 +25,5 @@ public interface AccountApi {
 	@POST("/user/register/")
 	@FormUrlEncoded
 	Observable<YResponse<JsonElement>> register(@Field("username") String username, @Field("password") String password, @Field("email") String email);
+
 }

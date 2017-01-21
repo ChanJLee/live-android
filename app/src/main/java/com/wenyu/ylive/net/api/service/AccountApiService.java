@@ -1,7 +1,5 @@
 package com.wenyu.ylive.net.api.service;
 
-import android.support.annotation.NonNull;
-
 import com.google.gson.JsonElement;
 import com.wenyu.ylive.net.api.AccountApi;
 import com.wenyu.ylive.net.core.BaseApiService;
@@ -34,11 +32,11 @@ public class AccountApiService extends BaseApiService<AccountApi> {
 		return sAccountApiService;
 	}
 
-	Observable<User> login(String username, String password) {
+	public Observable<User> login(String username, String password) {
 		return convert(getAPI().login(username, password));
 	}
 
-	Observable<JsonElement> register(String username, String password, String email) {
+	public Observable<JsonElement> register(String username, String password, String email) {
 		return convert(getAPI().register(username, password, email));
 	}
 }

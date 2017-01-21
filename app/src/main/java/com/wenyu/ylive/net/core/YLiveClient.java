@@ -27,7 +27,6 @@ public class YLiveClient {
 				.cookieJar(new YLiveCookieJar(PersistentCookieStore.getIntance(context)))
 				.addInterceptor(new CsrfTokenInterceptor());
 
-
 		mRetrofit = new Retrofit.Builder()
 				.baseUrl(BuildConfig.BASE_URI)
 				.client(clientBuilder.build())

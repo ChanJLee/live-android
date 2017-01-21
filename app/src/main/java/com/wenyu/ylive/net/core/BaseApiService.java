@@ -23,7 +23,7 @@ public class BaseApiService<API> {
 		mAPI = YLiveClient.getYLiveClient(AppClient.getAppContext()).getCore().create(apiClass);
 	}
 
-	public API getAPI() {
+	protected API getAPI() {
 		return mAPI;
 	}
 
