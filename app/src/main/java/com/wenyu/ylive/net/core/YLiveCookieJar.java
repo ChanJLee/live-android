@@ -1,7 +1,5 @@
 package com.wenyu.ylive.net.core;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,6 @@ public class YLiveCookieJar implements CookieJar {
 	public void saveFromResponse(HttpUrl httpUrl, List<Cookie> cookieList) {
 		if (cookieList != null && cookieList.size() > 0) {
 			for (Cookie cookie : cookieList) {
-				Log.d("chan_debug", cookie.toString());
 				cookieStore.add(httpUrl.uri(), new YLiveCookie(cookie));
 			}
 		}

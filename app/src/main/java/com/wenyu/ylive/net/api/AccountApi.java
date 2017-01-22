@@ -26,4 +26,6 @@ public interface AccountApi {
 	@FormUrlEncoded
 	Observable<YResponse<JsonElement>> register(@Field("username") String username, @Field("password") String password, @Field("email") String email);
 
+	@PUT("/user/logout/")
+	Observable<YResponse<JsonElement>> logout();
 }

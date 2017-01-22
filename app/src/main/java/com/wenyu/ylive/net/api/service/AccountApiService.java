@@ -39,4 +39,8 @@ public class AccountApiService extends BaseApiService<AccountApi> {
 	public Observable<JsonElement> register(String username, String password, String email) {
 		return convert(getAPI().register(username, password, email));
 	}
+
+	public Observable<JsonElement> logout() {
+		return convert(getAPI().logout());
+	}
 }

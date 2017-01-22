@@ -13,6 +13,7 @@ import com.wenyu.ylive.net.api.service.AccountApiService;
 import com.wenyu.ylive.net.model.User;
 
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends YLiveActivity {
@@ -24,23 +25,42 @@ public class MainActivity extends YLiveActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		AccountApiService.getAccountApiService().login("chan_debug", "chan_debug_password")
+//		AccountApiService.getAccountApiService().login("chan_debug", "chan_debug_password")
+//				.subscribeOn(Schedulers.io())
+//				.observeOn(Schedulers.io())
+//				.compose(this.<User>bindUntilEvent(ActivityEvent.DESTROY))
+//				.subscribe(new Subscriber<User>() {
+//					@Override
+//					public void onCompleted() {
+//						Log.d("chan_debug", "complete");
+//					}
+//
+//					@Override
+//					public void onError(Throwable e) {
+//						Log.d("chan_debug", "error");
+//					}
+//
+//					@Override
+//					public void onNext(User jsonElement) {
+//						Log.d("chan_debug", "next");
+//					}
+//				});
+		AccountApiService.getAccountApiService().logout()
 				.subscribeOn(Schedulers.io())
-				.observeOn(Schedulers.io())
-				.compose(this.<User>bindUntilEvent(ActivityEvent.DESTROY))
-				.subscribe(new Subscriber<User>() {
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(new Subscriber<JsonElement>() {
 					@Override
 					public void onCompleted() {
-						Log.d("chan_debug", "complete");
+						Log.d("chan_debug", "c");
 					}
 
 					@Override
 					public void onError(Throwable e) {
-						Log.d("chan_debug", "error");
+						Log.d("chan_debug", e.toString());
 					}
 
 					@Override
-					public void onNext(User jsonElement) {
+					public void onNext(JsonElement jsonElement) {
 						Log.d("chan_debug", "next");
 					}
 				});
