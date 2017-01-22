@@ -1,4 +1,4 @@
-package com.wenyu.ylive.main;
+package com.wenyu.ylive.biz.home;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.gson.JsonElement;
-import com.trello.rxlifecycle.ActivityEvent;
 import com.wenyu.ylive.R;
 import com.wenyu.ylive.base.YLiveActivity;
 import com.wenyu.ylive.net.api.service.AccountApiService;
-import com.wenyu.ylive.net.model.User;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;

@@ -1,11 +1,12 @@
-package com.wenyu.ylive;
+package com.wenyu.ylive.biz.splash;
 
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.wenyu.ylive.R;
 import com.wenyu.ylive.base.YLiveActivity;
-import com.wenyu.ylive.main.MainActivity;
+import com.wenyu.ylive.biz.home.MainActivity;
 
 import java.util.concurrent.TimeUnit;
 
