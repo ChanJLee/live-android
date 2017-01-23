@@ -65,6 +65,11 @@ public class MainActivity extends YLiveActivity {
 	}
 
 	@Override
+	protected int contentId() {
+		return 0;
+	}
+
+	@Override
 	public void onBackPressed() {
 		long currentTag = System.currentTimeMillis();
 		if (currentTag - mLastClickedTag < MIN_DURATION) {

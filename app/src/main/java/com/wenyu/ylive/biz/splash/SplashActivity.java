@@ -35,4 +35,9 @@ public class SplashActivity extends YLiveActivity {
 					}
 				});
 	}
+
+	@Override
+	protected int contentId() {
+		return 0;
+	}
 }
