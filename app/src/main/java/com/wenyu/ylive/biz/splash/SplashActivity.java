@@ -22,7 +22,6 @@ public class SplashActivity extends YLiveActivity {
 		super.onCreate(savedInstanceState);
 		Window window = getWindow();
 		window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.activity_splash);
 
 		Observable.timer(1, TimeUnit.SECONDS)
 				.subscribeOn(Schedulers.io())
@@ -38,6 +37,6 @@ public class SplashActivity extends YLiveActivity {
 
 	@Override
 	protected int contentId() {
-		return 0;
+		return R.layout.activity_splash;
 	}
 }

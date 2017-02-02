@@ -3,16 +3,14 @@ package com.wenyu.ylive.biz.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.transition.Explode;
+import android.transition.Slide;
+import android.transition.TransitionManager;
+import android.view.View;
+import android.view.ViewGroup;
 
-import com.google.gson.JsonElement;
 import com.wenyu.ylive.R;
 import com.wenyu.ylive.base.YLiveActivity;
-import com.wenyu.ylive.net.api.service.AccountApiService;
-
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class MainActivity extends YLiveActivity {
 	private long mLastClickedTag = 0;
@@ -21,7 +19,6 @@ public class MainActivity extends YLiveActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
 
 //		AccountApiService.getAccountApiService().login("chan_debug", "chan_debug_password")
 //				.subscribeOn(Schedulers.io())
@@ -43,30 +40,26 @@ public class MainActivity extends YLiveActivity {
 //						Log.d("chan_debug", "next");
 //					}
 //				});
-		AccountApiService.getAccountApiService().logout()
-				.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(new Subscriber<JsonElement>() {
-					@Override
-					public void onCompleted() {
-						Log.d("chan_debug", "c");
-					}
 
-					@Override
-					public void onError(Throwable e) {
-						Log.d("chan_debug", e.toString());
-					}
+		findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				View cube = findViewById(R.id.cube);
+				TransitionManager.beginDelayedTransition((ViewGroup) findViewById(R.id.root), new Slide());
+				toggle(cube);
+			}
+		});
+	}
 
-					@Override
-					public void onNext(JsonElement jsonElement) {
-						Log.d("chan_debug", "next");
-					}
-				});
+	private void toggle(View... views) {
+		for (View view : views) {
+			view.setVisibility(view.getVisibility() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
+		}
 	}
 
 	@Override
 	protected int contentId() {
-		return 0;
+		return R.layout.activity_main;
 	}
 
 	@Override
