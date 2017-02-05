@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#17a781</color>
     <color name="colorAccent">#117e61</color>
 
-
+    <color name="icon_normal">#ffffff</color>
     <color name="base_text_1">#ffffff</color>
+
+    <color name="title">#4a4a4a</color>
+    <color name="subtitle">#b6b6b6</color>
 </resources>

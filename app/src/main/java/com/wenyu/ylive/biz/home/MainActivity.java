@@ -2,58 +2,51 @@ package com.wenyu.ylive.biz.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
-import android.transition.Explode;
-import android.transition.Slide;
-import android.transition.TransitionManager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.wenyu.ylive.R;
 import com.wenyu.ylive.base.YLiveActivity;
+import com.wenyu.ylive.biz.home.adapter.HomeAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends YLiveActivity {
 	private long mLastClickedTag = 0;
 	private static final long MIN_DURATION = 2000;
 
+	RecyclerView mRecyclerView;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-//		AccountApiService.getAccountApiService().login("chan_debug", "chan_debug_password")
-//				.subscribeOn(Schedulers.io())
-//				.observeOn(Schedulers.io())
-//				.compose(this.<User>bindUntilEvent(ActivityEvent.DESTROY))
-//				.subscribe(new Subscriber<User>() {
-//					@Override
-//					public void onCompleted() {
-//						Log.d("chan_debug", "complete");
-//					}
-//
-//					@Override
-//					public void onError(Throwable e) {
-//						Log.d("chan_debug", "error");
-//					}
-//
-//					@Override
-//					public void onNext(User jsonElement) {
-//						Log.d("chan_debug", "next");
-//					}
-//				});
-
-		findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+		mRecyclerView = (RecyclerView) findViewById(R.id.main_content_recycler_view);
+		mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+		List<String> list = new ArrayList<>();
+		for (int i = 0; i < 20; ++i) {
+			list.add(i + "");
+		}
+		mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
 			@Override
-			public void onClick(View v) {
-				View cube = findViewById(R.id.cube);
-				TransitionManager.beginDelayedTransition((ViewGroup) findViewById(R.id.root), new Slide());
-				toggle(cube);
+			public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+				outRect.set(10, 0, 10, 40);
 			}
 		});
+		HomeAdapter adapter = new HomeAdapter(list, LayoutInflater.from(this));
+		mRecyclerView.setAdapter(adapter);
 	}
 
 	private void toggle(View... views) {
 		for (View view : views) {
-			view.setVisibility(view.getVisibility() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
+			view.setBackgroundColor(Color.RED);
 		}
 	}
 
@@ -76,5 +69,10 @@ public class MainActivity extends YLiveActivity {
 
 	public static Intent newIntent(Context context) {
 		return new Intent(context, MainActivity.class);
+	}
+
+	@Override
+	protected Toolbar findToolbarById() {
+		return (Toolbar) findViewById(R.id.toolbar);
 	}
 }

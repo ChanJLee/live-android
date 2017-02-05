@@ -32,6 +32,7 @@
             android:configChanges="orientation|keyboardHidden|keyboard"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden">
             <intent-filter>
                 <action android:name="com.wenyu.backhome"/>
