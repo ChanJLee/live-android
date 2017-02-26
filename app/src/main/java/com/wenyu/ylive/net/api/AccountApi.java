@@ -1,12 +1,11 @@
 package com.wenyu.ylive.net.api;
 
 import com.google.gson.JsonElement;
-import com.wenyu.ylive.net.core.YResponse;
+import com.wenyu.network.YResponse;
 import com.wenyu.ylive.net.model.User;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import rx.Observable;

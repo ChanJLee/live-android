@@ -47,10 +47,10 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:parentActivityName=".base.YLiveActivity">
+            android:parentActivityName="com.wenyu.common.YLiveActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.wenyu.ylive.base.YLiveActivity"/>
+                android:value="com.wenyu.common.YLiveActivity"/>
         </activity>
     </application>
 

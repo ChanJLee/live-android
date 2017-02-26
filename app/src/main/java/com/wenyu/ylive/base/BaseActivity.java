@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.wenyu.ylive.R;
-import com.wenyu.ylive.cview.YLiveProgressDialog;
 
 /**
  * Created by jiacheng.li on 17/1/7.

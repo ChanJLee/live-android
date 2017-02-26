@@ -2,7 +2,8 @@ package com.wenyu.ylive.base;
 
 import android.os.Bundle;
 
-import com.wenyu.ylive.mvp.presenter.BaseMvpPresenter;
+import com.wenyu.mvp.presenter.BaseMvpPresenter;
+
 
 /**
  * Created by jiacheng.li on 17/1/11.
