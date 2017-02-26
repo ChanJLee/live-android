@@ -9,12 +9,28 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/base" />
+            <option value="$PROJECT_DIR$/danmaku" />
+            <option value="$PROJECT_DIR$/http" />
+            <option value="$PROJECT_DIR$/image" />
+            <option value="$PROJECT_DIR$/misc" />
+            <option value="$PROJECT_DIR$/mvp" />
+            <option value="$PROJECT_DIR$/rtmp" />
+            <option value="$PROJECT_DIR$/xmpp" />
           </set>
         </option>
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/base" />
+            <option value="$PROJECT_DIR$/danmaku" />
+            <option value="$PROJECT_DIR$/http" />
+            <option value="$PROJECT_DIR$/image" />
+            <option value="$PROJECT_DIR$/misc" />
+            <option value="$PROJECT_DIR$/mvp" />
+            <option value="$PROJECT_DIR$/rtmp" />
+            <option value="$PROJECT_DIR$/xmpp" />
           </set>
         </option>
       </GradleProjectSettings>

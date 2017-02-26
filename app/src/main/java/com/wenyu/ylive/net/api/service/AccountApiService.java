@@ -1,8 +1,10 @@
 package com.wenyu.ylive.net.api.service;
 
+import android.content.Context;
+
 import com.google.gson.JsonElement;
+import com.wenyu.http.core.BaseApiService;
 import com.wenyu.ylive.net.api.AccountApi;
-import com.wenyu.ylive.net.core.BaseApiService;
 import com.wenyu.ylive.net.model.User;
 
 import rx.Observable;
@@ -16,15 +18,15 @@ public class AccountApiService extends BaseApiService<AccountApi> {
 
 	private static AccountApiService sAccountApiService;
 
-	private AccountApiService() {
-		super(AccountApi.class);
+	private AccountApiService(Context context) {
+		super(context, AccountApi.class);
 	}
 
-	public static AccountApiService getAccountApiService() {
+	public static AccountApiService getAccountApiService(Context context) {
 		if (sAccountApiService == null) {
 			synchronized (AccountApiService.class) {
 				if (sAccountApiService == null) {
-					sAccountApiService = new AccountApiService();
+					sAccountApiService = new AccountApiService(context);
 				}
 			}
 		}

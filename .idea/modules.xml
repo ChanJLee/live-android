@@ -4,6 +4,14 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/YLive.iml" filepath="$PROJECT_DIR$/YLive.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base/base.iml" filepath="$PROJECT_DIR$/base/base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/danmaku/danmaku.iml" filepath="$PROJECT_DIR$/danmaku/danmaku.iml" />
+      <module fileurl="file://$PROJECT_DIR$/http/http.iml" filepath="$PROJECT_DIR$/http/http.iml" />
+      <module fileurl="file://$PROJECT_DIR$/image/image.iml" filepath="$PROJECT_DIR$/image/image.iml" />
+      <module fileurl="file://$PROJECT_DIR$/misc/misc.iml" filepath="$PROJECT_DIR$/misc/misc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mvp/mvp.iml" filepath="$PROJECT_DIR$/mvp/mvp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rtmp/rtmp.iml" filepath="$PROJECT_DIR$/rtmp/rtmp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xmpp/xmpp.iml" filepath="$PROJECT_DIR$/xmpp/xmpp.iml" />
     </modules>
   </component>
 </project>
