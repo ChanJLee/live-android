@@ -1,12 +1,14 @@
 package com.wenyu.apt;
 
+import com.wenyu.apt.annotations.MvpPresenter;
+import com.wenyu.apt.element.ModelElement;
+import com.wenyu.apt.element.PresenterElement;
+import com.wenyu.apt.element.ViewElement;
+
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.Messager;
@@ -15,144 +17,119 @@ import javax.lang.model.element.VariableElement;
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
 
+
 /**
  * Created by chan on 16/10/15.
  * jiacheng.li@shanbay.com
  */
 public class CodeGenerator {
-    private Map<String, List<VariableElement>> mVariableElementMap = new HashMap<>();
-    /**
-     * 用于写java文件
-     */
-    private Filer mFiler;
-    /**
-     * logger
-     */
-    private Messager mMessager;
+	/**
+	 * 用于写java文件
+	 */
+	private Filer mFiler;
+	/**
+	 * logger
+	 */
+	private Messager mMessager;
 
-    /**
-     * APT生成代码所在的包名
-     */
-    private String mPackage;
+	/**
+	 * APT生成代码所在的包名
+	 */
+	private String mPackage;
 
-    public CodeGenerator(Filer filer, Messager messager) {
-        mFiler = filer;
-        mMessager = messager;
-    }
+	private PresenterElement mPresenterElement;
+	private ViewElement mViewElement;
+	private ModelElement mModelElement;
 
-    public void add(VariableElement element) {
-        List<VariableElement> variableElements = mVariableElementMap.get(element.getEnclosingElement().toString());
-        if (variableElements == null) {
-            variableElements = new ArrayList<>();
-            //获得被注解的class的名称作为键
-            mVariableElementMap.put(element.getEnclosingElement().toString(), variableElements);
-        }
+	public CodeGenerator(Filer filer, Messager messager) {
+		mFiler = filer;
+		mMessager = messager;
+	}
 
-        //当前class下备注解的field
-        variableElements.add(element);
-    }
+	public void generate(Set<? extends Element> presenterSet, Set<? extends Element> modelSet, Set<? extends Element> viewSet) throws IOException {
+		parsePresenter(presenterSet);
+		parseModel(modelSet);
+		parseView(viewSet);
+		generate();
+	}
 
-    public void generate() {
+	private void parsePresenter(Set<? extends Element> presenterSet) {
+		Iterator<? extends Element> iterator = presenterSet.iterator();
+		VariableElement variableElement = (VariableElement) iterator.next();
+		MvpPresenter mvpPresenter = variableElement.getAnnotation(MvpPresenter.class);
+		mPresenterElement = new PresenterElement(variableElement.getSimpleName().toString(), variableElement.getEnclosingElement().toString(), mvpPresenter.component(), mvpPresenter.module());
 
-        if (mVariableElementMap.isEmpty()) {
-            return;
-        }
+		Element element = variableElement.getEnclosingElement();
+		while (element != null && element.getEnclosingElement() != null) {
+			mPackage = element.toString();
+			element = element.getEnclosingElement();
+		}
 
-        init();
+		mPackage = mPackage.substring(0, mPackage.lastIndexOf("."));
+	}
 
-        try {
-            for (Map.Entry<String, List<VariableElement>> entry : mVariableElementMap.entrySet()) {
-                //把.都换成$
-                String clazzName = "YellowPeach$" + entry.getKey().replaceAll("\\.", "\\$");
-                //指定java文件写入的位置
-                JavaFileObject javaFileObject = mFiler.createSourceFile(mPackage + "." + clazzName);
-                mMessager.printMessage(Diagnostic.Kind.NOTE, "在" + mPackage + "." + clazzName + "生成代码");
+	private void parseModel(Set<? extends Element> modelSet) {
+		Iterator<? extends Element> iterator = modelSet.iterator();
+		VariableElement variableElement = (VariableElement) iterator.next();
+		mModelElement = new ModelElement(variableElement.getSimpleName().toString(), variableElement.getEnclosingElement().toString());
+	}
 
-                //开始写文件
-                Writer writer = javaFileObject.openWriter();
-                writer.write(generateSourceCode(entry, mPackage, clazzName));
-                writer.flush();
-                writer.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	private void parseView(Set<? extends Element> viewSet) {
+		Iterator<? extends Element> iterator = viewSet.iterator();
+		VariableElement variableElement = (VariableElement) iterator.next();
+		mViewElement = new ViewElement(variableElement.getSimpleName().toString(), variableElement.getEnclosingElement().toString());
+	}
 
-    private void init() {
+	public void generate() throws IOException {
+		String clazzName = "Mvp" + mPresenterElement.enclosingClazzName.replaceAll("\\.", "\\$");
+		//指定java文件写入的位置
+		JavaFileObject javaFileObject = mFiler.createSourceFile(mPackage + "." + clazzName);
+		mMessager.printMessage(Diagnostic.Kind.NOTE, "在" + mPackage + "." + clazzName + "生成代码");
 
-        //先获得包名
-        Iterator<Map.Entry<String, List<VariableElement>>> iterator = mVariableElementMap.entrySet().iterator();
-        Map.Entry<String, List<VariableElement>> elementEntry = iterator.next();
+		//开始写文件
+		Writer writer = javaFileObject.openWriter();
+		writer.write(generateSourceCode(mPackage, clazzName));
+		writer.flush();
+		writer.close();
+	}
 
-        VariableElement variableElement = elementEntry.getValue().get(0);
 
-        Element element = variableElement.getEnclosingElement();
-        while (element != null && element.getEnclosingElement() != null) {
-            mPackage = element.toString();
-            element = element.getEnclosingElement();
-        }
+	private String generateSourceCode(String packageName, String clazzName) {
 
-        mPackage = mPackage.substring(0, mPackage.lastIndexOf("."));
-    }
+		//包
+		StringBuilder stringBuilder = new StringBuilder("package ");
+		stringBuilder.append(packageName);
+		stringBuilder.append(";\n");
 
-    private static String generateSourceCode(Map.Entry<String, List<VariableElement>> entry, String packageName, String clazzName) {
 
-        //包
-        StringBuilder stringBuilder = new StringBuilder("package ");
-        stringBuilder.append(packageName);
-        stringBuilder.append(";\n");
+		stringBuilder.append("public class ");
+		stringBuilder.append(clazzName);
+		stringBuilder.append("{");
 
-        //import
-        stringBuilder.append("import android.view.View;\n" +
-                "\n" +
-                "import com.chan.lib.Peach;\n" +
-                "\n" +
-                "import java.util.ArrayList;\n" +
-                "import java.util.List;");
+		stringBuilder.append("public static void inject(");
+		stringBuilder.append(mPresenterElement.enclosingClazzName);
+		stringBuilder.append(" o){");
 
-        stringBuilder.append("public class ");
-        stringBuilder.append(clazzName);
-        stringBuilder.append(" implements Peach {\n");
+//		String daggerComponentName = "Dagger" + mPresenterElement.component.getCanonicalName();
+//		String builderName = daggerComponentName + ".Builder";
+//
+//		stringBuilder.append(builderName);
+//		stringBuilder.append(" builder = ");
+//		stringBuilder.append(daggerComponentName);
+//		stringBuilder.append(".builder();\n");
+//
+//		String functionName = mPresenterElement.module.getSimpleName();
+//
+//		stringBuilder.append(daggerComponentName);
+//		stringBuilder.append(" component = builder.");
+//		stringBuilder.append(Character.toLowerCase(functionName.charAt(0)) + functionName.substring(1));
+//		stringBuilder.append("(new ");
+//		stringBuilder.append(mPresenterElement.module.getCanonicalName());
+//		stringBuilder.append("(o)).build();\n");
+//		stringBuilder.append("component.inject(o);");
 
-        //成员变量
-        stringBuilder.append("private List<View> mViews = new ArrayList<>();\n");
-
-        //构造函数 参数为被注解的class
-        stringBuilder.append("public ");
-        stringBuilder.append(clazzName);
-        stringBuilder.append("(");
-        stringBuilder.append(entry.getKey());
-        stringBuilder.append(" o){");
-
-        for (VariableElement item : entry.getValue()) {
-            stringBuilder.append("mViews.add(");
-            stringBuilder.append("o.");
-            //返回field的名字
-            stringBuilder.append(item.getSimpleName());
-            stringBuilder.append(");");
-        }
-
-        stringBuilder.append("}");
-
-        //override的内容
-        stringBuilder.append(" @Override\n" +
-                "    public void setVisible(View... target) {\n" +
-                "\n" +
-                "        for (View v : mViews) {\n" +
-                "            v.setVisibility(View.GONE);\n" +
-                "        }\n" +
-                "\n" +
-                "        for (int i = 0; i < target.length; ++i) {\n" +
-                "            final int index = mViews.indexOf(target[i]);\n" +
-                "            if (index != -1) {\n" +
-                "                mViews.get(index).setVisibility(View.VISIBLE);\n" +
-                "            }\n" +
-                "        }\n" +
-                "    }");
-
-        //结尾
-        stringBuilder.append("}");
-        return stringBuilder.toString();
-    }
+		//结尾
+		stringBuilder.append("}");
+		return stringBuilder.toString();
+	}
 }

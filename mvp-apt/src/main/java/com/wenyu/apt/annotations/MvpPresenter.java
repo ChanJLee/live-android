@@ -16,6 +16,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 @Inherited
 @Target(ElementType.FIELD)
-public @interface Presenter {
-	Class<?> value();
+public @interface MvpPresenter {
+	Class<?> component();
+	Class<?> module();
 }

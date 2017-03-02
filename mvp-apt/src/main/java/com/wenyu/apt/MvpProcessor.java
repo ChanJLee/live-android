@@ -1,8 +1,11 @@
 package com.wenyu.apt;
 
 import com.google.auto.service.AutoService;
-import com.wenyu.apt.annotations.Presenter;
+import com.wenyu.apt.annotations.MvpModel;
+import com.wenyu.apt.annotations.MvpPresenter;
+import com.wenyu.apt.annotations.MvpView;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,66 +18,67 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.VariableElement;
 
 @AutoService(Processor.class)
 public class MvpProcessor extends AbstractProcessor {
-    /**
-     * 用于写java文件
-     */
-    private Filer mFiler;
-    /**
-     * 可以理解为log
-     */
-    private Messager mMessager;
-    /**
-     * 注解检查器，用于判断被注解的field不是private的
-     */
-    private AnnotationChecker mAnnotationChecker;
 
-    @Override
-    public synchronized void init(ProcessingEnvironment processingEnv) {
-        super.init(processingEnv);
+	/**
+	 * 用于写java文件
+	 */
+	private Filer mFiler;
+	/**
+	 * 可以理解为log
+	 */
+	private Messager mMessager;
+	/**
+	 * 注解检查器，用于判断被注解的field不是private的
+	 */
+	private AnnotationChecker mAnnotationChecker;
 
-        mFiler = processingEnv.getFiler();
-        mMessager = processingEnv.getMessager();
-        mAnnotationChecker = new AnnotationChecker(mMessager);
-    }
+	@Override
+	public synchronized void init(ProcessingEnvironment processingEnv) {
+		super.init(processingEnv);
 
-    @Override
-    public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+		mFiler = processingEnv.getFiler();
+		mMessager = processingEnv.getMessager();
+		mAnnotationChecker = new AnnotationChecker(mMessager);
+	}
 
-        //找到被注解的field
-        Set<? extends Element> set = roundEnv.getElementsAnnotatedWith(Presenter.class);
+	@Override
+	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
 
-        if (set != null) {
+		//找到被注解的field
+		Set<? extends Element> presenterSet = roundEnv.getElementsAnnotatedWith(MvpPresenter.class);
+		Set<? extends Element> modelSet = roundEnv.getElementsAnnotatedWith(MvpModel.class);
+		Set<? extends Element> viewSet = roundEnv.getElementsAnnotatedWith(MvpView.class);
 
-            CodeGenerator codeGenerator = new CodeGenerator(mFiler, mMessager);
-            for (Element element : set) {
-                //先检查权限
-                if (!mAnnotationChecker.checkAnnotation(element)) {
-                    return false;
-                }
-                //把备注解的field添加到生成器里，准备用来生成代码
-                codeGenerator.add((VariableElement) element);
-            }
-            //开始生成代码
-            codeGenerator.generate();
-        }
-        return true;
-    }
+		if (!mAnnotationChecker.checkAnnotation(presenterSet, modelSet, viewSet)) {
+			return false;
+		}
 
-    @Override
-    public Set<String> getSupportedAnnotationTypes() {
+		CodeGenerator codeGenerator = new CodeGenerator(mFiler, mMessager);
+		try {
+			codeGenerator.generate(presenterSet, modelSet, viewSet);
+		} catch (IOException e) {
+			return false;
+		}
 
-        //添加支持的注解类型 我们支持JoinView
-        Set<String> set = new HashSet<>();
-        set.add(Presenter.class.getCanonicalName());
-        return set;
-    }
+		return true;
+	}
 
-    @Override
-    public SourceVersion getSupportedSourceVersion() {
-        return SourceVersion.RELEASE_7;
-    }
+	@Override
+	public Set<String> getSupportedAnnotationTypes() {
+
+		//添加支持的注解类型 我们支持JoinView
+		Set<String> set = new HashSet<>();
+		set.add(MvpPresenter.class.getCanonicalName());
+		set.add(MvpView.class.getCanonicalName());
+		set.add(MvpModel.class.getCanonicalName());
+		return set;
+	}
+
+	@Override
+	public SourceVersion getSupportedSourceVersion() {
+		return SourceVersion.RELEASE_7;
+	}
 }
