@@ -9,9 +9,7 @@ import com.wenyu.apt.utils.ClazzMapUtils;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -114,7 +112,7 @@ public class CodeGenerator {
 
 	public void generate() throws IOException {
 		//指定java文件写入的位置
-		String clazzName = ClazzMapUtils.getClazzPackage(mPresenterElement.enclosingClazzName);
+		String clazzName = ClazzMapUtils.getClazzName(mPresenterElement.enclosingClazzName);
 		JavaFileObject javaFileObject = mFiler.createSourceFile(mPackage + "." + clazzName);
 		mMessager.printMessage(Diagnostic.Kind.NOTE, "在" + mPackage + "." + clazzName + "生成代码");
 

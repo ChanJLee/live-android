@@ -6,7 +6,7 @@ package com.wenyu.apt.utils;
  * All rights reserved.
  */
 public class ClazzMapUtils {
-	public static String getClazzPackage(String className) {
+	public static String getClazzName(String className) {
 		return className.replaceAll("\\.", "\\$");
 	}
 }

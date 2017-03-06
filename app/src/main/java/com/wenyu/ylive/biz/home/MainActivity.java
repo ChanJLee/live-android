@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.wenyu.apt.MvpInjector;
 import com.wenyu.apt.annotations.MvpModel;
 import com.wenyu.apt.annotations.MvpView;
 import com.wenyu.apt.annotations.MvpPresenter;
@@ -39,7 +40,7 @@ public class MainActivity extends YLiveActivity {
 	XView mXView;
 
 	@Inject
-	@MvpModel
+	//@MvpModel
 	YModel mYModel;
 
 	@MvpPresenter(module = MainModule.class, component = MainComponent.class)
@@ -48,6 +49,7 @@ public class MainActivity extends YLiveActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		MvpInjector.inject(this);
 		mRecyclerView = (RecyclerView) findViewById(R.id.main_content_recycler_view);
 		mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 		List<String> list = new ArrayList<>();
@@ -62,6 +64,7 @@ public class MainActivity extends YLiveActivity {
 		});
 		HomeAdapter adapter = new HomeAdapter(list, LayoutInflater.from(this));
 		mRecyclerView.setAdapter(adapter);
+
 	}
 
 	private void toggle(View... views) {
