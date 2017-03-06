@@ -18,6 +18,7 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
+import javax.tools.Diagnostic;
 
 @AutoService(Processor.class)
 public class MvpProcessor extends AbstractProcessor {
@@ -47,13 +48,18 @@ public class MvpProcessor extends AbstractProcessor {
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
 
+		mMessager.printMessage(Diagnostic.Kind.NOTE, "progress");
 		//找到被注解的field
 		Set<? extends Element> presenterSet = roundEnv.getElementsAnnotatedWith(MvpPresenter.class);
 		Set<? extends Element> modelSet = roundEnv.getElementsAnnotatedWith(MvpModel.class);
 		Set<? extends Element> viewSet = roundEnv.getElementsAnnotatedWith(MvpView.class);
 
+		if (presenterSet.isEmpty() && modelSet.isEmpty() && viewSet.isEmpty()) {
+			return true;
+		}
+
 		if (!mAnnotationChecker.checkAnnotation(presenterSet, modelSet, viewSet)) {
-			return false;
+			return true;
 		}
 
 		CodeGenerator codeGenerator = new CodeGenerator(mFiler, mMessager);

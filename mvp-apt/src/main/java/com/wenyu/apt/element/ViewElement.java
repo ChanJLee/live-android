@@ -7,7 +7,7 @@ package com.wenyu.apt.element;
  */
 public class ViewElement extends MvpElement {
 
-	public ViewElement(String fieldName, String enclosingClazzName) {
-		super(fieldName, enclosingClazzName);
+	public ViewElement(String fieldName, String enclosingClazzName, String type) {
+		super(fieldName, enclosingClazzName, type);
 	}
 }

@@ -9,8 +9,8 @@ import javax.inject.Inject;
  * Copyright © 2016年 扇贝网(shanbay.com).
  * All rights reserved.
  */
-public class X {
+public class XView {
 	@Inject
-	public X(MainActivity activity) {
+	public XView(MainActivity activity) {
 	}
 }

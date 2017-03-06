@@ -8,9 +8,11 @@ package com.wenyu.apt.element;
 public class MvpElement {
 	public String fieldName;
 	public String enclosingClazzName;
+	public String type;
 
-	public MvpElement(String fieldName, String enclosingClazzName) {
+	public MvpElement(String fieldName, String enclosingClazzName, String type) {
 		this.fieldName = fieldName;
 		this.enclosingClazzName = enclosingClazzName;
+		this.type = type;
 	}
 }

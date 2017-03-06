@@ -7,7 +7,7 @@ package com.wenyu.apt.element;
  */
 public class ModelElement extends MvpElement {
 
-	public ModelElement(String fieldName, String enclosingClazzName) {
-		super(fieldName, enclosingClazzName);
+	public ModelElement(String fieldName, String enclosingClazzName, String type) {
+		super(fieldName, enclosingClazzName, type);
 	}
 }

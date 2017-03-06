@@ -6,4 +6,11 @@ package com.wenyu.ylive;
  * All rights reserved.
  */
 public class Z {
+	XView mXView;
+	YModel mYModel;
+
+	public Z(YModel yModel, XView xView) {
+		this.mXView = xView;
+		this.mYModel = yModel;
+	}
 }

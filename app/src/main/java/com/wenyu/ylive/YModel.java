@@ -9,8 +9,8 @@ import javax.inject.Inject;
  * Copyright © 2016年 扇贝网(shanbay.com).
  * All rights reserved.
  */
-public class Y {
+public class YModel {
 	@Inject
-	public Y(MainActivity activity) {
+	public YModel(MainActivity activity) {
 	}
 }

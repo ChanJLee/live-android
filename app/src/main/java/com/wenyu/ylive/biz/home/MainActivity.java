@@ -17,8 +17,8 @@ import com.wenyu.apt.annotations.MvpPresenter;
 import com.wenyu.ylive.MainComponent;
 import com.wenyu.ylive.MainModule;
 import com.wenyu.ylive.R;
-import com.wenyu.ylive.X;
-import com.wenyu.ylive.Y;
+import com.wenyu.ylive.XView;
+import com.wenyu.ylive.YModel;
 import com.wenyu.ylive.Z;
 import com.wenyu.ylive.base.YLiveActivity;
 import com.wenyu.ylive.biz.home.adapter.HomeAdapter;
@@ -34,15 +34,15 @@ public class MainActivity extends YLiveActivity {
 
 	RecyclerView mRecyclerView;
 
-	//@Inject
+	@Inject
 	@MvpView
-	X x;
+	XView mXView;
 
-	//@Inject
+	@Inject
 	@MvpModel
-	Y y;
+	YModel mYModel;
 
-	@MvpPresenter(component = MainComponent.class, module = MainModule.class)
+	@MvpPresenter(module = MainModule.class, component = MainComponent.class)
 	Z z;
 
 	@Override
