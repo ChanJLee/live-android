@@ -65,22 +65,19 @@ public class CodeGenerator {
 		VariableElement variableElement = (VariableElement) iterator.next();
 
 		for (AnnotationMirror annotationMirror : variableElement.getAnnotationMirrors()) {
-			mMessager.printMessage(Diagnostic.Kind.NOTE, "loop" + MvpPresenter.class.getCanonicalName() + "" + annotationMirror.getAnnotationType().toString());
 			if (MvpPresenter.class.getCanonicalName().equals(annotationMirror.getAnnotationType().toString())) {
-				mMessager.printMessage(Diagnostic.Kind.NOTE, "enter");
 				Map<? extends ExecutableElement, ? extends AnnotationValue> elementValues = annotationMirror.getElementValues();
 				TypeMirror mirror = variableElement.asType();
 				mPresenterElement = new PresenterElement(variableElement.getSimpleName().toString(), variableElement.getEnclosingElement().toString(), mirror.toString());
 				for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : elementValues.entrySet()) {
-					mMessager.printMessage(Diagnostic.Kind.NOTE, "map loop " + entry.getKey().toString() + " " + entry.getValue());
 
 					String key = entry.getKey().getSimpleName().toString();
-					mMessager.printMessage(Diagnostic.Kind.NOTE, "key" + key);
 					if ("module".equals(key)) {
-						mMessager.printMessage(Diagnostic.Kind.NOTE, "module" + entry.getValue().toString());
 						mPresenterElement.module = new Clazz(entry.getValue().toString());
 					} else if ("component".equals(key)) {
-						mMessager.printMessage(Diagnostic.Kind.NOTE, "presenter");
+						mPresenterElement.component = new Clazz(entry.getValue().toString());
+					} else if ("dependency".equals(key)) {
+						mMessager.printMessage(Diagnostic.Kind.NOTE, "dependency get");
 						mPresenterElement.component = new Clazz(entry.getValue().toString());
 					}
 				}
@@ -118,7 +115,6 @@ public class CodeGenerator {
 		//指定java文件写入的位置
 		String clazzName = ClazzMapUtils.getClazzName(mPresenterElement.enclosingClazzName);
 		JavaFileObject javaFileObject = mFiler.createSourceFile(mPackage + "." + clazzName);
-		mMessager.printMessage(Diagnostic.Kind.NOTE, "在" + mPackage + "." + clazzName + "生成代码");
 
 		//开始写文件
 		Writer writer = javaFileObject.openWriter();
@@ -141,13 +137,15 @@ public class CodeGenerator {
 		stringBuilder.append("{");
 
 		stringBuilder.append("public static void inject(");
-		mMessager.printMessage(Diagnostic.Kind.NOTE, "inject");
 		stringBuilder.append(mPresenterElement.enclosingClazzName);
-		mMessager.printMessage(Diagnostic.Kind.NOTE, "inject after");
-		stringBuilder.append(" o){");
+		stringBuilder.append(" o");
+		if (mPresenterElement.dependency != null) {
+			stringBuilder.append(",");
+			stringBuilder.append(mPresenterElement.dependency.getCanonicalName());
+			stringBuilder.append(" o1");
+		}
+		stringBuilder.append("){");
 
-		mMessager.printMessage(Diagnostic.Kind.NOTE, mPresenterElement.component + "");
-		mMessager.printMessage(Diagnostic.Kind.NOTE, mPresenterElement.component.getCanonicalName() + "");
 		String daggerComponentName = mPresenterElement.component.getPackage() + ".Dagger" + mPresenterElement.component.getSimpleName();
 		String builderName = daggerComponentName + ".Builder";
 
@@ -156,14 +154,21 @@ public class CodeGenerator {
 		stringBuilder.append(daggerComponentName);
 		stringBuilder.append(".builder();\n");
 
-		String functionName = mPresenterElement.module.getSimpleName();
 
 		stringBuilder.append(mPresenterElement.component.getCanonicalName());
 		stringBuilder.append(" component = builder.");
-		stringBuilder.append(Character.toLowerCase(functionName.charAt(0)) + functionName.substring(1));
+		stringBuilder.append(simpleName2FunctionName(mPresenterElement.module.getSimpleName()));
 		stringBuilder.append("(new ");
 		stringBuilder.append(mPresenterElement.module.getCanonicalName());
-		stringBuilder.append("(o)).build();\n");
+		stringBuilder.append("(o))");
+		if (mPresenterElement.dependency != null) {
+			mMessager.printMessage(Diagnostic.Kind.NOTE, "dependency not null");
+			stringBuilder.append(".");
+			stringBuilder.append(simpleName2FunctionName(mPresenterElement.dependency.getSimpleName()));
+			stringBuilder.append("(o2)");
+		}
+		stringBuilder.append(".build();");
+
 		stringBuilder.append("component.inject(o);");
 		stringBuilder.append("o.");
 		stringBuilder.append(mPresenterElement.fieldName);
@@ -183,5 +188,18 @@ public class CodeGenerator {
 		//结尾
 		stringBuilder.append("}}");
 		return stringBuilder.toString();
+	}
+
+	public static String simpleName2FunctionName(String simpleName) {
+
+		if (simpleName == null || simpleName.isEmpty()) {
+			return simpleName;
+		}
+
+		if (simpleName.length() == 1) {
+			return String.valueOf(Character.toLowerCase(simpleName.charAt(0)));
+		}
+
+		return Character.toLowerCase(simpleName.charAt(0)) + simpleName.substring(1);
 	}
 }

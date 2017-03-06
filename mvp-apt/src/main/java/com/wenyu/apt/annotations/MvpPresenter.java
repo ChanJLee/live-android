@@ -19,4 +19,5 @@ import java.lang.annotation.Target;
 public @interface MvpPresenter {
 	Class<?> component();
 	Class<?> module();
+	Class<?> dependency() default Void.class;
 }

@@ -40,7 +40,7 @@ public class MainActivity extends YLiveActivity {
 	XView mXView;
 
 	@Inject
-	//@MvpModel
+	@MvpModel
 	YModel mYModel;
 
 	@MvpPresenter(module = MainModule.class, component = MainComponent.class)

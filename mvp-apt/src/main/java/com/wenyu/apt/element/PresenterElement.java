@@ -8,6 +8,7 @@ package com.wenyu.apt.element;
 public class PresenterElement extends MvpElement {
 	public Clazz component;
 	public Clazz module;
+	public Clazz dependency;
 
 	public PresenterElement(String fieldName, String enclosingClazzName, String type) {
 		super(fieldName, enclosingClazzName, type);
