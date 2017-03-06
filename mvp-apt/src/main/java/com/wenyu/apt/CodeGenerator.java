@@ -72,7 +72,7 @@ public class CodeGenerator {
 				TypeMirror mirror = variableElement.asType();
 				mPresenterElement = new PresenterElement(variableElement.getSimpleName().toString(), variableElement.getEnclosingElement().toString(), mirror.toString());
 				for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : elementValues.entrySet()) {
-					mMessager.printMessage(Diagnostic.Kind.NOTE, entry.getKey().toString() + " " + entry.getValue());
+					mMessager.printMessage(Diagnostic.Kind.NOTE, "map loop " + entry.getKey().toString() + " " + entry.getValue());
 
 					String key = entry.getKey().getSimpleName().toString();
 					mMessager.printMessage(Diagnostic.Kind.NOTE, "key" + key);
@@ -98,6 +98,10 @@ public class CodeGenerator {
 
 	private void parseModel(Set<? extends Element> modelSet) {
 		Iterator<? extends Element> iterator = modelSet.iterator();
+		if (!iterator.hasNext()) {
+			return;
+		}
+
 		VariableElement variableElement = (VariableElement) iterator.next();
 		TypeMirror mirror = variableElement.asType();
 		mModelElement = new ModelElement(variableElement.getSimpleName().toString(), variableElement.getEnclosingElement().toString(), mirror.toString());
@@ -165,8 +169,13 @@ public class CodeGenerator {
 		stringBuilder.append(mPresenterElement.fieldName);
 		stringBuilder.append("= new ");
 		stringBuilder.append(mPresenterElement.type);
-		stringBuilder.append("(o.");
-		stringBuilder.append(mModelElement.fieldName);
+
+		if (mModelElement == null) {
+			stringBuilder.append("(null");
+		} else {
+			stringBuilder.append("(o.");
+			stringBuilder.append(mModelElement.fieldName);
+		}
 		stringBuilder.append(", o.");
 		stringBuilder.append(mViewElement.fieldName);
 		stringBuilder.append(");");

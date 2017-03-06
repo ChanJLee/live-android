@@ -73,6 +73,7 @@ public class AnnotationChecker {
 			return checkModifier((Element) iterator.next());
 		}
 
+		mMessager.printMessage(Diagnostic.Kind.NOTE, "model null");
 		return true;
 	}
 
