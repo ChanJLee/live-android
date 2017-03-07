@@ -1,5 +1,7 @@
 package com.wenyu.mvp.view;
 
+import android.app.Activity;
+
 import java.util.EventListener;
 
 /**
@@ -8,9 +10,13 @@ import java.util.EventListener;
  * All rights reserved.
  */
 public interface IMvpView<E extends EventListener> {
-	void setEventListener(E e);
+	void getEventListener(E e);
 
 	void onAttach();
 
 	void onDetach();
+
+	Activity getActivity();
+
+	void showToast(String message);
 }

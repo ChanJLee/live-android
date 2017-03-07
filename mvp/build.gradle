@@ -29,6 +29,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile "junit:junit:${rootProject.ext.jUnitVersion}"
 
+    compile "com.android.support:support-v4:${rootProject.ext.supportVersion}"
     apt "com.google.dagger:dagger-compiler:${rootProject.ext.daggerVersion}"
     provided "org.glassfish:javax.annotation:${rootProject.ext.javaxAnnotationVersion}"
     compile "com.google.dagger:dagger:${rootProject.ext.daggerVersion}"

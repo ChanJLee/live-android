@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by jiacheng.li on 17/1/22.
@@ -16,7 +17,7 @@ import rx.Subscription;
 public abstract class BaseMvpPresenter<V extends IMvpView, M extends IMvpModel> implements IMvpPresenter<V, M> {
 	private V mView;
 	private M mModel;
-	private List<Subscription> mSubscriptions = new ArrayList<>();
+	private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
 
 	@Override
 	final public void setView(V view) {
@@ -35,10 +36,8 @@ public abstract class BaseMvpPresenter<V extends IMvpView, M extends IMvpModel> 
 
 	@Override
 	public void detach() {
-		for (Subscription subscription : mSubscriptions) {
-			if (subscription.isUnsubscribed()) {
-				subscription.unsubscribe();
-			}
+		if (!mCompositeSubscription.isUnsubscribed()) {
+			mCompositeSubscription.unsubscribe();
 		}
 		mView.onDetach();
 	}
@@ -55,7 +54,7 @@ public abstract class BaseMvpPresenter<V extends IMvpView, M extends IMvpModel> 
 
 	protected void add(Subscription subscription) {
 		if (subscription != null) {
-			mSubscriptions.add(subscription);
+			mCompositeSubscription.add(subscription);
 		}
 	}
 }
