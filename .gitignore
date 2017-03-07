@@ -38,3 +38,12 @@ captures/
 
 # Keystore files
 *.jks
+danmuku/libs/
+danmuku/src/main/res/drawable/
+mvp-apt/libs/
+mvp/libs/
+mvp/src/main/res/drawable/
+network/libs/
+network/src/main/res/drawable/
+xmpp/src/main/java/
+xmpp/src/main/res/drawable/
