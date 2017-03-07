@@ -1,4 +1,4 @@
-package com.wenyu.apt;
+package com.wenyu.apt.impl;
 
 import com.google.auto.service.AutoService;
 import com.wenyu.apt.annotations.MvpModel;
@@ -48,12 +48,12 @@ public class MvpProcessor extends AbstractProcessor {
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
 
-		mMessager.printMessage(Diagnostic.Kind.NOTE, "progress");
 		//找到被注解的field
 		Set<? extends Element> presenterSet = roundEnv.getElementsAnnotatedWith(MvpPresenter.class);
 		Set<? extends Element> modelSet = roundEnv.getElementsAnnotatedWith(MvpModel.class);
 		Set<? extends Element> viewSet = roundEnv.getElementsAnnotatedWith(MvpView.class);
 
+		//只处理一次
 		if (presenterSet.isEmpty() && modelSet.isEmpty() && viewSet.isEmpty()) {
 			return true;
 		}
@@ -62,7 +62,7 @@ public class MvpProcessor extends AbstractProcessor {
 			return true;
 		}
 
-		CodeGenerator codeGenerator = new CodeGenerator(mFiler, mMessager);
+		com.wenyu.apt.impl.CodeGenerator codeGenerator = new com.wenyu.apt.impl.CodeGenerator(mFiler, mMessager);
 		try {
 			codeGenerator.generate(presenterSet, modelSet, viewSet);
 		} catch (IOException e) {
