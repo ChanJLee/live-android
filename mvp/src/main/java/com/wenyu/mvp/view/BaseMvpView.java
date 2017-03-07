@@ -12,7 +12,7 @@ import java.util.EventListener;
  * All rights reserved.
  */
 public abstract class BaseMvpView<E extends EventListener> implements IMvpView<E> {
-	private Activity mActivity;
+	protected Activity mActivity;
 	private E mEventListener;
 
 	public BaseMvpView(@NonNull Activity activity) {
