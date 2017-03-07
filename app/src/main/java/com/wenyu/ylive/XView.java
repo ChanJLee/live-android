@@ -1,5 +1,7 @@
 package com.wenyu.ylive;
 
+import android.app.Application;
+
 import com.wenyu.ylive.biz.home.MainActivity;
 
 import javax.inject.Inject;
@@ -10,7 +12,12 @@ import javax.inject.Inject;
  * All rights reserved.
  */
 public class XView {
+	private MainActivity mMainActivity;
+	private Application mApplication;
+
 	@Inject
-	public XView(MainActivity activity) {
+	public XView(MainActivity mainActivity, Application application) {
+		mMainActivity = mainActivity;
+		mApplication = application;
 	}
 }

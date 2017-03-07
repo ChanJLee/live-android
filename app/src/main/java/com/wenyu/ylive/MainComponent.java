@@ -1,7 +1,5 @@
 package com.wenyu.ylive;
 
-import android.app.Activity;
-
 import com.wenyu.mvp.annotation.PerActivity;
 import com.wenyu.ylive.biz.home.MainActivity;
 
@@ -13,7 +11,7 @@ import dagger.Component;
  * All rights reserved.
  */
 @PerActivity
-@Component(modules = MainModule.class)
+@Component(modules = MainModule.class, dependencies = {MainDependencyComponent.class})
 public interface MainComponent {
 
 	MainActivity getActivity();

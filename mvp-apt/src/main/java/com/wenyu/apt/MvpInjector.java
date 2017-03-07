@@ -30,4 +30,8 @@ public class MvpInjector {
 			e.printStackTrace();
 		}
 	}
+
+	public static void inject(Object o, Object dependency) {
+		inject(null, o, dependency);
+	}
 }

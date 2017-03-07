@@ -15,10 +15,6 @@ import javax.tools.Diagnostic;
  */
 public class AnnotationChecker {
 
-	private static final int MAX_PRESENTER_SIZE = 1;
-	private static final int MAX_VIEW_SIZE = 1;
-	private static final int MAX_MODEL_SIZE = 1;
-
 	private Messager mMessager;
 
 	public AnnotationChecker(Messager messager) {
@@ -26,67 +22,39 @@ public class AnnotationChecker {
 	}
 
 	public boolean checkAnnotation(Set<? extends Element> presenterSet, Set<? extends Element> modelSet, Set<? extends Element> viewSet) {
-		//没有presenter Model view 则报错
-		if (presenterSet.isEmpty() && modelSet.isEmpty() && viewSet.isEmpty()) {
-			mMessager.printMessage(Diagnostic.Kind.ERROR, "缺少View Presenter Model注释");
-			return false;
-		}
-
-		//如果没有presenter 而有Model 或者view 则报错
-		if (presenterSet.isEmpty() && (!modelSet.isEmpty() || !viewSet.isEmpty())) {
-			mMessager.printMessage(Diagnostic.Kind.ERROR, "缺少presenter");
-			return false;
-		}
-
-		//有Presenter而没有View
-		if (!presenterSet.isEmpty() && viewSet.isEmpty()) {
-			mMessager.printMessage(Diagnostic.Kind.ERROR, "缺少view");
-			return false;
-		}
-
-		return checkPresenterAnnotation(presenterSet) && checkModelAnnotation(modelSet) && checkViewAnnotation(viewSet);
-
+		return checkPresenterAnnotation(presenterSet) &&
+				checkModelAnnotation(modelSet) &&
+				checkViewAnnotation(viewSet);
 	}
 
 	private boolean checkPresenterAnnotation(Set<? extends Element> elements) {
-		if (elements.size() > MAX_PRESENTER_SIZE) {
-			mMessager.printMessage(Diagnostic.Kind.ERROR, "presenter至多之只能有一个");
-			return false;
-		}
-
-		if (!elements.isEmpty()) {
-			Iterator iterator = elements.iterator();
-			return checkModifier((Element) iterator.next());
+		Iterator iterator = elements.iterator();
+		while (iterator.hasNext()) {
+			if (!checkModifier((Element) iterator.next())) {
+				return false;
+			}
 		}
 
 		return true;
 	}
 
 	private boolean checkModelAnnotation(Set<? extends Element> elements) {
-		if (elements.size() > MAX_MODEL_SIZE) {
-			mMessager.printMessage(Diagnostic.Kind.ERROR, "model至多之只能有一个");
-			return false;
+		Iterator iterator = elements.iterator();
+		while (iterator.hasNext()) {
+			if (!checkModifier((Element) iterator.next())) {
+				return false;
+			}
 		}
 
-		if (!elements.isEmpty()) {
-			Iterator iterator = elements.iterator();
-			return checkModifier((Element) iterator.next());
-		}
-
-		mMessager.printMessage(Diagnostic.Kind.NOTE, "model null");
 		return true;
 	}
 
 	private boolean checkViewAnnotation(Set<? extends Element> elements) {
-
-		if (elements.size() > MAX_VIEW_SIZE) {
-			mMessager.printMessage(Diagnostic.Kind.ERROR, "view至多之只能有一个");
-			return false;
-		}
-
-		if (!elements.isEmpty()) {
-			Iterator iterator = elements.iterator();
-			return checkModifier((Element) iterator.next());
+		Iterator iterator = elements.iterator();
+		while (iterator.hasNext()) {
+			if (!checkModifier((Element) iterator.next())) {
+				return false;
+			}
 		}
 
 		return true;

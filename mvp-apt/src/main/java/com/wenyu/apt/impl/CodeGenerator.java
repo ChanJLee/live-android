@@ -77,8 +77,7 @@ public class CodeGenerator {
 					} else if ("component".equals(key)) {
 						mPresenterElement.component = new Clazz(entry.getValue().toString());
 					} else if ("dependency".equals(key)) {
-						mMessager.printMessage(Diagnostic.Kind.NOTE, "dependency get");
-						mPresenterElement.component = new Clazz(entry.getValue().toString());
+						mPresenterElement.dependency = new Clazz(entry.getValue().toString());
 					}
 				}
 			}
@@ -165,7 +164,7 @@ public class CodeGenerator {
 			mMessager.printMessage(Diagnostic.Kind.NOTE, "dependency not null");
 			stringBuilder.append(".");
 			stringBuilder.append(simpleName2FunctionName(mPresenterElement.dependency.getSimpleName()));
-			stringBuilder.append("(o2)");
+			stringBuilder.append("(o1)");
 		}
 		stringBuilder.append(".build();");
 
