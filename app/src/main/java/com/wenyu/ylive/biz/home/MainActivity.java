@@ -11,25 +11,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.wenyu.apt.MvpInjector;
-import com.wenyu.apt.annotations.MvpModel;
-import com.wenyu.apt.annotations.MvpView;
-import com.wenyu.apt.annotations.MvpPresenter;
-import com.wenyu.ylive.MainComponent;
-import com.wenyu.ylive.MainDependencyComponent;
-import com.wenyu.ylive.MainModule;
 import com.wenyu.ylive.R;
-import com.wenyu.ylive.XView;
-import com.wenyu.ylive.YModel;
-import com.wenyu.ylive.Z;
 import com.wenyu.ylive.base.YLiveActivity;
-import com.wenyu.ylive.base.YLiveApplication;
 import com.wenyu.ylive.biz.home.adapter.HomeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 public class MainActivity extends YLiveActivity {
 	private long mLastClickedTag = 0;
@@ -37,21 +24,10 @@ public class MainActivity extends YLiveActivity {
 
 	RecyclerView mRecyclerView;
 
-	@Inject
-	@MvpView
-	XView mXView;
-
-	@Inject
-	@MvpModel
-	YModel mYModel;
-
-	@MvpPresenter(module = MainModule.class, component = MainComponent.class, dependency = MainDependencyComponent.class)
-	Z z;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		MvpInjector.inject(this, YLiveApplication.getmMainDependencyComponent());
 		mRecyclerView = (RecyclerView) findViewById(R.id.main_content_recycler_view);
 		mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 		List<String> list = new ArrayList<>();
