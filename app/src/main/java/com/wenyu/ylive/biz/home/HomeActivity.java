@@ -14,11 +14,14 @@ import android.view.View;
 import com.wenyu.ylive.R;
 import com.wenyu.ylive.base.YLiveActivity;
 import com.wenyu.ylive.biz.home.adapter.HomeAdapter;
+import com.wenyu.ylive.biz.home.dependency.DaggerHomeComponent;
+import com.wenyu.ylive.biz.home.dependency.HomeComponent;
+import com.wenyu.ylive.biz.home.dependency.HomeModule;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends YLiveActivity {
+public class HomeActivity extends YLiveActivity {
 	private long mLastClickedTag = 0;
 	private static final long MIN_DURATION = 2000;
 
@@ -28,6 +31,10 @@ public class MainActivity extends YLiveActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		HomeComponent homeComponent = DaggerHomeComponent.builder().homeModule(new HomeModule(this)).build();
+		homeComponent.getId();
+
 		mRecyclerView = (RecyclerView) findViewById(R.id.main_content_recycler_view);
 		mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 		List<String> list = new ArrayList<>();
@@ -69,7 +76,7 @@ public class MainActivity extends YLiveActivity {
 	}
 
 	public static Intent newIntent(Context context) {
-		return new Intent(context, MainActivity.class);
+		return new Intent(context, HomeActivity.class);
 	}
 
 	@Override

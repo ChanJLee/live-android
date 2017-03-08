@@ -6,7 +6,10 @@ import android.view.WindowManager;
 
 import com.wenyu.ylive.R;
 import com.wenyu.ylive.base.YLiveActivity;
-import com.wenyu.ylive.biz.home.MainActivity;
+import com.wenyu.ylive.biz.home.HomeActivity;
+import com.wenyu.ylive.biz.home.dependency.DaggerHomeComponent;
+import com.wenyu.ylive.biz.home.dependency.HomeComponent;
+import com.wenyu.ylive.biz.home.dependency.HomeModule;
 
 import java.util.concurrent.TimeUnit;
 
@@ -22,14 +25,15 @@ public class SplashActivity extends YLiveActivity {
 		super.onCreate(savedInstanceState);
 		Window window = getWindow();
 		window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+		HomeComponent homeComponent = DaggerHomeComponent.builder().homeModule(new HomeModule(this)).build();
+		homeComponent.getId();
 		Observable.timer(1, TimeUnit.SECONDS)
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Action1<Long>() {
 					@Override
 					public void call(Long aLong) {
-						startActivity(MainActivity.newIntent(SplashActivity.this));
+						startActivity(HomeActivity.newIntent(SplashActivity.this));
 						finish();
 					}
 				});

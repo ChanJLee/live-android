@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".biz.home.MainActivity"
+            android:name=".biz.home.HomeActivity"
             android:configChanges="orientation|keyboardHidden|keyboard"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
