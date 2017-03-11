@@ -59,4 +59,5 @@ dependencies {
     compile project(':mvp')
     compile project(':network')
     compile project(':mvp-apt')
+    compile project(':xmpp')
 }
