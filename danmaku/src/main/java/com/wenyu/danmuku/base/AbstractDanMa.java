@@ -39,7 +39,7 @@ public abstract class AbstractDanMa implements IDanMa {
 		nextFrame();
 	}
 
-	abstract void onRender(Canvas canvas);
+	abstract protected void onRender(Canvas canvas);
 
 	protected void nextFrame() {
 		Rect rect = getBound();

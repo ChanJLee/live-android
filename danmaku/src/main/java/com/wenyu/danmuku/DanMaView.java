@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -60,9 +61,16 @@ public class DanMaView extends SurfaceView implements SurfaceHolder.Callback {
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+
+					Log.d("chan_debug", "next frame");
 					Canvas canvas = holder.lockCanvas();
 					mRenderManager.render(canvas, width, height);
-					holder.unlockCanvasAndPost(canvas);
+
+					try {
+						holder.unlockCanvasAndPost(canvas);
+					} catch (Exception e) {
+						//canvas object must be the same instance that was previously returned by lockCanvas
+					}
 				}
 			}
 		});

@@ -14,6 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.wenyu.ylive.DanmaActivity;
 import com.wenyu.ylive.R;
 import com.wenyu.ylive.XMPPActivity;
 import com.wenyu.ylive.base.YLiveActivity;
@@ -80,7 +81,7 @@ public class SplashActivity extends YLiveActivity {
 				.subscribe(new Action1<Long>() {
 					@Override
 					public void call(Long aLong) {
-						startActivity(XMPPActivity.newIntent(SplashActivity.this));
+						startActivity(DanmaActivity.newIntent(SplashActivity.this));
 						finish();
 					}
 				});

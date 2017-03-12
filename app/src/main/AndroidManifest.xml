@@ -47,6 +47,8 @@
         </activity>
         <activity android:name=".XMPPActivity">
         </activity>
+        <activity android:name=".DanmaActivity">
+        </activity>
     </application>
 
 </manifest>

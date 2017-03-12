@@ -2,6 +2,7 @@ package com.wenyu.danmuku.render;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.util.Log;
 
 import com.wenyu.danmuku.interfaces.IDanMa;
 
@@ -26,12 +27,16 @@ public class RenderManager {
 
 	public RenderManager(int danMaSize) {
 		mDanMaBlockingQueue = new LinkedBlockingDeque<>(danMaSize);
-
 	}
 
 	public void render(Canvas canvas, int width, int height) {
-		mWindowBound.set(0, 0, width, height);
 
+		if (mDanMaBlockingQueue == null || mDanMaBlockingQueue.isEmpty()) {
+			return;
+		}
+
+		Log.d("chan_debug", "render width: " + width + " height: " + height);
+		mWindowBound.set(0, 0, width, height);
 		Iterator<IDanMa> iterator = mDanMaBlockingQueue.iterator();
 		while (iterator.hasNext()) {
 			IDanMa danMa = iterator.next();
@@ -48,6 +53,7 @@ public class RenderManager {
 			mDanMaBlockingQueue.add(danMa);
 		} catch (Exception e) {
 			//方式数据溢出
+			e.printStackTrace();
 		}
 	}
 

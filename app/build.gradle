@@ -60,4 +60,5 @@ dependencies {
     compile project(':network')
     compile project(':mvp-apt')
     compile project(':xmpp')
+    compile project(':danmaku')
 }

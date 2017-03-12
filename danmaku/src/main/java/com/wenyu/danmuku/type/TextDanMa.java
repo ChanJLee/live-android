@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.text.TextPaint;
+import android.util.Log;
 
 import com.wenyu.danmuku.base.AbstractDanMa;
 
@@ -23,8 +24,9 @@ public class TextDanMa extends AbstractDanMa {
 	public TextDanMa(@NonNull String content, int x, int y, int speed, @OrientationType int orientation) {
 		super(x, y, speed, orientation);
 		mRect = new Rect();
+		mContent = content;
 		TextPaint textPaint = getTextPaint();
-		textPaint.getTextBounds(mContent, 0, content.length(), mRect);
+		textPaint.getTextBounds(mContent, 0, mContent.length(), mRect);
 
 		int offsetX = x - mRect.left;
 		int offsetY = y - mRect.top;
@@ -38,7 +40,8 @@ public class TextDanMa extends AbstractDanMa {
 	}
 
 	@Override
-	void onRender(Canvas canvas) {
+	protected void onRender(Canvas canvas) {
+		Log.d("chan_debug", "render content: " + mContent + " location: " + mRect.toString());
 		canvas.drawText(mContent, mRect.left, mRect.top, getTextPaint());
 	}
 
