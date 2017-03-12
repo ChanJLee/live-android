@@ -9,7 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/danmuku" />
+            <option value="$PROJECT_DIR$/danmaku" />
             <option value="$PROJECT_DIR$/mvp" />
             <option value="$PROJECT_DIR$/mvp-apt" />
             <option value="$PROJECT_DIR$/network" />
@@ -20,7 +20,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/danmuku" />
+            <option value="$PROJECT_DIR$/danmaku" />
             <option value="$PROJECT_DIR$/mvp" />
             <option value="$PROJECT_DIR$/mvp-apt" />
             <option value="$PROJECT_DIR$/network" />

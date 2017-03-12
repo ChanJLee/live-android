@@ -13,10 +13,7 @@ import android.widget.TextView;
 
 import com.wenyu.xmpp.XmppClient;
 
-import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smack.packet.Message;
-import org.jivesoftware.smack.packet.Packet;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -38,14 +35,13 @@ public class XMPPActivity extends AppCompatActivity {
 		mSend = (Button) findViewById(R.id.send);
 		mContent = (TextView) findViewById(R.id.content);
 
-		mXmppClient = XmppClient.getXmppClient("ylive", "19940525");
+		mXmppClient = XmppClient.getXmppClient(getApplicationContext(), "ylive", "19940525");
 		try {
-			mXmppClient.enter("spark_name@conference.192.168.1.101",
-					new PacketListener() {
+			mXmppClient.enterRoom("spark_name@conference.192.168.1.101",
+					new XmppClient.Callback() {
 						@Override
-						public void processPacket(Packet packet) {
-							Message message = (Message) packet;
-							mContent.setText(message.getBody());
+						public void onMessageReceived(boolean isFromMe, String message) {
+							mContent.setText(message);
 						}
 					})
 					.subscribeOn(Schedulers.io())

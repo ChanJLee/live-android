@@ -4,7 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/android_live.iml" filepath="$PROJECT_DIR$/android_live.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/danmuku/danmuku.iml" filepath="$PROJECT_DIR$/danmuku/danmuku.iml" />
+      <module fileurl="file://$PROJECT_DIR$/danmaku/danmaku.iml" filepath="$PROJECT_DIR$/danmaku/danmaku.iml" />
+      <module fileurl="file://$PROJECT_DIR$/danmaku/danmuku.iml" filepath="$PROJECT_DIR$/danmaku/danmuku.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvp/mvp.iml" filepath="$PROJECT_DIR$/mvp/mvp.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvp-apt/mvp-apt.iml" filepath="$PROJECT_DIR$/mvp-apt/mvp-apt.iml" />
       <module fileurl="file://$PROJECT_DIR$/network/network.iml" filepath="$PROJECT_DIR$/network/network.iml" />

@@ -1,1 +1,1 @@
-include ':app', ':mvp', ':network', ':xmpp', ':danmuku', ':mvp-apt'
+include ':app', ':mvp', ':network', ':xmpp', ':danmaku', ':mvp-apt'

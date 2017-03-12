@@ -29,4 +29,5 @@ dependencies {
     testCompile "junit:junit:${rootProject.ext.jUnitVersion}"
     compile "io.reactivex:rxjava:${rootProject.ext.rxJavaVersion}"
     compile "io.reactivex:rxandroid:${rootProject.ext.rxAndroidVersion}"
+    compile "com.android.support:support-v4:${rootProject.ext.supportVersion}"
 }
