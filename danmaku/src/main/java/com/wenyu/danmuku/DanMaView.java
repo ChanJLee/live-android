@@ -26,7 +26,6 @@ public class DanMaView extends SurfaceView implements SurfaceHolder.Callback {
 	private Thread mRenderThread;
 	private Paint mBackground;
 	private PorterDuffXfermode mClearPorterDuffXfermode;
-	private PorterDuffXfermode mSrcPorterDuffXfermode;
 
 	public DanMaView(Context context) {
 		this(context, null);
@@ -52,7 +51,6 @@ public class DanMaView extends SurfaceView implements SurfaceHolder.Callback {
 		mBackground = new Paint();
 		mBackground.setStyle(Paint.Style.FILL);
 		mClearPorterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
-		mSrcPorterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC);
 	}
 
 	@Override
@@ -81,7 +79,6 @@ public class DanMaView extends SurfaceView implements SurfaceHolder.Callback {
 
 					mBackground.setXfermode(mClearPorterDuffXfermode);
 					canvas.drawPaint(mBackground);
-					mBackground.setXfermode(mSrcPorterDuffXfermode);
 
 					mRenderManager.render(canvas, width, height);
 					try {

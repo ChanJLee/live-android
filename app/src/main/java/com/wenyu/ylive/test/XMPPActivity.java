@@ -1,4 +1,4 @@
-package com.wenyu.ylive;
+package com.wenyu.ylive.test;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.wenyu.xmpp.XmppClient;
+import com.wenyu.ylive.R;
 
 import org.jivesoftware.smack.XMPPException;
 

@@ -14,14 +14,9 @@ import android.support.v7.app.AlertDialog;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.wenyu.ylive.DanmaActivity;
+import com.wenyu.ylive.test.DanmaActivity;
 import com.wenyu.ylive.R;
-import com.wenyu.ylive.XMPPActivity;
 import com.wenyu.ylive.base.YLiveActivity;
-import com.wenyu.ylive.biz.home.HomeActivity;
-import com.wenyu.ylive.biz.home.dependency.DaggerHomeComponent;
-import com.wenyu.ylive.biz.home.dependency.HomeComponent;
-import com.wenyu.ylive.biz.home.dependency.HomeModule;
 
 import java.util.ArrayList;
 import java.util.HashMap;

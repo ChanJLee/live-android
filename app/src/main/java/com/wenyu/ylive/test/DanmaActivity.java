@@ -1,4 +1,4 @@
-package com.wenyu.ylive;
+package com.wenyu.ylive.test;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.widget.EditText;
 import com.wenyu.danmuku.DanMaView;
 import com.wenyu.danmuku.interfaces.IDanMa;
 import com.wenyu.danmuku.type.TextDanMa;
+import com.wenyu.ylive.R;
 
 public class DanmaActivity extends AppCompatActivity {
 

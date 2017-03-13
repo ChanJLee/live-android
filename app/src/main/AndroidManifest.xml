@@ -45,9 +45,9 @@
             android:name=".biz.profile.LoginActivity"
             android:label="@string/title_activity_login">
         </activity>
-        <activity android:name=".XMPPActivity">
+        <activity android:name=".test.XMPPActivity">
         </activity>
-        <activity android:name=".DanmaActivity">
+        <activity android:name=".test.DanmaActivity">
         </activity>
     </application>
 
