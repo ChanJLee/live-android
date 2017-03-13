@@ -56,4 +56,6 @@ ext {
     retrofitVersion = "2.0.2"
     okHttpVersion = "3.2.0"
     facebookOkHttpVersion = "1.3.0"
+
+    ijkVersion = "0.7.5"
 }
