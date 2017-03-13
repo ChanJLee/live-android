@@ -2,6 +2,7 @@ package com.wenyu.ylive;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -36,7 +37,9 @@ public class DanmaActivity extends AppCompatActivity {
 						return;
 					}
 
-					mDanMaView.pushDanMa(new TextDanMa(content, mWidth, mHeight / 2, 10, IDanMa.RIGHT_TO_LEFT));
+					TextDanMa text = new TextDanMa(content, mWidth, mHeight / 2, 16, IDanMa.RIGHT_TO_LEFT);
+					text.setColor(Color.GREEN);
+					mDanMaView.pushDanMa(text);
 				}
 			}
 		});

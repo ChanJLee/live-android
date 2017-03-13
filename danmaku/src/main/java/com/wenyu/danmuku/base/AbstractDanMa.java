@@ -44,9 +44,9 @@ public abstract class AbstractDanMa implements IDanMa {
 	protected void nextFrame() {
 		Rect rect = getBound();
 		if (mOrientation == LEFT_TO_RIGHT) {
-			rect.offset(rect.left + mSpeed, 0);
+			rect.offset(mSpeed, 0);
 		} else if (mOrientation == RIGHT_TO_LEFT) {
-			rect.offset(rect.left - mSpeed, 0);
+			rect.offset(-mSpeed, 0);
 		}
 	}
 }

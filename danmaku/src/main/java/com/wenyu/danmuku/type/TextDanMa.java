@@ -6,7 +6,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.text.TextPaint;
-import android.util.Log;
 
 import com.wenyu.danmuku.base.AbstractDanMa;
 
@@ -17,9 +16,10 @@ import com.wenyu.danmuku.base.AbstractDanMa;
  */
 public class TextDanMa extends AbstractDanMa {
 	private static TextPaint sTextPaint;
-
-	public String mContent;
-	public Rect mRect;
+	private static final int DEFAULT_TEST_SIZE = 60;
+	private String mContent;
+	private Rect mRect;
+	private int mColor = Color.WHITE;
 
 	public TextDanMa(@NonNull String content, int x, int y, int speed, @OrientationType int orientation) {
 		super(x, y, speed, orientation);
@@ -41,15 +41,19 @@ public class TextDanMa extends AbstractDanMa {
 
 	@Override
 	protected void onRender(Canvas canvas) {
-		Log.d("chan_debug", "render content: " + mContent + " location: " + mRect.toString());
-		canvas.drawText(mContent, mRect.left, mRect.top, getTextPaint());
+		TextPaint textPaint = getTextPaint();
+		textPaint.setColor(mColor);
+		canvas.drawText(mContent, mRect.left, mRect.top, textPaint);
+	}
+
+	public void setColor(int color) {
+		mColor = color;
 	}
 
 	private static TextPaint getTextPaint() {
 		if (sTextPaint == null) {
 			sTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-			sTextPaint.setTextSize(20);
-			sTextPaint.setColor(Color.WHITE);
+			sTextPaint.setTextSize(DEFAULT_TEST_SIZE);
 		}
 		return sTextPaint;
 	}

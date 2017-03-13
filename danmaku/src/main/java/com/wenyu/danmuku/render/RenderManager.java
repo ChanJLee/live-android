@@ -35,12 +35,11 @@ public class RenderManager {
 			return;
 		}
 
-		Log.d("chan_debug", "render width: " + width + " height: " + height);
 		mWindowBound.set(0, 0, width, height);
 		Iterator<IDanMa> iterator = mDanMaBlockingQueue.iterator();
 		while (iterator.hasNext()) {
 			IDanMa danMa = iterator.next();
-			if (mWindowBound.contains(danMa.getBound())) {
+			if (checkInvalidate(danMa)) {
 				danMa.render(canvas);
 			} else {
 				iterator.remove();
@@ -48,7 +47,30 @@ public class RenderManager {
 		}
 	}
 
-	public void pushDanMa(IDanMa danMa) {
+	private boolean checkInvalidate(IDanMa danMa) {
+		Rect danMaBound = danMa.getBound();
+
+		Log.d("chan_debug", danMaBound.toString());
+		if (danMaBound.left > mWindowBound.right) {
+			return false;
+		}
+
+		if (danMaBound.right < mWindowBound.left) {
+			return false;
+		}
+
+		if (danMaBound.top > mWindowBound.bottom) {
+			return false;
+		}
+
+		if (danMaBound.bottom < mWindowBound.top) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public void push(IDanMa danMa) {
 		try {
 			mDanMaBlockingQueue.add(danMa);
 		} catch (Exception e) {

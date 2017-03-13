@@ -2,9 +2,13 @@ package com.wenyu.danmuku;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -20,6 +24,9 @@ public class DanMaView extends SurfaceView implements SurfaceHolder.Callback {
 	private RenderManager mRenderManager;
 	private boolean mIsCreated = false;
 	private Thread mRenderThread;
+	private Paint mBackground;
+	private PorterDuffXfermode mClearPorterDuffXfermode;
+	private PorterDuffXfermode mSrcPorterDuffXfermode;
 
 	public DanMaView(Context context) {
 		this(context, null);
@@ -42,6 +49,10 @@ public class DanMaView extends SurfaceView implements SurfaceHolder.Callback {
 		setZOrderOnTop(true);
 		getHolder().setFormat(PixelFormat.TRANSLUCENT);
 		getHolder().addCallback(this);
+		mBackground = new Paint();
+		mBackground.setStyle(Paint.Style.FILL);
+		mClearPorterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
+		mSrcPorterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC);
 	}
 
 	@Override
@@ -52,20 +63,27 @@ public class DanMaView extends SurfaceView implements SurfaceHolder.Callback {
 	@Override
 	public void surfaceChanged(final SurfaceHolder holder, int format, final int width, final int height) {
 		mIsCreated = true;
+
 		mRenderThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				while (mIsCreated) {
 					try {
-						Thread.sleep(50);
+						Thread.sleep(60);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 
-					Log.d("chan_debug", "next frame");
 					Canvas canvas = holder.lockCanvas();
-					mRenderManager.render(canvas, width, height);
+					if (canvas == null) {
+						continue;
+					}
 
+					mBackground.setXfermode(mClearPorterDuffXfermode);
+					canvas.drawPaint(mBackground);
+					mBackground.setXfermode(mSrcPorterDuffXfermode);
+
+					mRenderManager.render(canvas, width, height);
 					try {
 						holder.unlockCanvasAndPost(canvas);
 					} catch (Exception e) {
@@ -84,6 +102,6 @@ public class DanMaView extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	public void pushDanMa(IDanMa danMa) {
-		mRenderManager.pushDanMa(danMa);
+		mRenderManager.push(danMa);
 	}
 }
