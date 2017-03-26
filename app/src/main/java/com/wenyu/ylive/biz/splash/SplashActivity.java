@@ -14,9 +14,9 @@ import android.support.v7.app.AlertDialog;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.wenyu.ylive.test.DanmaActivity;
 import com.wenyu.ylive.R;
 import com.wenyu.ylive.base.YLiveActivity;
+import com.wenyu.ylive.biz.home.HomeActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,10 +76,14 @@ public class SplashActivity extends YLiveActivity {
 				.subscribe(new Action1<Long>() {
 					@Override
 					public void call(Long aLong) {
-						startActivity(DanmaActivity.newIntent(SplashActivity.this));
-						finish();
+						route();
 					}
 				});
+	}
+
+	private void route() {
+		Intent intent = HomeActivity.newIntent(this);
+		startActivity(intent);
 	}
 
 	private boolean addPermissionIfRequired(List<String> permissionsList, String permission) {

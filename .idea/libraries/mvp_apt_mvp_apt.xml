@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="mvp-apt.mvp-apt">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/mvp-apt/build/libs/mvp-apt.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

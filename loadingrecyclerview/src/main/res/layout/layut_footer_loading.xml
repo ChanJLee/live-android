@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:padding="@dimen/padding5">
+
+    <RelativeLayout
+        android:id="@+id/loading_footer_reload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding10">
+
+        <TextView
+            android:id="@+id/loading_footer_reload_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="哎呀，失去网络了......"
+            android:textSize="@dimen/textsize17"/>
+
+        <TextView
+            android:id="@+id/loading_footer_reload_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/loading_footer_reload_no_network"
+            android:text="重新加载"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textsize17"/>
+
+        <ImageView
+            android:id="@+id/loading_footer_reload_no_network"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/icon_no_network"/>
+    </RelativeLayout>
+
+    <com.wenyu.loadingrecyclerview.CircleImageView
+        android:id="@+id/loading_footer_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"/>
+</FrameLayout>
