@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/mvp" />
             <option value="$PROJECT_DIR$/mvp-apt" />
             <option value="$PROJECT_DIR$/network" />
+            <option value="$PROJECT_DIR$/rtmp" />
             <option value="$PROJECT_DIR$/xmpp" />
           </set>
         </option>
