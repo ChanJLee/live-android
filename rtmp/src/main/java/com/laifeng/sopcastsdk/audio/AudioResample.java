@@ -1,14 +1,6 @@
-package com.wenyu.rtmp.audio;
+package com.laifeng.sopcastsdk.audio;
 
-/**
- * @Title: AudioResample
- * @Package com.android.webrtc.audio
- * @Description:
- * @Author Jim
- * @Date 16/8/19
- * @Time 下午4:55
- * @Version
- */
+
 public class AudioResample {
 
     static {

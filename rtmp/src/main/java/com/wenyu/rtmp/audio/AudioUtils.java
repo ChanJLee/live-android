@@ -7,15 +7,6 @@ import android.media.MediaRecorder;
 
 import com.wenyu.rtmp.configuration.AudioConfiguration;
 
-/**
- * @Title: AudioUtils
- * @Package cn.wecoder.camerademo.audio
- * @Description:
- * @Author Jim
- * @Date 16/3/24
- * @Time 下午5:54
- * @Version
- */
 public class AudioUtils {
     public static boolean checkMicSupport(AudioConfiguration audioConfiguration) {
         boolean result;

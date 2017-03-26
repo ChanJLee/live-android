@@ -8,15 +8,6 @@ import com.wenyu.rtmp.mediacodec.AudioMediaCodec;
 
 import java.nio.ByteBuffer;
 
-/**
- * @Title: AudioEncoder
- * @Package com.wenyu.rtmp.audio
- * @Description:
- * @Author Jim
- * @Date 16/9/19
- * @Time 上午9:57
- * @Version
- */
 @TargetApi(18)
 public class AudioEncoder {
     private MediaCodec mMediaCodec;

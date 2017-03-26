@@ -16,7 +16,7 @@ import android.view.WindowManager;
 
 import com.wenyu.ylive.R;
 import com.wenyu.ylive.base.YLiveActivity;
-import com.wenyu.ylive.biz.home.HomeActivity;
+import com.wenyu.ylive.test.RTMPActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,12 +45,14 @@ public class SplashActivity extends YLiveActivity {
 			return;
 		}
 
-		final List<String> permissionsList = new ArrayList<String>();
+		final List<String> permissionsList = new ArrayList<>();
 		addPermissionIfRequired(permissionsList, Manifest.permission.READ_PHONE_STATE);
-		boolean basePermission = addPermissionIfRequired(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+		addPermissionIfRequired(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+		addPermissionIfRequired(permissionsList, Manifest.permission.CAMERA);
+		addPermissionIfRequired(permissionsList, Manifest.permission.RECORD_AUDIO);
 
 		// 不需要额外权限或者最基本的权限（存储）保证后，直接启动
-		if (permissionsList.isEmpty() || basePermission) {
+		if (permissionsList.isEmpty()) {
 			startUp();
 			return;
 		}
@@ -82,7 +84,8 @@ public class SplashActivity extends YLiveActivity {
 	}
 
 	private void route() {
-		Intent intent = HomeActivity.newIntent(this);
+		//Intent intent = HomeActivity.newIntent(this);
+		Intent intent = RTMPActivity.newIntent(this);
 		startActivity(intent);
 	}
 
@@ -138,5 +141,10 @@ public class SplashActivity extends YLiveActivity {
 	@Override
 	protected int contentId() {
 		return R.layout.activity_splash;
+	}
+
+	@Override
+	public void onBackPressed() {
+		finish();
 	}
 }
