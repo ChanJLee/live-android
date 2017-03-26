@@ -70,7 +70,7 @@ public class XmppClient {
 		}
 	};
 
-	public XmppClient(@NonNull Context context, @NonNull String username, @NonNull String password) {
+	private XmppClient(@NonNull Context context, @NonNull String username, @NonNull String password) {
 		mPassword = password;
 		mUsername = username;
 		mContext = context;
