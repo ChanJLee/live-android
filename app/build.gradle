@@ -61,4 +61,5 @@ dependencies {
     compile project(':mvp-apt')
     compile project(':xmpp')
     compile project(':danmaku')
+    compile project(':rtmp')
 }
