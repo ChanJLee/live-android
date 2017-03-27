@@ -18,12 +18,12 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BASE_URI", "\"http://192.168.1.102:8000\""
+            buildConfigField "String", "HTTP_BASE_URI", "\"http://${rootProject.ext.serverIPAddress}:${rootProject.ext.serverHttpPort}\""
         }
 
         debug {
             minifyEnabled false
-            buildConfigField "String", "BASE_URI", "\"http://192.168.1.101:8000/\""
+            buildConfigField "String", "HTTP_BASE_URI", "\"http://${rootProject.ext.serverIPAddress}:${rootProject.ext.serverHttpPort}\""
         }
     }
 
