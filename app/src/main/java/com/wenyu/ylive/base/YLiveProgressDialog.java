@@ -18,7 +18,7 @@ public class YLiveProgressDialog extends Dialog {
 	public YLiveProgressDialog(Context context) {
 		super(context, R.style.YLiveBase_ProgressDialog);
 		this.mContext = context;
-		this.setContentView(R.layout.common_shanbay_progress_dialog);
+		this.setContentView(R.layout.dialog_progress);
 		this.getWindow().getAttributes().gravity = Gravity.CENTER;
 
 		mTvMessage = (TextView) findViewById(R.id.msg);

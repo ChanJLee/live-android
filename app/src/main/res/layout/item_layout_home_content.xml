@@ -63,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:src="@drawable/ic_videocam_24dp"
+        android:src="@drawable/ic_home_videocam"
         android:layout_marginRight="@dimen/margin8"
         android:layout_marginBottom="@dimen/margin8"/>
 

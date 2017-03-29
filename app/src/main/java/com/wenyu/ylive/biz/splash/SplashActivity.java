@@ -16,7 +16,7 @@ import android.view.WindowManager;
 
 import com.wenyu.ylive.R;
 import com.wenyu.ylive.base.YLiveActivity;
-import com.wenyu.ylive.test.RTMPActivity;
+import com.wenyu.ylive.biz.home.HomeActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,120 +31,121 @@ import rx.schedulers.Schedulers;
 
 public class SplashActivity extends YLiveActivity {
 
-	private static final int REQUEST_CODE_ASK_RUNTIME_PERMISSIONS = 0x0521;
+    private static final int REQUEST_CODE_ASK_RUNTIME_PERMISSIONS = 0x0521;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		Window window = getWindow();
-		window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		// 6.0 以下手机直接启动
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-			startUp();
-			return;
-		}
+        // 6.0 以下手机直接启动
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            startUp();
+            return;
+        }
 
-		final List<String> permissionsList = new ArrayList<>();
-		addPermissionIfRequired(permissionsList, Manifest.permission.READ_PHONE_STATE);
-		addPermissionIfRequired(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-		addPermissionIfRequired(permissionsList, Manifest.permission.CAMERA);
-		addPermissionIfRequired(permissionsList, Manifest.permission.RECORD_AUDIO);
+        List<String> permissionsList = new ArrayList<>();
+        permissionsList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        permissionsList.add(Manifest.permission.CAMERA);
+        permissionsList.add(Manifest.permission.RECORD_AUDIO);
 
-		// 不需要额外权限或者最基本的权限（存储）保证后，直接启动
-		if (permissionsList.isEmpty()) {
-			startUp();
-			return;
-		}
+        final List<String> result = checkNeedToRequirePermission(permissionsList);
 
-		AlertDialog dialog = new AlertDialog.Builder(this).setMessage("我们需要一些基本权限来保证App的正常运行")
-				.setPositiveButton("我知道了", new DialogInterface.OnClickListener() {
+        // 不需要额外权限或者最基本的权限（存储）保证后，直接启动
+        if (result.isEmpty()) {
+            startUp();
+            return;
+        }
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						String[] parr = permissionsList.toArray(new String[permissionsList.size()]);
-						ActivityCompat.requestPermissions(SplashActivity.this, parr,
-								REQUEST_CODE_ASK_RUNTIME_PERMISSIONS);
-					}
-				}).create();
-		dialog.setCanceledOnTouchOutside(false);
-		dialog.show();
-	}
+        AlertDialog dialog = new AlertDialog.Builder(this).setMessage("我们需要一些基本权限来保证App的正常运行")
+                .setPositiveButton("我知道了", new DialogInterface.OnClickListener() {
 
-	private void startUp() {
-		Observable.timer(1, TimeUnit.SECONDS)
-				.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(new Action1<Long>() {
-					@Override
-					public void call(Long aLong) {
-						route();
-					}
-				});
-	}
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ActivityCompat.requestPermissions(SplashActivity.this, result.toArray(new String[result.size()]), REQUEST_CODE_ASK_RUNTIME_PERMISSIONS);
+                    }
+                }).create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
 
-	private void route() {
-		//Intent intent = HomeActivity.newIntent(this);
-		Intent intent = RTMPActivity.newIntent(this);
-		startActivity(intent);
-	}
+    private void startUp() {
+        Observable.timer(1, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long aLong) {
+                        route();
+                    }
+                });
+    }
 
-	private boolean addPermissionIfRequired(List<String> permissionsList, String permission) {
-		boolean allowed = true;
-		if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-			permissionsList.add(permission);
-			allowed = false;
-		}
-		return allowed;
-	}
+    private void route() {
+        Intent intent = HomeActivity.newIntent(this);
+        startActivity(intent);
+    }
 
-	@Override
-	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-		if (REQUEST_CODE_ASK_RUNTIME_PERMISSIONS == requestCode) {
-			Map<String, Integer> perms = new HashMap<String, Integer>();
-			perms.put(Manifest.permission.READ_PHONE_STATE, PackageManager.PERMISSION_GRANTED);
-			perms.put(Manifest.permission.WRITE_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
-			for (int i = 0; i < permissions.length; i++) {
-				perms.put(permissions[i], grantResults[i]);
-			}
+    private List<String> checkNeedToRequirePermission(List<String> permissions) {
+        List<String> result = new ArrayList<>();
 
-			// 如果获得了基本存储权限，则允许执行
-			if (perms.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-				startUp();
-				return;
-			}
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                result.add(permission);
+            }
+        }
 
-			String msg = "需要存储权限来保存你的学习数据，否则将无法正常使用扇贝听力";
-			AlertDialog dialog = new AlertDialog.Builder(this).setMessage(msg)
-					.setPositiveButton("去设置", new DialogInterface.OnClickListener() {
+        return result;
+    }
 
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							try {
-								Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-								Uri uri = Uri.fromParts("package", getPackageName(), null);
-								intent.setData(uri);
-								startActivity(intent);
-							} catch (Exception e) {
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (REQUEST_CODE_ASK_RUNTIME_PERMISSIONS == requestCode) {
+            Map<String, Integer> perms = new HashMap<String, Integer>();
+            perms.put(Manifest.permission.READ_PHONE_STATE, PackageManager.PERMISSION_GRANTED);
+            perms.put(Manifest.permission.WRITE_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
+            for (int i = 0; i < permissions.length; i++) {
+                perms.put(permissions[i], grantResults[i]);
+            }
 
-							}
-						}
-					}).create();
-			dialog.setCanceledOnTouchOutside(false);
-			dialog.show();
+            // 如果获得了基本存储权限，则允许执行
+            if (perms.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                startUp();
+                return;
+            }
 
-		} else {
-			super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		}
-	}
+            String msg = "需要存储权限来保存你的学习数据，否则将无法正常使用扇贝听力";
+            AlertDialog dialog = new AlertDialog.Builder(this).setMessage(msg)
+                    .setPositiveButton("去设置", new DialogInterface.OnClickListener() {
 
-	@Override
-	protected int contentId() {
-		return R.layout.activity_splash;
-	}
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            try {
+                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                                intent.setData(uri);
+                                startActivity(intent);
+                            } catch (Exception e) {
 
-	@Override
-	public void onBackPressed() {
-		finish();
-	}
+                            }
+                        }
+                    }).create();
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
+
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    @Override
+    protected int contentId() {
+        return R.layout.activity_splash;
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

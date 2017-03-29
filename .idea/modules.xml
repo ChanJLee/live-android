@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/android_live.iml" filepath="$PROJECT_DIR$/android_live.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/danmaku/danmaku.iml" filepath="$PROJECT_DIR$/danmaku/danmaku.iml" />
-      <module fileurl="file://$PROJECT_DIR$/danmaku/danmuku.iml" filepath="$PROJECT_DIR$/danmaku/danmuku.iml" />
       <module fileurl="file://$PROJECT_DIR$/loadingrecyclerview/loadingrecyclerview.iml" filepath="$PROJECT_DIR$/loadingrecyclerview/loadingrecyclerview.iml" />
       <module fileurl="file://$PROJECT_DIR$/media/media.iml" filepath="$PROJECT_DIR$/media/media.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvp/mvp.iml" filepath="$PROJECT_DIR$/mvp/mvp.iml" />

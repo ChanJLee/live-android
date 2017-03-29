@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="asmack-android-6">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/xmpp/libs/asmack-android-6.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
