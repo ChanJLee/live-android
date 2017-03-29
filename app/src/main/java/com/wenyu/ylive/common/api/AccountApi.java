@@ -1,8 +1,8 @@
-package com.wenyu.ylive.net.api;
+package com.wenyu.ylive.common.api;
 
 import com.google.gson.JsonElement;
 import com.wenyu.network.YResponse;
-import com.wenyu.ylive.net.model.User;
+import com.wenyu.ylive.common.bean.User;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

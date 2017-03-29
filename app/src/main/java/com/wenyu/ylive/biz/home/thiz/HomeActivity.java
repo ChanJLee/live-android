@@ -1,4 +1,4 @@
-package com.wenyu.ylive.biz.home;
+package com.wenyu.ylive.biz.home.thiz;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,13 +6,25 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
+import com.wenyu.apt.annotations.MvpPresenter;
+import com.wenyu.apt.annotations.MvpView;
 import com.wenyu.ylive.R;
 import com.wenyu.ylive.base.YLiveActivity;
+import com.wenyu.ylive.biz.home.thiz.inject.HomeComponent;
+import com.wenyu.ylive.biz.home.thiz.inject.HomeModule;
+import com.wenyu.ylive.biz.home.thiz.presenter.HomePresenterImpl;
+import com.wenyu.ylive.biz.home.thiz.view.HomeViewImpl;
 
 public class HomeActivity extends YLiveActivity {
 	private static final long MIN_DURATION = 2000;
 
 	private long mLastClickedTimePoint = 0;
+
+	@MvpPresenter(module = HomeModule.class, component = HomeComponent.class)
+	HomePresenterImpl mHomePresenter;
+
+	@MvpView
+	HomeViewImpl mHomeView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

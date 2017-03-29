@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.wenyu.ylive.net.model.User;
+import com.wenyu.ylive.common.bean.User;
 
 /**
  * Created by jiacheng.li on 17/3/18.

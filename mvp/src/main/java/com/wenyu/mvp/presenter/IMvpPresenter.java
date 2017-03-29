@@ -9,13 +9,10 @@ import com.wenyu.mvp.view.IMvpView;
  * All rights reserved.
  */
 public interface IMvpPresenter<V extends IMvpView, M extends IMvpModel> {
-	void setView(V view);
 
 	V getView();
 
 	M getModel();
-
-	void setModel(M model);
 
 	void attach();
 

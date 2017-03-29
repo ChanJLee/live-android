@@ -4,14 +4,14 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
-import java.util.EventListener;
+import com.wenyu.mvp.presenter.MvpEventListener;
 
 /**
  * Created by jiacheng.li on 17/3/7.
  * Copyright © 2016年 扇贝网(shanbay.com).
  * All rights reserved.
  */
-public abstract class BaseMvpView<E extends EventListener> implements IMvpView<E> {
+public abstract class BaseMvpView<E extends MvpEventListener> implements IMvpView<E> {
 	protected Activity mActivity;
 	private E mEventListener;
 
@@ -32,5 +32,10 @@ public abstract class BaseMvpView<E extends EventListener> implements IMvpView<E
 	@Override
 	public void showToast(String message) {
 		Toast.makeText(mActivity, message, Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void setVisibility(boolean visible) {
+
 	}
 }

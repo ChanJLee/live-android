@@ -1,4 +1,4 @@
-package com.wenyu.ylive.biz.home.adapter;
+package com.wenyu.ylive.biz.home.thiz.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

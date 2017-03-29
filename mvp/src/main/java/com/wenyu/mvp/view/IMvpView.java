@@ -2,21 +2,20 @@ package com.wenyu.mvp.view;
 
 import android.app.Activity;
 
-import java.util.EventListener;
+import com.wenyu.mvp.presenter.MvpEventListener;
+
 
 /**
  * Created by jiacheng.li on 17/1/22.
  * Copyright © 2016年 扇贝网(shanbay.com).
  * All rights reserved.
  */
-public interface IMvpView<E extends EventListener> {
-	void getEventListener(E e);
+public interface IMvpView<E extends MvpEventListener> {
+    void getEventListener(E e);
 
-	void onAttach();
+    void setVisibility(boolean visible);
 
-	void onDetach();
+    Activity getActivity();
 
-	Activity getActivity();
-
-	void showToast(String message);
+    void showToast(String message);
 }

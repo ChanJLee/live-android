@@ -3,11 +3,8 @@ package com.wenyu.mvp.presenter;
 import com.wenyu.mvp.model.IMvpModel;
 import com.wenyu.mvp.view.IMvpView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import rx.Subscription;
-import rx.subscriptions.CompositeSubscription;
+import rx.internal.util.SubscriptionList;
 
 /**
  * Created by jiacheng.li on 17/1/22.
@@ -17,30 +14,29 @@ import rx.subscriptions.CompositeSubscription;
 public abstract class BaseMvpPresenter<V extends IMvpView, M extends IMvpModel> implements IMvpPresenter<V, M> {
 	private V mView;
 	private M mModel;
-	private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
+	private SubscriptionList mSubscriptionList = new SubscriptionList();
 
-	@Override
-	final public void setView(V view) {
+	public BaseMvpPresenter(V view, M model) {
 		mView = view;
-	}
-
-	@Override
-	final public void setModel(M model) {
 		mModel = model;
 	}
 
 	@Override
 	public void attach() {
-		mView.onAttach();
+		onAttach();
 	}
 
 	@Override
 	public void detach() {
-		if (!mCompositeSubscription.isUnsubscribed()) {
-			mCompositeSubscription.unsubscribe();
-		}
-		mView.onDetach();
+        onDetach();
+        if (mSubscriptionList.hasSubscriptions() && !mSubscriptionList.isUnsubscribed()) {
+            mSubscriptionList.unsubscribe();
+        }
 	}
+
+	protected abstract void onAttach();
+
+    protected abstract void onDetach();
 
 	@Override
 	public M getModel() {
@@ -54,7 +50,7 @@ public abstract class BaseMvpPresenter<V extends IMvpView, M extends IMvpModel> 
 
 	protected void add(Subscription subscription) {
 		if (subscription != null) {
-			mCompositeSubscription.add(subscription);
+            mSubscriptionList.add(subscription);
 		}
 	}
 }

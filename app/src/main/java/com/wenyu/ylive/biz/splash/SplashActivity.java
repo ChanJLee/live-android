@@ -16,7 +16,7 @@ import android.view.WindowManager;
 
 import com.wenyu.ylive.R;
 import com.wenyu.ylive.base.YLiveActivity;
-import com.wenyu.ylive.biz.home.HomeActivity;
+import com.wenyu.ylive.biz.home.thiz.HomeActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;

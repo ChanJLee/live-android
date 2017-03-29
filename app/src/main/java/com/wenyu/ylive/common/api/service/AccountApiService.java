@@ -1,4 +1,4 @@
-package com.wenyu.ylive.net.api.service;
+package com.wenyu.ylive.common.api.service;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -6,8 +6,8 @@ import android.support.annotation.NonNull;
 import com.google.gson.JsonElement;
 import com.wenyu.network.BaseApiService;
 import com.wenyu.ylive.BuildConfig;
-import com.wenyu.ylive.net.api.AccountApi;
-import com.wenyu.ylive.net.model.User;
+import com.wenyu.ylive.common.api.AccountApi;
+import com.wenyu.ylive.common.bean.User;
 import com.wenyu.ylive.utils.AppClient;
 
 import rx.Observable;

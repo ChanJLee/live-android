@@ -174,14 +174,15 @@ public class CodeGenerator {
 		stringBuilder.append("= new ");
 		stringBuilder.append(mPresenterElement.type);
 
+		stringBuilder.append("(o.");
+		stringBuilder.append(mViewElement.fieldName);
+		stringBuilder.append(",");
 		if (mModelElement == null) {
-			stringBuilder.append("(null");
+			stringBuilder.append("null");
 		} else {
-			stringBuilder.append("(o.");
+			stringBuilder.append("o.");
 			stringBuilder.append(mModelElement.fieldName);
 		}
-		stringBuilder.append(", o.");
-		stringBuilder.append(mViewElement.fieldName);
 		stringBuilder.append(");");
 
 		//结尾
