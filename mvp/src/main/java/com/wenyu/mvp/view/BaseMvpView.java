@@ -6,6 +6,8 @@ import android.widget.Toast;
 
 import com.wenyu.mvp.presenter.MvpEventListener;
 
+import javax.inject.Inject;
+
 /**
  * Created by jiacheng.li on 17/3/7.
  * Copyright © 2016年 扇贝网(shanbay.com).

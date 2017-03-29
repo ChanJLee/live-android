@@ -138,10 +138,12 @@ public class CodeGenerator {
 		stringBuilder.append("public static void inject(");
 		stringBuilder.append(mPresenterElement.enclosingClazzName);
 		stringBuilder.append(" o");
+		stringBuilder.append(",");
 		if (mPresenterElement.dependency != null) {
-			stringBuilder.append(",");
 			stringBuilder.append(mPresenterElement.dependency.getCanonicalName());
 			stringBuilder.append(" o1");
+		} else {
+			stringBuilder.append("Object o1");
 		}
 		stringBuilder.append("){");
 
