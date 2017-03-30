@@ -7,7 +7,7 @@ import com.wenyu.mvp.view.IMvpView;
  * Created by chan on 17/3/29.
  */
 
-public interface IHomeView extends IMvpView {
+public interface IHomeView extends IMvpView<MvpEventListener> {
     void goToBroadcast();
 
     void goToRegisterAnchor();
