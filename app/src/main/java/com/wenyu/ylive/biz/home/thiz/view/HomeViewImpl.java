@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.wenyu.mvp.view.BaseMvpView;
+import com.wenyu.mvp.presenter.MvpEventListener;
 
 import javax.inject.Inject;
 
@@ -11,7 +12,7 @@ import javax.inject.Inject;
  * Created by chan on 17/3/29.
  */
 
-public class HomeViewImpl extends BaseMvpView implements IHomeView {
+public class HomeViewImpl extends BaseMvpView<MvpEventListener> implements IHomeView<MvpEventListener> {
 
     @Inject
     public HomeViewImpl(@NonNull Activity activity) {
