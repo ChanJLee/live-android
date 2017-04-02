@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.wenyu.mvp.annotation.UserScope;
-import com.wenyu.ylive.biz.home.main.presenter.HomeMainPresenter;
 import com.wenyu.ylive.biz.home.thiz.presenter.HomePresenterImpl;
 
 import dagger.Module;
