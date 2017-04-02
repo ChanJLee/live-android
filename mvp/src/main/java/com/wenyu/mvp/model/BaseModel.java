@@ -8,9 +8,4 @@ import android.app.Application;
  * All rights reserved.
  */
 public abstract class BaseModel implements IMvpModel {
-	protected Application mApplication;
-
-	public BaseModel(Application application) {
-		mApplication = application;
-	}
 }

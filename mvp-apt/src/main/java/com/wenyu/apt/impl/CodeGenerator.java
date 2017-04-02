@@ -1,6 +1,7 @@
 package com.wenyu.apt.impl;
 
 import com.wenyu.apt.annotations.MvpPresenter;
+import com.wenyu.apt.element.Bundle;
 import com.wenyu.apt.element.Clazz;
 import com.wenyu.apt.element.ModelElement;
 import com.wenyu.apt.element.PresenterElement;
@@ -9,6 +10,7 @@ import com.wenyu.apt.utils.ClazzMapUtils;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -19,6 +21,7 @@ import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.AnnotationValue;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
 import javax.tools.Diagnostic;
@@ -39,18 +42,12 @@ public class CodeGenerator {
 	 */
 	private Messager mMessager;
 
-	/**
-	 * APT生成代码所在的包名
-	 */
-	private String mPackage;
-
-	private PresenterElement mPresenterElement;
-	private ViewElement mViewElement;
-	private ModelElement mModelElement;
+	private Map<Element, Bundle> mTypeElementBundleMap;
 
 	public CodeGenerator(Filer filer, Messager messager) {
 		mFiler = filer;
 		mMessager = messager;
+		mTypeElementBundleMap = new HashMap<>();
 	}
 
 	public void generate(Set<? extends Element> presenterSet, Set<? extends Element> modelSet, Set<? extends Element> viewSet) throws IOException {
@@ -61,73 +58,94 @@ public class CodeGenerator {
 	}
 
 	private void parsePresenter(Set<? extends Element> presenterSet) {
-		Iterator<? extends Element> iterator = presenterSet.iterator();
-		VariableElement variableElement = (VariableElement) iterator.next();
 
-		for (AnnotationMirror annotationMirror : variableElement.getAnnotationMirrors()) {
-			if (MvpPresenter.class.getCanonicalName().equals(annotationMirror.getAnnotationType().toString())) {
-				Map<? extends ExecutableElement, ? extends AnnotationValue> elementValues = annotationMirror.getElementValues();
-				TypeMirror mirror = variableElement.asType();
-				mPresenterElement = new PresenterElement(variableElement.getSimpleName().toString(), variableElement.getEnclosingElement().toString(), mirror.toString());
-				for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : elementValues.entrySet()) {
+		for (Element aPresenterSet : presenterSet) {
+			VariableElement variableElement = (VariableElement) aPresenterSet;
 
-					String key = entry.getKey().getSimpleName().toString();
-					if ("module".equals(key)) {
-						mPresenterElement.module = new Clazz(entry.getValue().toString());
-					} else if ("component".equals(key)) {
-						mPresenterElement.component = new Clazz(entry.getValue().toString());
-					} else if ("dependency".equals(key)) {
-						mPresenterElement.dependency = new Clazz(entry.getValue().toString());
+			PresenterElement presenterElement = null;
+			for (AnnotationMirror annotationMirror : variableElement.getAnnotationMirrors()) {
+				if (MvpPresenter.class.getCanonicalName().equals(annotationMirror.getAnnotationType().toString())) {
+					Map<? extends ExecutableElement, ? extends AnnotationValue> elementValues = annotationMirror.getElementValues();
+					TypeMirror mirror = variableElement.asType();
+					presenterElement = new PresenterElement(variableElement.getSimpleName().toString(), variableElement.getEnclosingElement().toString(), mirror.toString());
+					for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : elementValues.entrySet()) {
+
+						String key = entry.getKey().getSimpleName().toString();
+						if ("module".equals(key)) {
+							presenterElement.module = new Clazz(entry.getValue().toString());
+						} else if ("component".equals(key)) {
+							presenterElement.component = new Clazz(entry.getValue().toString());
+						} else if ("dependency".equals(key)) {
+							presenterElement.dependency = new Clazz(entry.getValue().toString());
+						}
 					}
 				}
 			}
-		}
 
-		Element element = variableElement.getEnclosingElement();
-		while (element != null && element.getEnclosingElement() != null) {
-			mPackage = element.toString();
-			element = element.getEnclosingElement();
-		}
+			String packageName = null;
+			Element element = variableElement.getEnclosingElement();
+			while (element != null && element.getEnclosingElement() != null) {
+				packageName = element.toString();
+				element = element.getEnclosingElement();
+			}
 
-		mPackage = mPackage.substring(0, mPackage.lastIndexOf("."));
+			packageName = packageName.substring(0, packageName.lastIndexOf("."));
+
+			Bundle bundle = getBundle(variableElement.getEnclosingElement());
+			bundle.mPackageName = packageName;
+			bundle.mPresenterElement = presenterElement;
+		}
 	}
 
 	private void parseModel(Set<? extends Element> modelSet) {
-		Iterator<? extends Element> iterator = modelSet.iterator();
-		if (!iterator.hasNext()) {
-			return;
-		}
 
-		VariableElement variableElement = (VariableElement) iterator.next();
-		TypeMirror mirror = variableElement.asType();
-		mModelElement = new ModelElement(variableElement.getSimpleName().toString(), variableElement.getEnclosingElement().toString(), mirror.toString());
+		for (Element aModelSet : modelSet) {
+			VariableElement variableElement = (VariableElement) aModelSet;
+			TypeMirror mirror = variableElement.asType();
+			ModelElement modelElement = new ModelElement(variableElement.getSimpleName().toString(), variableElement.getEnclosingElement().toString(), mirror.toString());
+			Bundle bundle = getBundle(variableElement.getEnclosingElement());
+			bundle.mModelElement = modelElement;
+		}
 	}
 
 	private void parseView(Set<? extends Element> viewSet) {
-		Iterator<? extends Element> iterator = viewSet.iterator();
-		VariableElement variableElement = (VariableElement) iterator.next();
-		TypeMirror mirror = variableElement.asType();
-		mViewElement = new ViewElement(variableElement.getSimpleName().toString(), variableElement.getEnclosingElement().toString(), mirror.toString());
+		for (Element aViewSet : viewSet) {
+			VariableElement variableElement = (VariableElement) aViewSet;
+			TypeMirror mirror = variableElement.asType();
+			ViewElement viewElement = new ViewElement(variableElement.getSimpleName().toString(), variableElement.getEnclosingElement().toString(), mirror.toString());
+			Bundle bundle = getBundle(variableElement.getEnclosingElement());
+			mMessager.printMessage(Diagnostic.Kind.NOTE, "view-> " + variableElement.getSimpleName());
+			bundle.mViewElement = viewElement;
+		}
 	}
 
 	public void generate() throws IOException {
-		//指定java文件写入的位置
-		String clazzName = ClazzMapUtils.getClazzName(mPresenterElement.enclosingClazzName);
-		JavaFileObject javaFileObject = mFiler.createSourceFile(mPackage + "." + clazzName);
 
-		//开始写文件
-		Writer writer = javaFileObject.openWriter();
-		writer.write(generateSourceCode(mPackage, clazzName));
-		writer.flush();
-		writer.close();
+		for (Bundle bundle : mTypeElementBundleMap.values()) {
+
+			mMessager.printMessage(Diagnostic.Kind.NOTE, bundle.mPackageName + ">>package");
+			mMessager.printMessage(Diagnostic.Kind.NOTE, bundle.mPresenterElement + ">>presenter");
+			mMessager.printMessage(Diagnostic.Kind.NOTE, bundle.mModelElement + ">>model");
+			mMessager.printMessage(Diagnostic.Kind.NOTE, bundle.mViewElement + ">>view");
+
+			//指定java文件写入的位置
+			String clazzName = ClazzMapUtils.getClazzName(bundle.mPresenterElement.enclosingClazzName);
+			JavaFileObject javaFileObject = mFiler.createSourceFile(bundle.mPackageName + "." + clazzName);
+
+			//开始写文件
+			Writer writer = javaFileObject.openWriter();
+			writer.write(generateSourceCode(bundle, clazzName));
+			writer.flush();
+			writer.close();
+		}
 	}
 
 
-	private String generateSourceCode(String packageName, String clazzName) {
+	private String generateSourceCode(Bundle bundle, String clazzName) {
 
 		//包
 		StringBuilder stringBuilder = new StringBuilder("package ");
-		stringBuilder.append(packageName);
+		stringBuilder.append(bundle.mPackageName);
 		stringBuilder.append(";\n");
 
 
@@ -136,18 +154,18 @@ public class CodeGenerator {
 		stringBuilder.append("{");
 
 		stringBuilder.append("public static void inject(");
-		stringBuilder.append(mPresenterElement.enclosingClazzName);
+		stringBuilder.append(bundle.mPresenterElement.enclosingClazzName);
 		stringBuilder.append(" o");
 		stringBuilder.append(",");
-		if (mPresenterElement.dependency != null) {
-			stringBuilder.append(mPresenterElement.dependency.getCanonicalName());
+		if (bundle.mPresenterElement.dependency != null) {
+			stringBuilder.append(bundle.mPresenterElement.dependency.getCanonicalName());
 			stringBuilder.append(" o1");
 		} else {
 			stringBuilder.append("Object o1");
 		}
 		stringBuilder.append("){");
 
-		String daggerComponentName = mPresenterElement.component.getPackage() + ".Dagger" + mPresenterElement.component.getSimpleName();
+		String daggerComponentName = bundle.mPresenterElement.component.getPackage() + ".Dagger" + bundle.mPresenterElement.component.getSimpleName();
 		String builderName = daggerComponentName + ".Builder";
 
 		stringBuilder.append(builderName);
@@ -156,40 +174,49 @@ public class CodeGenerator {
 		stringBuilder.append(".builder();\n");
 
 
-		stringBuilder.append(mPresenterElement.component.getCanonicalName());
+		stringBuilder.append(bundle.mPresenterElement.component.getCanonicalName());
 		stringBuilder.append(" component = builder.");
-		stringBuilder.append(simpleName2FunctionName(mPresenterElement.module.getSimpleName()));
+		stringBuilder.append(simpleName2FunctionName(bundle.mPresenterElement.module.getSimpleName()));
 		stringBuilder.append("(new ");
-		stringBuilder.append(mPresenterElement.module.getCanonicalName());
+		stringBuilder.append(bundle.mPresenterElement.module.getCanonicalName());
 		stringBuilder.append("(o))");
-		if (mPresenterElement.dependency != null) {
-			mMessager.printMessage(Diagnostic.Kind.NOTE, "dependency not null");
+		if (bundle.mPresenterElement.dependency != null) {
 			stringBuilder.append(".");
-			stringBuilder.append(simpleName2FunctionName(mPresenterElement.dependency.getSimpleName()));
+			stringBuilder.append(simpleName2FunctionName(bundle.mPresenterElement.dependency.getSimpleName()));
 			stringBuilder.append("(o1)");
 		}
 		stringBuilder.append(".build();");
 
 		stringBuilder.append("component.inject(o);");
 		stringBuilder.append("o.");
-		stringBuilder.append(mPresenterElement.fieldName);
+		stringBuilder.append(bundle.mPresenterElement.fieldName);
 		stringBuilder.append("= new ");
-		stringBuilder.append(mPresenterElement.type);
+		stringBuilder.append(bundle.mPresenterElement.type);
 
 		stringBuilder.append("(o.");
-		stringBuilder.append(mViewElement.fieldName);
+		stringBuilder.append(bundle.mViewElement.fieldName);
 		stringBuilder.append(",");
-		if (mModelElement == null) {
+		if (bundle.mModelElement == null) {
 			stringBuilder.append("null");
 		} else {
 			stringBuilder.append("o.");
-			stringBuilder.append(mModelElement.fieldName);
+			stringBuilder.append(bundle.mModelElement.fieldName);
 		}
 		stringBuilder.append(");");
 
 		//结尾
 		stringBuilder.append("}}");
 		return stringBuilder.toString();
+	}
+
+	private Bundle getBundle(Element encloseElement) {
+		Bundle bundle = mTypeElementBundleMap.get(encloseElement);
+		if (bundle == null) {
+			bundle = new Bundle();
+			mTypeElementBundleMap.put(encloseElement, bundle);
+		}
+
+		return bundle;
 	}
 
 	public static String simpleName2FunctionName(String simpleName) {

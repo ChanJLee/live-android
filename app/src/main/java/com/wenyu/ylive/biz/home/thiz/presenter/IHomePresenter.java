@@ -9,4 +9,5 @@ import com.wenyu.ylive.biz.home.thiz.view.IHomeView;
  */
 
 public interface IHomePresenter extends IMvpPresenter<IHomeView, IMvpModel> {
+    void init();
 }

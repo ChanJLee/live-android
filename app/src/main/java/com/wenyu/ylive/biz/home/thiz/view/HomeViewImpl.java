@@ -12,7 +12,7 @@ import javax.inject.Inject;
  * Created by chan on 17/3/29.
  */
 
-public class HomeViewImpl extends BaseMvpView<MvpEventListener> implements IHomeView<MvpEventListener> {
+public class HomeViewImpl extends BaseMvpView<MvpEventListener> implements IHomeView {
 
     @Inject
     public HomeViewImpl(@NonNull Activity activity) {

@@ -57,6 +57,8 @@ dependencies {
     provided "org.glassfish:javax.annotation:${rootProject.ext.javaxAnnotationVersion}"
     compile "com.google.dagger:dagger:${rootProject.ext.daggerVersion}"
 
+    compile "com.jakewharton:butterknife:${rootProject.ext.butterKnifeVersion}"
+
     compile project(':mvp')
     compile project(':network')
     compile project(':mvp-apt')

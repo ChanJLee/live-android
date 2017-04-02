@@ -62,4 +62,6 @@ ext {
     serverIPAddress = "192.168.1.102"
     serverHttpPort = "8000"
     serverRTMPPort = "1396"
+
+    butterKnifeVersion = "7.0.1"
 }

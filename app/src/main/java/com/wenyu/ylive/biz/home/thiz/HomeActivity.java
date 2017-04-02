@@ -39,6 +39,8 @@ public class HomeActivity extends YLiveActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(false);
         }
+
+        mHomePresenter.init();
     }
 
     @Override
