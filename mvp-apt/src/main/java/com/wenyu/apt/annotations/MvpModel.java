@@ -17,4 +17,5 @@ import java.lang.annotation.Target;
 @Inherited
 @Target(ElementType.FIELD)
 public @interface MvpModel {
+    String tag() default "";
 }

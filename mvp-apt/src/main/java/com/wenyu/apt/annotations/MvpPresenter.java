@@ -17,7 +17,11 @@ import java.lang.annotation.Target;
 @Inherited
 @Target(ElementType.FIELD)
 public @interface MvpPresenter {
-	Class<?> component();
-	Class<?> module();
-	Class<?> dependency() default Void.class;
+    Class<?> component();
+
+    Class<?> module();
+
+    Class<?> dependency() default Void.class;
+
+    String tag() default "";
 }

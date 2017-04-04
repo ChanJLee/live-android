@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.wenyu.mvp.annotation.ActivityScope;
 import com.wenyu.ylive.biz.home.thiz.HomeActivity;
+import com.wenyu.ylive.common.api.service.AccountApiService;
 
 import dagger.Module;
 import dagger.Provides;

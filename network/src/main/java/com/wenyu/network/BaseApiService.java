@@ -15,47 +15,53 @@ import rx.functions.Func1;
  */
 public class BaseApiService<API> {
 
-	public static final int CODE_EXCEPTION = 0x300;
-	public static final int CODE_NO_AUTHENTICATION = 0x400;
-	public static final int CODE_OK = 0x200;
+    public static final int CODE_EXCEPTION = 0x300;
+    public static final int CODE_NO_AUTHENTICATION = 0x400;
+    public static final int CODE_OK = 0x200;
 
-	private API mAPI;
+    private API mAPI;
+    private Context mContext;
 
-	public BaseApiService(Context context, String domain, Class<API> apiClass) {
-		mAPI = YLiveClient.getYLiveClient(context, domain).getCore().create(apiClass);
-	}
+    public BaseApiService(Context context, String domain, Class<API> apiClass) {
+        mContext = context;
+        mAPI = YLiveClient.getYLiveClient(context, domain).getCore().create(apiClass);
+    }
 
-	protected API getAPI() {
-		return mAPI;
-	}
+    protected API getAPI() {
+        return mAPI;
+    }
 
-	protected <T> Observable<T> convert(Observable<YResponse<T>> response) {
-		return response.onErrorResumeNext(
-				new Func1<Throwable, Observable<? extends YResponse<T>>>() {
-					@Override
-					public Observable<? extends YResponse<T>> call(Throwable throwable) {
+    protected Context getContext() {
+        return mContext;
+    }
 
-						if (throwable instanceof ConnectException) {
-							return Observable.error(new YLiveException(CODE_EXCEPTION, "网络异常"));
-						}
+    protected <T> Observable<T> convert(Observable<YResponse<T>> response) {
+        return response.onErrorResumeNext(
+                new Func1<Throwable, Observable<? extends YResponse<T>>>() {
+                    @Override
+                    public Observable<? extends YResponse<T>> call(Throwable throwable) {
 
-						if (throwable instanceof HttpException) {
-							return Observable.error(new YLiveException(CODE_EXCEPTION, "Bad Request"));
-						}
+                        if (throwable instanceof ConnectException) {
+                            return Observable.error(new YLiveException(CODE_EXCEPTION, "网络异常"));
+                        }
 
-						return Observable.error(new YLiveException(CODE_EXCEPTION, "未知错误"));
-					}
-				})
-				.flatMap(new Func1<YResponse<T>, Observable<T>>() {
-					@Override
-					public Observable<T> call(YResponse<T> response) {
+                        if (throwable instanceof HttpException) {
+                            return Observable.error(new YLiveException(CODE_EXCEPTION, "Bad Request"));
+                        }
 
-						if (response.statusCode != CODE_OK) {
-							return Observable.error(new YLiveException(response.statusCode, response.message));
-						}
+                        return Observable.error(new YLiveException(CODE_EXCEPTION, "未知错误"));
+                    }
+                })
+                .flatMap(new Func1<YResponse<T>, Observable<T>>() {
+                    @Override
+                    public Observable<T> call(YResponse<T> response) {
 
-						return Observable.just(response.data);
-					}
-				});
-	}
+                        if (response.statusCode != CODE_OK) {
+                            return Observable.error(new YLiveException(response.statusCode, response.message));
+                        }
+
+                        return Observable.just(response.data);
+                    }
+                });
+    }
 }

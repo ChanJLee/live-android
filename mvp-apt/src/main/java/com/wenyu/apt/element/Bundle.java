@@ -5,6 +5,7 @@ package com.wenyu.apt.element;
  */
 
 public class Bundle {
+    public String mTag;
     public String mPackageName;
     public ModelElement mModelElement;
     public PresenterElement mPresenterElement;
