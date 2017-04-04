@@ -40,7 +40,14 @@ public class HomeActivity extends YLiveActivity {
             actionBar.setDisplayHomeAsUpEnabled(false);
         }
 
+        mHomePresenter.attach();
         mHomePresenter.init();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mHomePresenter.detach();
+        super.onDestroy();
     }
 
     @Override

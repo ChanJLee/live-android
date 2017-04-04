@@ -11,9 +11,11 @@ import com.wenyu.mvp.presenter.MvpEventListener;
  * All rights reserved.
  */
 public interface IMvpView<E extends MvpEventListener> {
-    void getEventListener(E e);
+    E getEventListener();
 
     void setVisibility(boolean visible);
+
+    void setEventListener(E listener);
 
     Activity getActivity();
 

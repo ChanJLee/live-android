@@ -9,11 +9,13 @@ import com.wenyu.mvp.presenter.BaseMvpPresenter;
 import com.wenyu.ylive.biz.home.main.inject.HomeMainComponent;
 import com.wenyu.ylive.biz.home.main.inject.HomeMainModule;
 import com.wenyu.ylive.biz.home.main.model.HomeMainModelImpl;
+import com.wenyu.ylive.biz.home.main.presenter.HomeMainEventListener;
 import com.wenyu.ylive.biz.home.main.presenter.HomeMainPresenter;
 import com.wenyu.ylive.biz.home.main.view.HomeMainViewImpl;
 import com.wenyu.ylive.biz.home.nav.inject.HomeNavComponent;
 import com.wenyu.ylive.biz.home.nav.inject.HomeNavModule;
 import com.wenyu.ylive.biz.home.nav.model.HomeNavModelImpl;
+import com.wenyu.ylive.biz.home.nav.presenter.HomeNavEventListener;
 import com.wenyu.ylive.biz.home.nav.presenter.HomeNavPresenterImpl;
 import com.wenyu.ylive.biz.home.nav.view.HomeNavViewImpl;
 import com.wenyu.ylive.biz.home.thiz.view.IHomeView;
@@ -55,13 +57,23 @@ public class HomePresenterImpl extends BaseMvpPresenter<IHomeView, IMvpModel> im
     @Override
     protected void onAttach() {
         MvpInjector.inject(this);
+        mHomeNavView.setEventListener(new HomeNavEventListener() {
+
+        });
+
+        mHomeMainView.setEventListener(new HomeMainEventListener() {
+        });
     }
 
     @Override
     public void onDetach() {
-//        mHomeMainPresenter = null;
-//        mHomeMainView = null;
-//        mHomeMainModel = null;
+        mHomeMainPresenter = null;
+        mHomeMainView = null;
+        mHomeMainModel = null;
+
+        mHomeNavPresenter = null;
+        mHomeNavView = null;
+        mHomeNavModel = null;
     }
 
     @Override

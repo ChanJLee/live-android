@@ -14,30 +14,35 @@ import javax.inject.Inject;
  * All rights reserved.
  */
 public abstract class BaseMvpView<E extends MvpEventListener> implements IMvpView<E> {
-	protected Activity mActivity;
-	private E mEventListener;
+    protected Activity mActivity;
+    private E mEventListener;
 
-	public BaseMvpView(@NonNull Activity activity) {
-		mActivity = activity;
-	}
+    public BaseMvpView(@NonNull Activity activity) {
+        mActivity = activity;
+    }
 
-	@Override
-	public void getEventListener(E eventListener) {
-		mEventListener = eventListener;
-	}
+    @Override
+    public void setEventListener(E eventListener) {
+        mEventListener = eventListener;
+    }
 
-	@Override
-	public Activity getActivity() {
-		return mActivity;
-	}
+    @Override
+    public Activity getActivity() {
+        return mActivity;
+    }
 
-	@Override
-	public void showToast(String message) {
-		Toast.makeText(mActivity, message, Toast.LENGTH_SHORT).show();
-	}
+    @Override
+    public void showToast(String message) {
+        Toast.makeText(mActivity, message, Toast.LENGTH_SHORT).show();
+    }
 
-	@Override
-	public void setVisibility(boolean visible) {
+    @Override
+    public E getEventListener() {
+        return mEventListener;
+    }
 
-	}
+    @Override
+    public void setVisibility(boolean visible) {
+
+    }
 }
