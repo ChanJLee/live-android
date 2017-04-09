@@ -1,23 +1,21 @@
 package com.wenyu.ylive.biz.home.thiz.presenter;
 
 import com.wenyu.apt.MvpInjector;
+import com.wenyu.apt.annotations.MvpInject;
 import com.wenyu.apt.annotations.MvpModel;
 import com.wenyu.apt.annotations.MvpPresenter;
 import com.wenyu.apt.annotations.MvpView;
 import com.wenyu.mvp.model.IMvpModel;
 import com.wenyu.mvp.presenter.BaseMvpPresenter;
-import com.wenyu.ylive.biz.home.main.inject.HomeMainComponent;
-import com.wenyu.ylive.biz.home.main.inject.HomeMainModule;
 import com.wenyu.ylive.biz.home.main.model.HomeMainModelImpl;
-import com.wenyu.ylive.biz.home.main.presenter.HomeMainEventListener;
 import com.wenyu.ylive.biz.home.main.presenter.HomeMainPresenter;
 import com.wenyu.ylive.biz.home.main.view.HomeMainViewImpl;
-import com.wenyu.ylive.biz.home.nav.inject.HomeNavComponent;
-import com.wenyu.ylive.biz.home.nav.inject.HomeNavModule;
 import com.wenyu.ylive.biz.home.nav.model.HomeNavModelImpl;
 import com.wenyu.ylive.biz.home.nav.presenter.HomeNavEventListener;
 import com.wenyu.ylive.biz.home.nav.presenter.HomeNavPresenterImpl;
 import com.wenyu.ylive.biz.home.nav.view.HomeNavViewImpl;
+import com.wenyu.ylive.biz.home.thiz.presenter.inject.HomePresenterComponent;
+import com.wenyu.ylive.biz.home.thiz.presenter.inject.HomePresenterModule;
 import com.wenyu.ylive.biz.home.thiz.view.IHomeView;
 
 import javax.inject.Inject;
@@ -25,14 +23,14 @@ import javax.inject.Inject;
 /**
  * Created by chan on 17/3/29.
  */
-
+@MvpInject(module = HomePresenterModule.class, component = HomePresenterComponent.class)
 public class HomePresenterImpl extends BaseMvpPresenter<IHomeView, IMvpModel> implements IHomePresenter {
 
     @MvpModel(tag = "main")
     @Inject
     HomeMainModelImpl mHomeMainModel;
 
-    @MvpPresenter(module = HomeMainModule.class, component = HomeMainComponent.class, tag = "main")
+    @MvpPresenter(tag = "main")
     HomeMainPresenter mHomeMainPresenter;
 
     @MvpView(tag = "main")
@@ -43,7 +41,7 @@ public class HomePresenterImpl extends BaseMvpPresenter<IHomeView, IMvpModel> im
     @MvpModel(tag = "nav")
     HomeNavModelImpl mHomeNavModel;
 
-    @MvpPresenter(module = HomeNavModule.class, component = HomeNavComponent.class, tag = "nav")
+    @MvpPresenter(tag = "nav")
     HomeNavPresenterImpl mHomeNavPresenter;
 
     @MvpView(tag = "nav")
@@ -60,20 +58,17 @@ public class HomePresenterImpl extends BaseMvpPresenter<IHomeView, IMvpModel> im
         mHomeNavView.setEventListener(new HomeNavEventListener() {
 
         });
-
-        mHomeMainView.setEventListener(new HomeMainEventListener() {
-        });
     }
 
     @Override
     public void onDetach() {
-        mHomeMainPresenter = null;
-        mHomeMainView = null;
-        mHomeMainModel = null;
-
-        mHomeNavPresenter = null;
-        mHomeNavView = null;
-        mHomeNavModel = null;
+//        mHomeMainPresenter = null;
+//        mHomeMainView = null;
+//        mHomeMainModel = null;
+//
+//        mHomeNavPresenter = null;
+//        mHomeNavView = null;
+//        mHomeNavModel = null;
     }
 
     @Override

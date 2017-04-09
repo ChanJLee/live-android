@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
 import com.wenyu.apt.MvpInjector;
+import com.wenyu.apt.annotations.MvpInject;
 import com.wenyu.apt.annotations.MvpPresenter;
 import com.wenyu.apt.annotations.MvpView;
 import com.wenyu.ylive.R;
@@ -18,12 +19,13 @@ import com.wenyu.ylive.biz.home.thiz.view.HomeViewImpl;
 
 import javax.inject.Inject;
 
+@MvpInject(module = HomeModule.class, component = HomeComponent.class)
 public class HomeActivity extends YLiveActivity {
     private static final long MIN_DURATION = 2000;
 
     private long mLastClickedTimePoint = 0;
 
-    @MvpPresenter(module = HomeModule.class, component = HomeComponent.class)
+    @MvpPresenter
     HomePresenterImpl mHomePresenter;
 
     @MvpView

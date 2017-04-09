@@ -1,5 +1,6 @@
 package com.wenyu.ylive.biz.home.nav.model;
 
+import com.wenyu.mvp.annotation.Tag;
 import com.wenyu.mvp.model.BaseModel;
 import com.wenyu.ylive.common.api.service.AccountApiService;
 
@@ -12,6 +13,6 @@ import javax.inject.Inject;
 public class HomeNavModelImpl extends BaseModel implements IHomeNavModel {
 
     @Inject
-    HomeNavModelImpl() {
+    public HomeNavModelImpl(AccountApiService accountApiService) {
     }
 }

@@ -1,5 +1,6 @@
 package com.wenyu.ylive.common.api.service;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -12,6 +13,8 @@ import com.wenyu.ylive.common.api.AccountApi;
 import com.wenyu.ylive.common.bean.User;
 import com.wenyu.ylive.utils.PreferenceUtils;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 
 /**
@@ -21,10 +24,11 @@ import rx.Observable;
  */
 public class AccountApiService extends BaseApiService<AccountApi> {
 
+    @SuppressLint("StaticFieldLeak")
     private static AccountApiService sAccountApiService;
 
-    public AccountApiService(Context context, String domain, @NonNull Class<AccountApi> accountApiClass) {
-        super(context, domain, accountApiClass);
+    private AccountApiService(Context context, String domain, @NonNull Class<AccountApi> accountApiClass) {
+        super(context, domain, AccountApi.class);
     }
 
     public static AccountApiService getAccountApiService(Context appContext) {

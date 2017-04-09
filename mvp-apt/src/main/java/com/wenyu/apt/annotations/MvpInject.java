@@ -8,14 +8,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by jiacheng.li on 17/1/22.
- * Copyright © 2016年 扇贝网(shanbay.com).
- * All rights reserved.
+ * Created by chan on 17/4/6.
  */
 @Documented
 @Retention(RetentionPolicy.SOURCE)
 @Inherited
-@Target(ElementType.FIELD)
-public @interface MvpPresenter {
-    String tag() default "";
+@Target(ElementType.TYPE)
+public @interface MvpInject {
+    Class<?> component();
+
+    Class<?> module();
+
+    Class<?> dependency() default Void.class;
 }
