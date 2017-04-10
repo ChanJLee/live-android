@@ -56,8 +56,8 @@ public class BaseApiService<API> {
                     @Override
                     public Observable<T> call(YResponse<T> response) {
 
-                        if (response.statusCode != CODE_OK) {
-                            return Observable.error(new YLiveException(response.statusCode, response.message));
+                        if (response.code != CODE_OK) {
+                            return Observable.error(new YLiveException(response.code, response.message));
                         }
 
                         return Observable.just(response.data);

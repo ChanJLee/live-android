@@ -6,7 +6,7 @@ package com.wenyu.network;
  * All rights reserved.
  */
 public class YResponse<T> {
-	public int statusCode;
+	public int code;
 	public String message;
 	public T data;
 }

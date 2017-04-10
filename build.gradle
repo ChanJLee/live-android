@@ -59,7 +59,7 @@ ext {
 
     ijkVersion = "0.7.5"
 
-    serverIPAddress = "192.168.1.108"
+    serverIPAddress = "192.168.1.103"
     serverHttpPort = "8000"
     serverRTMPPort = "1396"
 

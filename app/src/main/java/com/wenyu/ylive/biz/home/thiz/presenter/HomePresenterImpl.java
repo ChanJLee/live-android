@@ -55,9 +55,8 @@ public class HomePresenterImpl extends BaseMvpPresenter<IHomeView, IMvpModel> im
     @Override
     protected void onAttach() {
         MvpInjector.inject(this);
-        mHomeNavView.setEventListener(new HomeNavEventListener() {
-
-        });
+        mHomeNavPresenter.attach();
+        mHomeMainPresenter.attach();
     }
 
     @Override
@@ -73,6 +72,6 @@ public class HomePresenterImpl extends BaseMvpPresenter<IHomeView, IMvpModel> im
 
     @Override
     public void init() {
-
+        mHomeMainPresenter.init();
     }
 }

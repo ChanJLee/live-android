@@ -1,9 +1,5 @@
 package com.wenyu.network;
 
-import android.content.Context;
-
-import java.lang.ref.SoftReference;
-
 import rx.Subscriber;
 
 /**
@@ -12,18 +8,31 @@ import rx.Subscriber;
  * All rights reserved.
  */
 public abstract class YLiveBaseSubscriber<T> extends Subscriber<T> {
-	private SoftReference<Context> mContextSoftReference;
+    private T mData;
 
-	public YLiveBaseSubscriber(Context context) {
-		mContextSoftReference = new SoftReference<Context>(context);
-	}
+    @Override
+    public void onError(Throwable e) {
+        if (e instanceof YLiveException && ((YLiveException) e).isNoAuthentication()) {
+            onAuthFailed();
+            return;
+        }
 
-	@Override
-	public void onError(Throwable e) {
-		if (e instanceof YLiveException && ((YLiveException) e).isNoAuthentication()) {
-			onAuthFailed();
-		}
-	}
+        onResponseFailed(e);
+    }
 
-	public abstract void onAuthFailed();
+    @Override
+    public void onCompleted() {
+        onResponseSuccess(mData);
+    }
+
+    @Override
+    public void onNext(T t) {
+        mData = t;
+    }
+
+    public abstract void onAuthFailed();
+
+    public abstract void onResponseFailed(Throwable e);
+
+    public abstract void onResponseSuccess(T data);
 }

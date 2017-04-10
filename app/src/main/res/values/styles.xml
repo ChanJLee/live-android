@@ -8,6 +8,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowBackground">@color/base_bg_1</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">

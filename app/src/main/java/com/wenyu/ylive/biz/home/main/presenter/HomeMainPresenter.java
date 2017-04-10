@@ -4,6 +4,14 @@ import com.wenyu.apt.MvpInjector;
 import com.wenyu.mvp.presenter.BaseMvpPresenter;
 import com.wenyu.ylive.biz.home.main.model.IHomeMainModel;
 import com.wenyu.ylive.biz.home.main.view.IHomeMainView;
+import com.wenyu.ylive.common.bean.Room;
+import com.wenyu.ylive.common.listener.LoadingListenerCompat;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import rx.Observable;
+import rx.Subscription;
 
 /**
  * Created by chan on 17/4/2.
@@ -11,6 +19,52 @@ import com.wenyu.ylive.biz.home.main.view.IHomeMainView;
 
 public class HomeMainPresenter extends BaseMvpPresenter<IHomeMainView, IHomeMainModel> implements IHomeMainPresenter {
 
+    private int mCurrentCategory = IHomeMainModel.CATEGORY_SHOW;
+    private IHomeMainView mHomeMainView;
+    private LoadingListenerCompat<List<Room>> mDataLoadingListenerCompat = new LoadingListenerCompat<List<Room>>() {
+        @Override
+        public void addSubscription(Subscription subscription) {
+            add(subscription);
+        }
+
+        @Override
+        public Observable<List<Room>> requestData(int page) {
+            return getModel().fetchRoomList(mCurrentCategory, page);
+        }
+
+        @Override
+        public void handleRefreshSuccess(List<Room> data) {
+            List<IHomeMainView.Data> viewDataList = new ArrayList<>();
+            for (Room room : data) {
+                IHomeMainView.Data viewData = new IHomeMainView.Data();
+                viewData.anchor = room.anchor;
+                viewData.audienceCount = room.audienceCount;
+                viewData.snapshot = room.snapshot;
+                viewData.title = room.title;
+                viewDataList.add(viewData);
+            }
+            mHomeMainView.refresh(viewDataList);
+        }
+
+        @Override
+        public void handleLoadMoreSuccess(List<Room> data) {
+            List<IHomeMainView.Data> viewDataList = new ArrayList<>();
+            for (Room room : data) {
+                IHomeMainView.Data viewData = new IHomeMainView.Data();
+                viewData.anchor = room.anchor;
+                viewData.audienceCount = room.audienceCount;
+                viewData.snapshot = room.snapshot;
+                viewData.title = room.title;
+                viewDataList.add(viewData);
+            }
+            mHomeMainView.loadMore(viewDataList);
+        }
+
+        @Override
+        public int getDataCount(List<Room> data) {
+            return data.size();
+        }
+    };
 
     public HomeMainPresenter(IHomeMainView view, IHomeMainModel model) {
         super(view, model);
@@ -18,11 +72,17 @@ public class HomeMainPresenter extends BaseMvpPresenter<IHomeMainView, IHomeMain
 
     @Override
     protected void onAttach() {
-        MvpInjector.inject(this);
+        mHomeMainView = getView();
+        mHomeMainView.setLoadingListener(mDataLoadingListenerCompat);
     }
 
     @Override
     protected void onDetach() {
+        mHomeMainView = null;
+    }
 
+    @Override
+    public void init() {
+        mHomeMainView.renderLoading();
     }
 }

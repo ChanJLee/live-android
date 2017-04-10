@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_home_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,18 +10,24 @@
 
     <com.wenyu.loadingrecyclerview.LoadingRecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_weight="1"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/home_main_recycler_view"
+        android:paddingTop="@dimen/padding8"
+        android:paddingRight="@dimen/padding4"
+        android:paddingBottom="@dimen/padding8"
+        android:paddingLeft="@dimen/padding4"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/margin8"
+        android:clickable="true"
+        android:id="@+id/home_main_open_broadcast"
+        android:src="@drawable/ic_home_videocam"
         app:backgroundTint="@color/colorPrimary"
         app:elevation="6dp"
-        app:pressedTranslationZ="12dp"
-        android:clickable="true"
-        android:src="@drawable/ic_home_videocam"/>
+        app:pressedTranslationZ="12dp"/>
 </android.support.design.widget.CoordinatorLayout>
