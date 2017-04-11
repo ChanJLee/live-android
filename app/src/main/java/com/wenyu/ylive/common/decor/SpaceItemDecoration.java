@@ -2,7 +2,6 @@ package com.wenyu.ylive.common.decor;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -16,14 +15,14 @@ import com.wenyu.ylive.R;
 
 public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
     private int mVerticalSpace;
+
     public SpaceItemDecoration(Context context) {
-        this((int) context.getResources().getDimension(R.dimen.padding4));
+        this((int) context.getResources().getDimension(R.dimen.padding6));
     }
 
     public SpaceItemDecoration(int verticalSpace) {
         mVerticalSpace = verticalSpace;
     }
-
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
@@ -38,7 +37,7 @@ public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
             }
 
             if (position != state.getItemCount() - 1) {
-                outRect.set(0, 0, 0, mVerticalSpace);
+                rebound(outRect);
             }
             return;
         }
@@ -52,8 +51,12 @@ public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
             int spanCount = staggeredGridLayoutManager.getSpanCount();
             int count = state.getItemCount();
             if (count - position / spanCount * spanCount > spanCount) {
-                outRect.set(0, 0, 0, mVerticalSpace);
+                rebound(outRect);
             }
         }
+    }
+
+    void rebound(Rect outRect) {
+        outRect.set(0, 0, 0, mVerticalSpace);
     }
 }

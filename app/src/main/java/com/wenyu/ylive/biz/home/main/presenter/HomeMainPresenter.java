@@ -18,8 +18,9 @@ import rx.Subscription;
  */
 
 public class HomeMainPresenter extends BaseMvpPresenter<IHomeMainView, IHomeMainModel> implements IHomeMainPresenter {
+    private static int CATEGORY_CODE[] = {0x0521, 0x0522, 0x0523, 0x0524, 0x0525};
 
-    private int mCurrentCategory = IHomeMainModel.CATEGORY_SHOW;
+    private int mCurrentCategory = CATEGORY_CODE[0];
     private IHomeMainView mHomeMainView;
     private LoadingListenerCompat<List<Room>> mDataLoadingListenerCompat = new LoadingListenerCompat<List<Room>>() {
         @Override
@@ -73,6 +74,25 @@ public class HomeMainPresenter extends BaseMvpPresenter<IHomeMainView, IHomeMain
     @Override
     protected void onAttach() {
         mHomeMainView = getView();
+        mHomeMainView.setEventListener(new HomeMainEventListener() {
+            @Override
+            public void onTabSelected(int position) {
+                reload(position);
+            }
+
+            @Override
+            public void onTabReselected(int position) {
+                reload(position);
+            }
+
+            private void reload(int position) {
+                if (position < 0 || position >= CATEGORY_CODE.length || mHomeMainView == null) {
+                    return;
+                }
+                mCurrentCategory = CATEGORY_CODE[position];
+                mHomeMainView.renderLoading();
+            }
+        });
         mHomeMainView.setLoadingListener(mDataLoadingListenerCompat);
     }
 

@@ -7,4 +7,7 @@ import com.wenyu.mvp.presenter.MvpEventListener;
  */
 
 public interface HomeMainEventListener extends MvpEventListener {
+    void onTabSelected(int position);
+
+    void onTabReselected(int position);
 }

@@ -1,8 +1,10 @@
 package com.wenyu.ylive.biz.home.main.view;
 
 import android.app.Activity;
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
@@ -36,14 +38,41 @@ public class HomeMainViewImpl extends BaseMvpView<HomeMainEventListener> impleme
 
     private HomeMainAdapter mHomeMainAdapter;
 
+    private TabLayout.OnTabSelectedListener mOnTabSelectedListener = new TabLayout.OnTabSelectedListener() {
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            if (getEventListener() != null) {
+                getEventListener().onTabSelected(tab.getPosition());
+            }
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+            if (getEventListener() != null) {
+                getEventListener().onTabReselected(tab.getPosition());
+            }
+        }
+    };
+
     @Inject
     public HomeMainViewImpl(@NonNull Activity activity) {
         super(activity);
         View rootView = activity.findViewById(R.id.item_home_root);
         ButterKnife.bind(this, rootView);
 
+        mTabLayout.addOnTabSelectedListener(mOnTabSelectedListener);
         mHomeMainAdapter = new HomeMainAdapter(activity);
-        mLoadingRecyclerView.getView().addItemDecoration(new SpaceItemDecoration(activity));
+        mLoadingRecyclerView.getView().addItemDecoration(new SpaceItemDecoration(activity) {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+            }
+        });
         mLoadingRecyclerView.getView().setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mLoadingRecyclerView.setAdapter(mHomeMainAdapter);
     }

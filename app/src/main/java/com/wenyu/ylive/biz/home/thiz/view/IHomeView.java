@@ -11,4 +11,6 @@ public interface IHomeView extends IMvpView<MvpEventListener> {
     void goToBroadcast();
 
     void goToRegisterAnchor();
+
+    boolean dismissDrawerLayout();
 }

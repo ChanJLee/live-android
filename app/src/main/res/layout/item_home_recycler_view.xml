@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="@dimen/height80"
-                                    xmlns:tools="http://schemas.android.com/tools">
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/margin2"
+    android:layout_marginRight="@dimen/margin2">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,20 +13,20 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/home_main_cover"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height50"
-            android:id="@+id/home_main_cover"
             android:src="#b7e494"/>
 
         <TextView
+            android:id="@+id/home_main_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin4"
             android:layout_marginRight="@dimen/margin4"
             android:layout_marginTop="@dimen/margin6"
-            tools:text="来约呀~~~"
-            android:id="@+id/home_main_title"
-            android:textSize="@dimen/textsize14"/>
+            android:textSize="@dimen/textsize14"
+            tools:text="来约呀~~~"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,14 +39,14 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/home_main_anchor"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:id="@+id/home_main_anchor"
                 android:singleLine="true"
-                tools:text="13亿少女的梦想"
-                android:textSize="@dimen/textsize10"/>
+                android:textSize="@dimen/textsize10"
+                tools:text="13亿少女的梦想"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -53,11 +56,11 @@
                 android:src="@drawable/ic_home_recycler_view_visibility"/>
 
             <TextView
+                android:id="@+id/home_main_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="240万"
-                android:id="@+id/home_main_count"
-                android:textSize="@dimen/textsize10"/>
+                android:textSize="@dimen/textsize10"
+                tools:text="240万"/>
         </LinearLayout>
     </LinearLayout>
 

@@ -12,11 +12,5 @@ import rx.Observable;
  */
 
 public interface IHomeMainModel extends IMvpModel {
-    int CATEGORY_SHOW = 0x0521;
-    int CATEGORY_SPORT = 0x0522;
-    int CATEGORY_PET = 0x0523;
-    int CATEGORY_MUSIC = 0x0524;
-    int CATEGORY_DESKTOP_GAME = 0x0525;
-
     Observable<List<Room>> fetchRoomList(int category, int page);
 }

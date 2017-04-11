@@ -45,12 +45,16 @@ public class BaseActivity extends RxAppCompatActivity {
 			if (mToolbar != null) {
 				setSupportActionBar(mToolbar);
 				ActionBar ab = getSupportActionBar();
-				if (ab != null) {
+				if (ab != null && displayHomeAsUpEnabled()) {
 					ab.setDisplayHomeAsUpEnabled(true);
 				}
 			}
 		}
 		return mToolbar;
+	}
+
+	protected boolean displayHomeAsUpEnabled() {
+		return true;
 	}
 
 	@Override

@@ -59,6 +59,11 @@ public class HomeActivity extends YLiveActivity {
 
     @Override
     public void onBackPressed() {
+
+        if (mHomePresenter.onBackPressed()) {
+            return;
+        }
+
         long currentTag = System.currentTimeMillis();
         if (currentTag - mLastClickedTimePoint < MIN_DURATION) {
             finish();
@@ -71,7 +76,12 @@ public class HomeActivity extends YLiveActivity {
 
     @Override
     protected Toolbar findToolbarById() {
-        return (Toolbar) findViewById(R.id.toolbar);
+        return (Toolbar) findViewById(R.id.home_toolbar);
+    }
+
+    @Override
+    protected boolean displayHomeAsUpEnabled() {
+        return false;
     }
 
     public static Intent newIntent(Context context) {

@@ -11,7 +11,6 @@ import com.wenyu.ylive.biz.home.main.model.HomeMainModelImpl;
 import com.wenyu.ylive.biz.home.main.presenter.HomeMainPresenter;
 import com.wenyu.ylive.biz.home.main.view.HomeMainViewImpl;
 import com.wenyu.ylive.biz.home.nav.model.HomeNavModelImpl;
-import com.wenyu.ylive.biz.home.nav.presenter.HomeNavEventListener;
 import com.wenyu.ylive.biz.home.nav.presenter.HomeNavPresenterImpl;
 import com.wenyu.ylive.biz.home.nav.view.HomeNavViewImpl;
 import com.wenyu.ylive.biz.home.thiz.presenter.inject.HomePresenterComponent;
@@ -25,6 +24,8 @@ import javax.inject.Inject;
  */
 @MvpInject(module = HomePresenterModule.class, component = HomePresenterComponent.class)
 public class HomePresenterImpl extends BaseMvpPresenter<IHomeView, IMvpModel> implements IHomePresenter {
+
+    private IHomeView mHomeView;
 
     @MvpModel(tag = "main")
     @Inject
@@ -54,6 +55,7 @@ public class HomePresenterImpl extends BaseMvpPresenter<IHomeView, IMvpModel> im
 
     @Override
     protected void onAttach() {
+        mHomeView = getView();
         MvpInjector.inject(this);
         mHomeNavPresenter.attach();
         mHomeMainPresenter.attach();
@@ -61,17 +63,27 @@ public class HomePresenterImpl extends BaseMvpPresenter<IHomeView, IMvpModel> im
 
     @Override
     public void onDetach() {
-//        mHomeMainPresenter = null;
-//        mHomeMainView = null;
-//        mHomeMainModel = null;
-//
-//        mHomeNavPresenter = null;
-//        mHomeNavView = null;
-//        mHomeNavModel = null;
+        mHomeMainPresenter.detach();
+        mHomeNavPresenter.detach();
+
+        mHomeView = null;
+
+        mHomeMainPresenter = null;
+        mHomeMainView = null;
+        mHomeMainModel = null;
+
+        mHomeNavPresenter = null;
+        mHomeNavView = null;
+        mHomeNavModel = null;
     }
 
     @Override
     public void init() {
         mHomeMainPresenter.init();
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return mHomeView != null && mHomeView.dismissDrawerLayout();
     }
 }
