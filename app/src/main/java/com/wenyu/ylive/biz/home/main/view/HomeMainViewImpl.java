@@ -1,5 +1,6 @@
 package com.wenyu.ylive.biz.home.main.view;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
@@ -7,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.wenyu.loadingrecyclerview.LoadingRecyclerView;
 import com.wenyu.mvp.view.BaseMvpView;
@@ -29,6 +31,8 @@ import butterknife.OnClick;
  */
 
 public class HomeMainViewImpl extends BaseMvpView<HomeMainEventListener> implements IHomeMainView {
+    private static final int SCROLL_THRESHOLD = 30;
+    private final int mTranslationY;
 
     @Bind(R.id.home_main_tab_layout)
     TabLayout mTabLayout;
@@ -36,7 +40,13 @@ public class HomeMainViewImpl extends BaseMvpView<HomeMainEventListener> impleme
     @Bind(R.id.home_main_recycler_view)
     LoadingRecyclerView mLoadingRecyclerView;
 
+    @Bind(R.id.home_main_open_broadcast)
+    View mBtnAction;
+
     private HomeMainAdapter mHomeMainAdapter;
+
+    private ObjectAnimator mObjectAnimator;
+
 
     private TabLayout.OnTabSelectedListener mOnTabSelectedListener = new TabLayout.OnTabSelectedListener() {
         @Override
@@ -58,22 +68,31 @@ public class HomeMainViewImpl extends BaseMvpView<HomeMainEventListener> impleme
             }
         }
     };
-
     @Inject
     public HomeMainViewImpl(@NonNull Activity activity) {
         super(activity);
         View rootView = activity.findViewById(R.id.item_home_root);
         ButterKnife.bind(this, rootView);
 
+        mTranslationY = (int) activity.getResources().getDimension(R.dimen.height100);
         mTabLayout.addOnTabSelectedListener(mOnTabSelectedListener);
         mHomeMainAdapter = new HomeMainAdapter(activity);
-        mLoadingRecyclerView.getView().addItemDecoration(new SpaceItemDecoration(activity) {
+        RecyclerView recyclerView =  mLoadingRecyclerView.getView();
+        recyclerView.addItemDecoration(new SpaceItemDecoration(activity) {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 super.getItemOffsets(outRect, view, parent, state);
             }
         });
-        mLoadingRecyclerView.getView().setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (Math.abs(dy) >= SCROLL_THRESHOLD) {
+                    playAnimator(dy > 0);
+                }
+            }
+        });
         mLoadingRecyclerView.setAdapter(mHomeMainAdapter);
     }
 
@@ -100,5 +119,20 @@ public class HomeMainViewImpl extends BaseMvpView<HomeMainEventListener> impleme
     @Override
     public void renderLoading() {
         mLoadingRecyclerView.performRefresh();
+    }
+
+    private void playAnimator(boolean toBottom) {
+        if (mObjectAnimator != null && mObjectAnimator.isRunning()) {
+            mObjectAnimator.cancel();
+        }
+
+        if (toBottom) {
+            mObjectAnimator = ObjectAnimator.ofFloat(mBtnAction, View.TRANSLATION_Y, 0, mTranslationY);
+        } else {
+            mObjectAnimator = ObjectAnimator.ofFloat(mBtnAction, View.TRANSLATION_Y, mBtnAction.getTranslationY(), 0);
+        }
+        mObjectAnimator.setDuration(500);
+        mObjectAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        mObjectAnimator.start();
     }
 }

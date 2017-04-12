@@ -16,6 +16,7 @@
         android:paddingRight="@dimen/padding2"
         android:paddingBottom="@dimen/padding8"
         android:paddingLeft="@dimen/padding2"
+        android:clipChildren="false"
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
