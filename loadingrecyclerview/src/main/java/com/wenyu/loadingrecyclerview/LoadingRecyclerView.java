@@ -42,7 +42,6 @@ public class LoadingRecyclerView extends SwipeRefreshLayout {
 	private View mViewReload;
 	private View mViewReloadBtn;
 	private OnRefreshListener mOnRefreshListener;
-	private EndlessRecyclerOnScrollListener mOnScrollListener;
 	private OnClickListener mReloadOnClickListener;
 
 	private RefreshLoadingEvent mRefreshLoadingEvent = new RefreshLoadingEvent() {
@@ -175,24 +174,19 @@ public class LoadingRecyclerView extends SwipeRefreshLayout {
 
 		//=============
 
-		mRecyclerView = new RecyclerView(getContext());
-		ViewGroup.LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		mRecyclerView.setLayoutParams(lp);
-		LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext());
-		mRecyclerView.setLayoutManager(mLinearLayoutManager);
-		mOnScrollListener = new EndlessRecyclerOnScrollListener(mLinearLayoutManager) {
+		mRecyclerView = new MyRecyclerView(getContext()) {
 			@Override
-			public void onLoadMore(int page) {
-				Log.d(TAG, "onLoadMore: -------onLoadMore-----page---------" + page);
-
+			public void onLoadMorePage(int page) {
 				if (mListener != null && !mIsLoadMoreLocked) {
 					mListener.onLoadMore(mLoadMoreLoadingEvent);
 					Log.d(TAG, "onLoadMore: -------mLoadMoreLoadingEvent-----page---------" + page);
 				}
 			}
 		};
-		mRecyclerView.addOnScrollListener(mOnScrollListener);
-
+		ViewGroup.LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		mRecyclerView.setLayoutParams(lp);
+		LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext());
+		mRecyclerView.setLayoutManager(mLinearLayoutManager);
 		//==============
 
 		mLayoutFooterLoading = (ViewGroup) LayoutInflater.from(getContext()).inflate(R.layout.layut_footer_loading, null);
@@ -332,10 +326,6 @@ public class LoadingRecyclerView extends SwipeRefreshLayout {
 			}
 		}
 		return false;
-	}
-
-	public void reset() {
-		mOnScrollListener.reset();
 	}
 
 	/*

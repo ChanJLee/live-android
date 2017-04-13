@@ -31,7 +31,7 @@ import butterknife.OnClick;
  */
 
 public class HomeMainViewImpl extends BaseMvpView<HomeMainEventListener> implements IHomeMainView {
-    private static final int SCROLL_THRESHOLD = 30;
+    private static final int SCROLL_THRESHOLD = 50;
     private final int mTranslationY;
 
     @Bind(R.id.home_main_tab_layout)

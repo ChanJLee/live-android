@@ -26,17 +26,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tab_sports"
-            android:text="音乐"/>
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tab_education"
             android:text="户外"/>
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tab_mobile_game"
+            android:id="@+id/tab_education"
             android:text="宠物"/>
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tab_mobile_game"
+            android:text="音乐"/>
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
