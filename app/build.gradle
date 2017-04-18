@@ -66,5 +66,6 @@ dependencies {
     compile project(':danmaku')
     compile project(':rtmp')
     compile project(':loadingrecyclerview')
+    compile project(':media')
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }

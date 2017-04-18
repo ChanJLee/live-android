@@ -2,6 +2,7 @@ package com.wenyu.ylive.biz.home.main.view;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -17,6 +18,7 @@ import com.wenyu.ylive.biz.home.main.adapter.HomeMainAdapter;
 import com.wenyu.ylive.biz.home.main.presenter.HomeMainEventListener;
 import com.wenyu.ylive.common.decor.SpaceItemDecoration;
 import com.wenyu.ylive.common.listener.LoadingListenerCompat;
+import com.wenyu.ylive.test.VideoTestActivity;
 
 import java.util.List;
 
@@ -68,6 +70,7 @@ public class HomeMainViewImpl extends BaseMvpView<HomeMainEventListener> impleme
             }
         }
     };
+
     @Inject
     public HomeMainViewImpl(@NonNull Activity activity) {
         super(activity);
@@ -77,7 +80,7 @@ public class HomeMainViewImpl extends BaseMvpView<HomeMainEventListener> impleme
         mTranslationY = (int) activity.getResources().getDimension(R.dimen.height100);
         mTabLayout.addOnTabSelectedListener(mOnTabSelectedListener);
         mHomeMainAdapter = new HomeMainAdapter(activity);
-        RecyclerView recyclerView =  mLoadingRecyclerView.getView();
+        RecyclerView recyclerView = mLoadingRecyclerView.getView();
         recyclerView.addItemDecoration(new SpaceItemDecoration(activity) {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
@@ -98,7 +101,8 @@ public class HomeMainViewImpl extends BaseMvpView<HomeMainEventListener> impleme
 
     @OnClick(R.id.home_main_open_broadcast)
     void onOpenBroadcastClicked() {
-
+        Intent intent = new Intent(getActivity(), VideoTestActivity.class);
+        getActivity().startActivity(intent);
     }
 
     @Override
