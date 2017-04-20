@@ -11,6 +11,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
+import com.wenyu.loadingrecyclerview.BaseRVAdapter;
 import com.wenyu.loadingrecyclerview.LoadingRecyclerView;
 import com.wenyu.mvp.view.BaseMvpView;
 import com.wenyu.ylive.R;
@@ -18,6 +19,7 @@ import com.wenyu.ylive.biz.home.main.adapter.HomeMainAdapter;
 import com.wenyu.ylive.biz.home.main.presenter.HomeMainEventListener;
 import com.wenyu.ylive.common.decor.SpaceItemDecoration;
 import com.wenyu.ylive.common.listener.LoadingListenerCompat;
+import com.wenyu.ylive.test.RTMPActivity;
 import com.wenyu.ylive.test.VideoTestActivity;
 
 import java.util.List;
@@ -96,6 +98,14 @@ public class HomeMainViewImpl extends BaseMvpView<HomeMainEventListener> impleme
                 }
             }
         });
+        mHomeMainAdapter.setListener(new BaseRVAdapter.Listener() {
+            @Override
+            public void onItemClicked(int position) {
+                if (getEventListener() != null) {
+                    getEventListener().onRoomClicked(position);
+                }
+            }
+        });
         mLoadingRecyclerView.setAdapter(mHomeMainAdapter);
     }
 
@@ -123,6 +133,12 @@ public class HomeMainViewImpl extends BaseMvpView<HomeMainEventListener> impleme
     @Override
     public void renderLoading() {
         mLoadingRecyclerView.performRefresh();
+    }
+
+    @Override
+    public void gotoRoom() {
+        Intent intent = RTMPActivity.newIntent(getActivity());
+        getActivity().startActivity(intent);
     }
 
     private void playAnimator(boolean toBottom) {

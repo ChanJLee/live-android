@@ -85,6 +85,13 @@ public class HomeMainPresenter extends BaseMvpPresenter<IHomeMainView, IHomeMain
                 reload(position);
             }
 
+            @Override
+            public void onRoomClicked(int position) {
+                if (mHomeMainView != null) {
+                    mHomeMainView.gotoRoom();
+                }
+            }
+
             private void reload(int position) {
                 if (position < 0 || position >= CATEGORY_CODE.length || mHomeMainView == null) {
                     return;

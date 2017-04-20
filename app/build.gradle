@@ -19,11 +19,13 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "HTTP_BASE_URI", "\"http://${rootProject.ext.serverIPAddress}:${rootProject.ext.serverHttpPort}\""
+            buildConfigField "String", "RTMP_BASE_URI", "\"rtmp://${rootProject.ext.serverIPAddress}:${rootProject.ext.serverRTMPPort}/chan_live/rtmpstream\""
         }
 
         debug {
             minifyEnabled false
             buildConfigField "String", "HTTP_BASE_URI", "\"http://${rootProject.ext.serverIPAddress}:${rootProject.ext.serverHttpPort}\""
+            buildConfigField "String", "RTMP_BASE_URI", "\"rtmp://${rootProject.ext.serverIPAddress}:${rootProject.ext.serverRTMPPort}/chan_live/rtmpstream\""
         }
     }
 

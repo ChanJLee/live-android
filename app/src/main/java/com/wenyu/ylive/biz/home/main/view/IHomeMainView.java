@@ -22,6 +22,8 @@ public interface IHomeMainView extends IMvpView<HomeMainEventListener> {
 
     void renderLoading();
 
+    void gotoRoom();
+
     class Data {
         public String title;
         public String snapshot;
