@@ -8,11 +8,11 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseRVAdapter<VH extends BaseRVAdapter.ViewHolder, L extends BaseRVAdapter.Listener, D extends Object> extends RecyclerView.Adapter<VH> {
+public abstract class BaseRVAdapter<VH extends BaseRVAdapter.ViewHolder, D extends Object> extends RecyclerView.Adapter<VH> {
 
     protected Context mContext;
     protected List<D> mDataList = new ArrayList<>();
-    private L mListener;
+    private Listener<VH> mListener;
 
     public BaseRVAdapter(Context context) {
         mContext = context;
@@ -59,16 +59,16 @@ public abstract class BaseRVAdapter<VH extends BaseRVAdapter.ViewHolder, L exten
         super.onBindViewHolder(holder, position, payloads);
     }
 
-    public L getListener() {
+    public Listener<VH> getListener() {
         return mListener;
     }
 
-    public void setListener(L listener) {
+    public void setListener(Listener<VH> listener) {
         mListener = listener;
     }
 
-    public interface Listener {
-        void onItemClicked(int position);
+    public interface Listener<VH extends BaseRVAdapter.ViewHolder> {
+        void onItemClicked(VH viewHolder, int position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -80,7 +80,7 @@ public abstract class BaseRVAdapter<VH extends BaseRVAdapter.ViewHolder, L exten
                 @Override
                 public void onClick(View v) {
                     if (getListener() != null) {
-                        getListener().onItemClicked(position);
+                        getListener().onItemClicked((VH) ViewHolder.this, position);
                     }
                 }
             });

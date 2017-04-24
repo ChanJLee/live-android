@@ -2,8 +2,11 @@ package com.wenyu.ylive.biz.home.main.view;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +20,7 @@ import com.wenyu.mvp.view.BaseMvpView;
 import com.wenyu.ylive.R;
 import com.wenyu.ylive.biz.home.main.adapter.HomeMainAdapter;
 import com.wenyu.ylive.biz.home.main.presenter.HomeMainEventListener;
+import com.wenyu.ylive.biz.video.VideoActivity;
 import com.wenyu.ylive.common.decor.SpaceItemDecoration;
 import com.wenyu.ylive.common.listener.LoadingListenerCompat;
 import com.wenyu.ylive.test.RTMPActivity;
@@ -47,6 +51,7 @@ public class HomeMainViewImpl extends BaseMvpView<HomeMainEventListener> impleme
     @Bind(R.id.home_main_open_broadcast)
     View mBtnAction;
 
+    private View mCover;
     private HomeMainAdapter mHomeMainAdapter;
 
     private ObjectAnimator mObjectAnimator;
@@ -98,9 +103,10 @@ public class HomeMainViewImpl extends BaseMvpView<HomeMainEventListener> impleme
                 }
             }
         });
-        mHomeMainAdapter.setListener(new BaseRVAdapter.Listener() {
+        mHomeMainAdapter.setListener(new BaseRVAdapter.Listener<HomeMainAdapter.HomeMainViewHolder>() {
             @Override
-            public void onItemClicked(int position) {
+            public void onItemClicked(HomeMainAdapter.HomeMainViewHolder viewHolder, int position) {
+                mCover = viewHolder.ivCover;
                 if (getEventListener() != null) {
                     getEventListener().onRoomClicked(position);
                 }
@@ -137,8 +143,10 @@ public class HomeMainViewImpl extends BaseMvpView<HomeMainEventListener> impleme
 
     @Override
     public void gotoRoom() {
-        Intent intent = RTMPActivity.newIntent(getActivity());
-        getActivity().startActivity(intent);
+        Activity activity = getActivity();
+        Intent intent = VideoActivity.newIntent(getActivity());
+        Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(getActivity(), mCover, mCover.getTransitionName()).toBundle();
+        activity.startActivity(intent, bundle);
     }
 
     private void playAnimator(boolean toBottom) {

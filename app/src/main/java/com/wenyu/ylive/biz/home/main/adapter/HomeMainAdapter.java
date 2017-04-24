@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  * Copyright © 2016年 扇贝网(shanbay.com).
  * All rights reserved.
  */
-public class HomeMainAdapter extends BaseRVAdapter<HomeMainAdapter.HomeMainViewHolder, BaseRVAdapter.Listener, IHomeMainView.Data> {
+public class HomeMainAdapter extends BaseRVAdapter<HomeMainAdapter.HomeMainViewHolder, IHomeMainView.Data> {
 
     private LayoutInflater mLayoutInflater;
     private Context mContext;
@@ -45,19 +45,19 @@ public class HomeMainAdapter extends BaseRVAdapter<HomeMainAdapter.HomeMainViewH
         holder.tvCount.setText(String.valueOf(data.audienceCount));
     }
 
-    class HomeMainViewHolder extends BaseRVAdapter.ViewHolder {
+    public class HomeMainViewHolder extends BaseRVAdapter.ViewHolder {
 
         @Bind(R.id.home_main_cover)
-        ImageView ivCover;
+        public ImageView ivCover;
 
         @Bind(R.id.home_main_title)
-        TextView tvTitle;
+        public TextView tvTitle;
 
         @Bind(R.id.home_main_anchor)
-        TextView tvAnchor;
+        public TextView tvAnchor;
 
         @Bind(R.id.home_main_count)
-        TextView tvCount;
+        public TextView tvCount;
 
         public HomeMainViewHolder(View itemView) {
             super(itemView);

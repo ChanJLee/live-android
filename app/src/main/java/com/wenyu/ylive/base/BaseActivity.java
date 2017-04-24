@@ -47,6 +47,7 @@ public class BaseActivity extends RxAppCompatActivity {
 				ActionBar ab = getSupportActionBar();
 				if (ab != null && displayHomeAsUpEnabled()) {
 					ab.setDisplayHomeAsUpEnabled(true);
+					mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black);
 				}
 			}
 		}
