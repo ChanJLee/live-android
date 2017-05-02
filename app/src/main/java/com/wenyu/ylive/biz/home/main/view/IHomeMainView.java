@@ -22,7 +22,7 @@ public interface IHomeMainView extends IMvpView<HomeMainEventListener> {
 
     void renderLoading();
 
-    void gotoRoom();
+    void gotoRoom(Room room);
 
     class Data {
         public String title;

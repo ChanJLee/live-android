@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:padding="@dimen/padding4"
+              android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="1.4"
+        android:id="@+id/video_description"
+        android:text="鲁迅的沉浮，标志着一个社会理性发展的尺度。毫无疑问，在中国现代文学史上，再没有一个作家能取得鲁迅这样的影响力，但同样需要面对的，是鲁迅也有他的局限，他的遗憾。只是一代代人在面对共同的瓶颈感到无可奈何时，鲁迅代言了他们的情绪，为他们的精神带来了某种安慰"/>
+
+</LinearLayout>

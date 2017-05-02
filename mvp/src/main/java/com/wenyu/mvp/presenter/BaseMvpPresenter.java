@@ -12,8 +12,9 @@ import rx.internal.util.SubscriptionList;
  * All rights reserved.
  */
 public abstract class BaseMvpPresenter<V extends IMvpView, M extends IMvpModel> implements IMvpPresenter<V, M> {
-	private V mView;
-	private M mModel;
+	protected V mView;
+	protected M mModel;
+
 	private SubscriptionList mSubscriptionList = new SubscriptionList();
 
 	public BaseMvpPresenter(V view, M model) {

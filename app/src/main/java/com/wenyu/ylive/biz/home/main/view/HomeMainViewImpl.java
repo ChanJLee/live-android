@@ -21,6 +21,7 @@ import com.wenyu.ylive.R;
 import com.wenyu.ylive.biz.home.main.adapter.HomeMainAdapter;
 import com.wenyu.ylive.biz.home.main.presenter.HomeMainEventListener;
 import com.wenyu.ylive.biz.video.VideoActivity;
+import com.wenyu.ylive.common.bean.Room;
 import com.wenyu.ylive.common.decor.SpaceItemDecoration;
 import com.wenyu.ylive.common.listener.LoadingListenerCompat;
 import com.wenyu.ylive.test.RTMPActivity;
@@ -142,9 +143,9 @@ public class HomeMainViewImpl extends BaseMvpView<HomeMainEventListener> impleme
     }
 
     @Override
-    public void gotoRoom() {
+    public void gotoRoom(Room room) {
         Activity activity = getActivity();
-        Intent intent = VideoActivity.newIntent(getActivity());
+        Intent intent = VideoActivity.newIntent(getActivity(), room);
         Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(getActivity(), mCover, mCover.getTransitionName()).toBundle();
         activity.startActivity(intent, bundle);
     }

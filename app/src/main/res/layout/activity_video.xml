@@ -1,38 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/video_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="com.wenyu.ylive.biz.video.VideoActivity">
 
-
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height100">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <VideoView
-            android:id="@+id/videoView"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="@dimen/height100">
 
-        <ImageView
+            <VideoView
+                android:id="@+id/videoView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <ImageView
+                android:id="@+id/video_cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="#c4a948"
+                android:transitionName="@string/transition_video_cover"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:id="@+id/video_overlay"
+                android:background="@color/colorPrimary"/>
+        </FrameLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#48b755"
-            android:src="#c4a948"
-            android:transitionName="@string/transition_video_cover"/>
-    </FrameLayout>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height25"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/padding4"
+                android:text="直播简介"
+                android:textColor="@color/base_text_2"
+                android:textSize="@dimen/textsize16"/>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/base_line"/>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <include layout="@layout/item_video_page_description"/>
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/video_toolbar"
         android:layout_width="match_parent"
-        android:navigationIcon="@drawable/ic_arrow_back_black"
         android:layout_height="?attr/actionBarSize"
         android:background="@android:color/transparent"
-        app:popupTheme="@style/AppTheme.PopupOverlay"/>
+        android:navigationIcon="@drawable/ic_arrow_back_black"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/margin8"
+            android:button="@drawable/ic_video_follow"/>
+    </android.support.v7.widget.Toolbar>
 
 
-</android.support.design.widget.CoordinatorLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/margin8"
+        android:clickable="true"
+        android:id="@+id/video_play"
+        android:src="@drawable/ic_play_arrow"
+        app:backgroundTint="@color/colorPrimary"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"/>
+</FrameLayout>

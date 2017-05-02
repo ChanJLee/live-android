@@ -8,4 +8,13 @@ import com.wenyu.ylive.biz.video.presenter.VideoEventListener;
  */
 
 public interface IVideoView extends IMvpView<VideoEventListener> {
+
+    void render(Data data);
+
+    class Data {
+        public String title;
+        public String cover;
+        public String anchor;
+        public String url;
+    }
 }

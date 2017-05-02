@@ -22,6 +22,8 @@ public class HomeMainPresenter extends BaseMvpPresenter<IHomeMainView, IHomeMain
 
     private int mCurrentCategory = CATEGORY_CODE[0];
     private IHomeMainView mHomeMainView;
+    private List<Room> mRooms = new ArrayList<>();
+
     private LoadingListenerCompat<List<Room>> mDataLoadingListenerCompat = new LoadingListenerCompat<List<Room>>() {
         @Override
         public void addSubscription(Subscription subscription) {
@@ -44,6 +46,8 @@ public class HomeMainPresenter extends BaseMvpPresenter<IHomeMainView, IHomeMain
                 viewData.title = room.title;
                 viewDataList.add(viewData);
             }
+            mRooms.clear();
+            mRooms.addAll(data);
             mHomeMainView.refresh(viewDataList);
         }
 
@@ -58,6 +62,7 @@ public class HomeMainPresenter extends BaseMvpPresenter<IHomeMainView, IHomeMain
                 viewData.title = room.title;
                 viewDataList.add(viewData);
             }
+            mRooms.addAll(data);
             mHomeMainView.loadMore(viewDataList);
         }
 
@@ -87,8 +92,12 @@ public class HomeMainPresenter extends BaseMvpPresenter<IHomeMainView, IHomeMain
 
             @Override
             public void onRoomClicked(int position) {
+                if (position < 0 || position >= mRooms.size()) {
+                    return;
+                }
+
                 if (mHomeMainView != null) {
-                    mHomeMainView.gotoRoom();
+                    mHomeMainView.gotoRoom(mRooms.get(position));
                 }
             }
 
