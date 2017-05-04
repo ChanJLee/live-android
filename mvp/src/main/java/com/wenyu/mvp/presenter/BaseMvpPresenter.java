@@ -54,6 +54,4 @@ public abstract class BaseMvpPresenter<V extends IMvpView, M extends IMvpModel> 
             mSubscriptionList.add(subscription);
 		}
 	}
-
-
 }

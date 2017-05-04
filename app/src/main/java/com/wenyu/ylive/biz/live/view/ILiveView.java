@@ -9,4 +9,9 @@ import com.wenyu.ylive.biz.live.presenter.LiveEventListener;
 
 public interface ILiveView extends IMvpView<LiveEventListener> {
 
+    void release();
+
+    void pause();
+
+    void resume();
 }

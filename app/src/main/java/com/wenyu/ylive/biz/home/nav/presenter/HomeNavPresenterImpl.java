@@ -16,7 +16,12 @@ public class HomeNavPresenterImpl extends BaseMvpPresenter<IHomeNavView, IHomeNa
 
     @Override
     protected void onAttach() {
-
+        mView.setEventListener(new HomeNavEventListener() {
+            @Override
+            public void onLoginAndRegisterClicked() {
+                mView.goToLoginAndRegister();
+            }
+        });
     }
 
     @Override

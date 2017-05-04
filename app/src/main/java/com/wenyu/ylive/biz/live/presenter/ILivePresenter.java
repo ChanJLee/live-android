@@ -9,4 +9,7 @@ import com.wenyu.ylive.biz.live.view.ILiveView;
  */
 
 public interface ILivePresenter extends IMvpPresenter<ILiveView, ILiveModel> {
+    void onActivityStop();
+
+    void onActivityStart();
 }

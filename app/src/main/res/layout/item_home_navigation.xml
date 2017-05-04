@@ -12,7 +12,7 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/navigation_avatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_home_account_circle"/>
@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/padding8"
         android:text="登录/注册"
+        android:id="@+id/navigation_login_and_register"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 </LinearLayout>

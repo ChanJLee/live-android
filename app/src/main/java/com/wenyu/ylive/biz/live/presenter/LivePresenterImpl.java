@@ -21,6 +21,16 @@ public class LivePresenterImpl extends BaseMvpPresenter<ILiveView, ILiveModel> i
 
     @Override
     protected void onDetach() {
+        mView.release();
+    }
 
+    @Override
+    public void onActivityStop() {
+        mView.pause();
+    }
+
+    @Override
+    public void onActivityStart() {
+        mView.resume();
     }
 }

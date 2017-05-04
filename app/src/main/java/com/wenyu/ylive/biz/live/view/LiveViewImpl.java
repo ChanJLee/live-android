@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -43,115 +42,16 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
     @Bind(R.id.liveView)
     CameraLivingView mLFLiveView;
 
-    GestureDetector mGestureDetector;
-
     @Bind(R.id.btnRecord)
     ImageButton mRecordBtn;
+
     @Bind(R.id.progressConnecting)
     ProgressBar mProgressConnecting;
-    RtmpSender mRtmpSender;
-    VideoConfiguration mVideoConfiguration;
-    int mCurrentBps;
-    EditText mAddressET;
 
-    @Inject
-    public LiveViewImpl(@NonNull Activity activity) {
-        super(activity);
-        mGrayEffect = new GrayEffect(getActivity());
-        mNullEffect = new NullEffect(getActivity());
-
-        View root = activity.findViewById(R.id.live_container);
-        ButterKnife.bind(this, root);
-    }
-
-    @OnCheckedChanged(R.id.live_start)
-    void onLiveChecked(boolean checked) {
-        if (checked) {
-            //TODO
-            String uploadUrl = BuildConfig.RTMP_BASE_URI;
-            mRtmpSender.setAddress(uploadUrl);
-            mProgressConnecting.setVisibility(View.VISIBLE);
-            Toast.makeText(getActivity(), "开始推流", Toast.LENGTH_SHORT).show();
-            mRtmpSender.connect();
-        } else {
-            mProgressConnecting.setVisibility(View.GONE);
-            Toast.makeText(getActivity(), "已经关播", Toast.LENGTH_SHORT).show();
-            mLFLiveView.stop();
-        }
-    }
-
-    private void initLiveView() {
-        SopCastLog.isOpen(true);
-        mLFLiveView.init();
-        CameraConfiguration.Builder cameraBuilder = new CameraConfiguration.Builder();
-        cameraBuilder.setOrientation(CameraConfiguration.Orientation.LANDSCAPE)
-                .setFacing(CameraConfiguration.Facing.BACK);
-        CameraConfiguration cameraConfiguration = cameraBuilder.build();
-        mLFLiveView.setCameraConfiguration(cameraConfiguration);
-
-        VideoConfiguration.Builder videoBuilder = new VideoConfiguration.Builder();
-        videoBuilder.setSize(640, 360);
-        mVideoConfiguration = videoBuilder.build();
-        mLFLiveView.setVideoConfiguration(mVideoConfiguration);
-
-        //设置水印
-//		Bitmap watermarkImg = BitmapFactory.decodeResource(getResources(), R.mipmap.watermark);
-//		Watermark watermark = new Watermark(watermarkImg, 50, 25, WatermarkPosition.WATERMARK_ORIENTATION_BOTTOM_RIGHT, 8, 8);
-//		mLFLiveView.setWatermark(watermark);
-
-        //设置预览监听
-        mLFLiveView.setCameraOpenListener(new CameraListener() {
-            @Override
-            public void onOpenSuccess() {
-                Toast.makeText(getActivity(), "camera open success", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onOpenFail(int error) {
-                Toast.makeText(getActivity(), "camera open fail", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onCameraChange() {
-                Toast.makeText(getActivity(), "camera switch", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        //设置手势识别
-        mGestureDetector = new GestureDetector(getActivity(), new GestureListener());
-        mLFLiveView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                mGestureDetector.onTouchEvent(event);
-                return false;
-            }
-        });
-
-        //初始化flv打包器
-        RtmpPacker packer = new RtmpPacker();
-        packer.initAudioParams(AudioConfiguration.DEFAULT_FREQUENCY, 16, false);
-        mLFLiveView.setPacker(packer);
-        //设置发送器
-        mRtmpSender = new RtmpSender();
-        mRtmpSender.setVideoParams(640, 360);
-        mRtmpSender.setAudioParams(AudioConfiguration.DEFAULT_FREQUENCY, 16, false);
-        mRtmpSender.setSenderListener(mSenderListener);
-        mLFLiveView.setSender(mRtmpSender);
-        mLFLiveView.setLivingStartListener(new CameraLivingView.LivingStartListener() {
-            @Override
-            public void startError(int error) {
-                //直播失败
-                Toast.makeText(getActivity(), "start living fail", Toast.LENGTH_SHORT).show();
-                mLFLiveView.stop();
-            }
-
-            @Override
-            public void startSuccess() {
-                //直播成功
-                Toast.makeText(getActivity(), "start living", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+    private GestureDetector mGestureDetector;
+    private RtmpSender mRtmpSender;
+    private VideoConfiguration mVideoConfiguration;
+    private int mCurrentBps;
 
     private RtmpSender.OnSenderListener mSenderListener = new RtmpSender.OnSenderListener() {
         @Override
@@ -208,6 +108,22 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
         }
     };
 
+    @Override
+    public void release() {
+        mLFLiveView.stop();
+        mLFLiveView.release();
+    }
+
+    @Override
+    public void pause() {
+        mLFLiveView.pause();
+    }
+
+    @Override
+    public void resume() {
+        mLFLiveView.resume();
+    }
+
     public class GestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
@@ -221,6 +137,105 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
                 Toast.makeText(getActivity(), "Fling Right", Toast.LENGTH_SHORT).show();
             }
             return super.onFling(e1, e2, velocityX, velocityY);
+        }
+    }
+
+    @Inject
+    public LiveViewImpl(@NonNull Activity activity) {
+        super(activity);
+
+        mGrayEffect = new GrayEffect(getActivity());
+        mNullEffect = new NullEffect(getActivity());
+
+        View root = activity.findViewById(R.id.live_container);
+        ButterKnife.bind(this, root);
+
+        SopCastLog.isOpen(true);
+        mLFLiveView.init();
+        CameraConfiguration.Builder cameraBuilder = new CameraConfiguration.Builder();
+        cameraBuilder.setOrientation(CameraConfiguration.Orientation.LANDSCAPE)
+                .setFacing(CameraConfiguration.Facing.BACK);
+        CameraConfiguration cameraConfiguration = cameraBuilder.build();
+        mLFLiveView.setCameraConfiguration(cameraConfiguration);
+
+        VideoConfiguration.Builder videoBuilder = new VideoConfiguration.Builder();
+        videoBuilder.setSize(640, 360);
+        mVideoConfiguration = videoBuilder.build();
+        mLFLiveView.setVideoConfiguration(mVideoConfiguration);
+
+        //设置水印
+//		Bitmap watermarkImg = BitmapFactory.decodeResource(getResources(), R.mipmap.watermark);
+//		Watermark watermark = new Watermark(watermarkImg, 50, 25, WatermarkPosition.WATERMARK_ORIENTATION_BOTTOM_RIGHT, 8, 8);
+//		mLFLiveView.setWatermark(watermark);
+
+        //设置预览监听
+        mLFLiveView.setCameraOpenListener(new CameraListener() {
+            @Override
+            public void onOpenSuccess() {
+                Toast.makeText(getActivity(), "camera open success", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onOpenFail(int error) {
+                Toast.makeText(getActivity(), "camera open fail", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onCameraChange() {
+                Toast.makeText(getActivity(), "camera switch", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //设置手势识别
+        mGestureDetector = new GestureDetector(getActivity(), new GestureListener());
+        mLFLiveView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mGestureDetector.onTouchEvent(event);
+                return false;
+            }
+        });
+
+        //初始化flv打包器
+        RtmpPacker packer = new RtmpPacker();
+        packer.initAudioParams(AudioConfiguration.DEFAULT_FREQUENCY, 16, false);
+        mLFLiveView.setPacker(packer);
+
+        //设置发送器
+        mRtmpSender = new RtmpSender();
+        mRtmpSender.setVideoParams(640, 360);
+        mRtmpSender.setAudioParams(AudioConfiguration.DEFAULT_FREQUENCY, 16, false);
+        mRtmpSender.setSenderListener(mSenderListener);
+        mLFLiveView.setSender(mRtmpSender);
+        mLFLiveView.setLivingStartListener(new CameraLivingView.LivingStartListener() {
+            @Override
+            public void startError(int error) {
+                //直播失败
+                Toast.makeText(getActivity(), "start living fail", Toast.LENGTH_SHORT).show();
+                mLFLiveView.stop();
+            }
+
+            @Override
+            public void startSuccess() {
+                //直播成功
+                Toast.makeText(getActivity(), "start living", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @OnCheckedChanged(R.id.live_start)
+    void onLiveChecked(boolean checked) {
+        if (checked) {
+            //TODO
+            String uploadUrl = BuildConfig.RTMP_BASE_URI;
+            mRtmpSender.setAddress(uploadUrl);
+            mProgressConnecting.setVisibility(View.VISIBLE);
+            Toast.makeText(getActivity(), "开始推流", Toast.LENGTH_SHORT).show();
+            mRtmpSender.connect();
+        } else {
+            mProgressConnecting.setVisibility(View.GONE);
+            Toast.makeText(getActivity(), "已经关播", Toast.LENGTH_SHORT).show();
+            mLFLiveView.stop();
         }
     }
 }

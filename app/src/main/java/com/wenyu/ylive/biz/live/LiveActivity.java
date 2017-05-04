@@ -36,6 +36,8 @@ public class LiveActivity extends YLiveActivity {
         super.onCreate(savedInstanceState);
 
         MvpInjector.inject(this);
+
+        mLivePresenter.attach();
     }
 
     @Override
@@ -43,26 +45,21 @@ public class LiveActivity extends YLiveActivity {
         return R.layout.activity_live;
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mLivePresenter.onActivityStop();
+    }
 
-//
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        mLFLiveView.pause();
-//    }
-//
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        mLFLiveView.resume();
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mLivePresenter.onActivityStart();
+    }
 
-    //TODO
-
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        mLFLiveView.stop();
-//        mLFLiveView.release();
-//    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mLivePresenter.detach();
+    }
 }

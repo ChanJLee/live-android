@@ -8,4 +8,5 @@ import com.wenyu.ylive.biz.home.nav.presenter.HomeNavEventListener;
  */
 
 public interface IHomeNavView extends IMvpView<HomeNavEventListener> {
+    void goToLoginAndRegister();
 }
