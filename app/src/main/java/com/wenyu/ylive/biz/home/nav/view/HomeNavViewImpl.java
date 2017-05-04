@@ -48,6 +48,6 @@ public class HomeNavViewImpl extends BaseMvpView<HomeNavEventListener> implement
 
     @Override
     public void goToLoginAndRegister() {
-        getActivity().startActivity(LoginActivity.createIntent(getActivity()));
+        getActivity().startActivity(LoginActivity.newIntent(getActivity()));
     }
 }
