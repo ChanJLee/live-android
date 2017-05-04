@@ -28,7 +28,7 @@ public class LoginActivity extends YLiveActivity {
     }
 
     @OnClick(R.id.register)
-    void onRegisterClicled() {
+    void onRegisterClicked() {
 
     }
 
