@@ -58,6 +58,7 @@ dependencies {
     apt "com.google.dagger:dagger-compiler:${rootProject.ext.daggerVersion}"
     provided "org.glassfish:javax.annotation:${rootProject.ext.javaxAnnotationVersion}"
     compile "com.google.dagger:dagger:${rootProject.ext.daggerVersion}"
+    compile "org.greenrobot:eventbus:${rootProject.ext.eventBusVersion}"
 
     compile "com.jakewharton:butterknife:${rootProject.ext.butterKnifeVersion}"
 

@@ -80,6 +80,7 @@ public class HomePresenterImpl extends BaseMvpPresenter<IHomeView, IMvpModel> im
     @Override
     public void init() {
         mHomeMainPresenter.init();
+        mHomeNavPresenter.init();
     }
 
     @Override

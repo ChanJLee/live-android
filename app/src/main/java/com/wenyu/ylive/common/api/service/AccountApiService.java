@@ -3,17 +3,13 @@ package com.wenyu.ylive.common.api.service;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.wenyu.network.BaseApiService;
 import com.wenyu.ylive.BuildConfig;
+import com.wenyu.ylive.biz.account.AccountConfig;
 import com.wenyu.ylive.common.api.AccountApi;
 import com.wenyu.ylive.common.bean.User;
-import com.wenyu.ylive.utils.PreferenceUtils;
-
-import javax.inject.Inject;
 
 import rx.Observable;
 
@@ -58,16 +54,6 @@ public class AccountApiService extends BaseApiService<AccountApi> {
     private static final String KEY_USER = "AccountServiceUser";
 
     public User getCurrentUser() {
-
-        String userString = PreferenceUtils.getString(getContext(), KEY_USER);
-        if (TextUtils.isEmpty(userString)) {
-            return User.anonymous;
-        }
-
-        try {
-            return new Gson().fromJson(userString, User.class);
-        } catch (Exception e) {
-            return User.anonymous;
-        }
+        return AccountConfig.getIntance(getContext()).getCurrentUser();
     }
 }

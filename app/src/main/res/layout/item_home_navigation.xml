@@ -25,4 +25,12 @@
         android:id="@+id/navigation_login_and_register"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding8"
+        android:text="username"
+        android:id="@+id/navigation_username"
+        android:visibility="gone"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 </LinearLayout>

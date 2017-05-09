@@ -49,7 +49,7 @@ public class VideoViewImpl extends BaseMvpView<VideoEventListener> implements IV
     @Bind(R.id.video_overlay)
     View mOverlay;
 
-    @Bind(R.id.videoView)
+    @Bind(R.id.video_view)
     VideoView mVideoView;
 
     private ViewGroup mRootView;

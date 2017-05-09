@@ -194,7 +194,7 @@ public class CodeGenerator {
         } else {
             stringBuilder.append("Object o1");
         }
-        stringBuilder.append("){");
+        stringBuilder.append("){\n");
 
         String builderSymbol = "builder";
         String componentSymbol = "component";
@@ -219,9 +219,9 @@ public class CodeGenerator {
             stringBuilder.append(simpleName2FunctionName(injectTarget.dependency.getSimpleName()));
             stringBuilder.append("(o1)");
         }
-        stringBuilder.append(".build();");
+        stringBuilder.append(".build();\n");
 
-        stringBuilder.append(String.format("%s.inject(o);", componentSymbol));
+        stringBuilder.append(String.format("%s.inject(o);\n", componentSymbol));
 
         for (int i = 0; i < injectTarget.mInjectElements.size(); ++i) {
             InjectElement injectElement = injectTarget.mInjectElements.get(i);
@@ -239,7 +239,7 @@ public class CodeGenerator {
                 stringBuilder.append("o.");
                 stringBuilder.append(injectElement.mModelElement.fieldName);
             }
-            stringBuilder.append(");");
+            stringBuilder.append(");\n");
         }
 
 
