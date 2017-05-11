@@ -1,24 +1,29 @@
 package com.wenyu.ylive.biz.home.main.presenter;
 
+import com.google.gson.JsonElement;
 import com.wenyu.apt.MvpInjector;
 import com.wenyu.mvp.presenter.BaseMvpPresenter;
 import com.wenyu.ylive.biz.home.main.model.IHomeMainModel;
 import com.wenyu.ylive.biz.home.main.view.IHomeMainView;
 import com.wenyu.ylive.common.bean.Room;
 import com.wenyu.ylive.common.listener.LoadingListenerCompat;
+import com.wenyu.ylive.common.rx.YLiveSubscriber;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+import static com.wenyu.ylive.common.api.service.YLiveApiService.CATEGORY_CODE;
 
 /**
  * Created by chan on 17/4/2.
  */
 
 public class HomeMainPresenter extends BaseMvpPresenter<IHomeMainView, IHomeMainModel> implements IHomeMainPresenter {
-    private static int CATEGORY_CODE[] = {0x0521, 0x0522, 0x0523, 0x0524, 0x0525};
 
     private int mCurrentCategory = CATEGORY_CODE[0];
     private IHomeMainView mHomeMainView;
@@ -99,6 +104,26 @@ public class HomeMainPresenter extends BaseMvpPresenter<IHomeMainView, IHomeMain
                 if (mHomeMainView != null) {
                     mHomeMainView.gotoRoom(mRooms.get(position));
                 }
+            }
+
+            @Override
+            public void onOpenBroadcastClicked() {
+                add(getModel().fetchLivePermission()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new YLiveSubscriber<JsonElement>() {
+                    @Override
+                    public void onResponseFailed(Throwable e) {
+                        mView.showLiveErrorDialog();
+                    }
+
+                    @Override
+                    public void onResponseSuccess(JsonElement data) {
+                        if (mView != null) {
+                            mView.goToLive();
+                        }
+                    }
+                }));
             }
 
             private void reload(int position) {

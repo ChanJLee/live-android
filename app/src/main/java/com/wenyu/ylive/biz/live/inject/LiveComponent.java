@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.wenyu.mvp.annotation.ActivityScope;
 import com.wenyu.ylive.biz.live.LiveActivity;
+import com.wenyu.ylive.common.api.service.YLiveApiService;
 
 import dagger.Component;
 
@@ -14,6 +15,8 @@ import dagger.Component;
 @Component(modules = LiveModule.class)
 public interface LiveComponent {
     Activity getActivity();
+
+    YLiveApiService getYLiveApiService();
 
     void inject(LiveActivity activity);
 }

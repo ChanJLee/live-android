@@ -3,12 +3,14 @@ package com.wenyu.ylive.biz.home.main.view;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.wenyu.mvp.view.BaseMvpView;
 import com.wenyu.ylive.R;
 import com.wenyu.ylive.biz.home.main.adapter.HomeMainAdapter;
 import com.wenyu.ylive.biz.home.main.presenter.HomeMainEventListener;
+import com.wenyu.ylive.biz.live.LiveActivity;
 import com.wenyu.ylive.biz.video.VideoActivity;
 import com.wenyu.ylive.common.bean.Room;
 import com.wenyu.ylive.common.decor.SpaceItemDecoration;
@@ -118,8 +121,32 @@ public class HomeMainViewImpl extends BaseMvpView<HomeMainEventListener> impleme
 
     @OnClick(R.id.home_main_open_broadcast)
     void onOpenBroadcastClicked() {
-        Intent intent = new Intent(getActivity(), VideoTestActivity.class);
+
+        if (getEventListener() != null) {
+            getEventListener().onOpenBroadcastClicked();
+        }
+    }
+
+    @Override
+    public void goToLive() {
+        Intent intent = LiveActivity.newIntent(getActivity());
         getActivity().startActivity(intent);
+    }
+
+    @Override
+    public void showLiveErrorDialog() {
+        new AlertDialog.Builder(getActivity())
+                .setMessage("您还没有申请当主播，暂时无法开播")
+                .setNegativeButton("取消", null)
+                .setCancelable(false)
+                .setPositiveButton("去申请", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //
+                    }
+                })
+                .create()
+                .show();
     }
 
     @Override

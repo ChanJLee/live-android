@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.wenyu.mvp.annotation.ActivityScope;
 import com.wenyu.ylive.biz.live.LiveActivity;
+import com.wenyu.ylive.common.api.service.YLiveApiService;
 
 import dagger.Module;
 import dagger.Provides;
@@ -24,5 +25,11 @@ public class LiveModule {
     @Provides
     Activity provideActivity() {
         return mLiveActivity;
+    }
+
+    @ActivityScope
+    @Provides
+    YLiveApiService provideYliveApiService() {
+        return YLiveApiService.getYLiveApiService(mLiveActivity.getApplicationContext());
     }
 }

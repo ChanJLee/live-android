@@ -2,6 +2,7 @@ package com.wenyu.ylive.biz.live.view;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.wenyu.rtmp.video.effect.GrayEffect;
 import com.wenyu.rtmp.video.effect.NullEffect;
 import com.wenyu.ylive.BuildConfig;
 import com.wenyu.ylive.R;
+import com.wenyu.ylive.biz.live.dialog.RoomConfigDialog;
 import com.wenyu.ylive.biz.live.presenter.LiveEventListener;
 
 import javax.inject.Inject;
@@ -39,19 +41,16 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
     private GrayEffect mGrayEffect;
     private NullEffect mNullEffect;
 
-    @Bind(R.id.liveView)
+    @Bind(R.id.live_view)
     CameraLivingView mLFLiveView;
 
-    @Bind(R.id.btnRecord)
-    ImageButton mRecordBtn;
-
-    @Bind(R.id.progressConnecting)
-    ProgressBar mProgressConnecting;
-
+    private String mTitle;
+    private int mCategory;
     private GestureDetector mGestureDetector;
     private RtmpSender mRtmpSender;
     private VideoConfiguration mVideoConfiguration;
     private int mCurrentBps;
+    private RoomConfigDialog mRoomConfigDialog;
 
     private RtmpSender.OnSenderListener mSenderListener = new RtmpSender.OnSenderListener() {
         @Override
@@ -61,24 +60,19 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
 
         @Override
         public void onConnected() {
-            mProgressConnecting.setVisibility(View.GONE);
             mLFLiveView.start();
             mCurrentBps = mVideoConfiguration.maxBps;
         }
 
         @Override
         public void onDisConnected() {
-            mProgressConnecting.setVisibility(View.GONE);
             Toast.makeText(getActivity(), "fail to live", Toast.LENGTH_SHORT).show();
-            //mRecordBtn.setBackgroundResource(R.mipmap.ic_record_start);
             mLFLiveView.stop();
         }
 
         @Override
         public void onPublishFail() {
-            mProgressConnecting.setVisibility(View.GONE);
             Toast.makeText(getActivity(), "fail to publish stream", Toast.LENGTH_SHORT).show();
-            //mRecordBtn.setBackgroundResource(R.mipmap.ic_record_start);
         }
 
         @Override
@@ -122,6 +116,47 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
     @Override
     public void resume() {
         mLFLiveView.resume();
+    }
+
+    @Override
+    public void render(Data data) {
+        mRtmpSender.setAddress(data.liveUrl);
+        Toast.makeText(getActivity(), "开始推流", Toast.LENGTH_SHORT).show();
+        mRtmpSender.connect();
+
+
+        //TODO 链接弹幕
+    }
+
+    @Override
+    public int fetchCategory() {
+        return mCategory;
+    }
+
+    @Override
+    public String fetchTitle() {
+        return mTitle;
+    }
+
+    @Override
+    public void showRoomConfigDialog() {
+        if (mRoomConfigDialog == null) {
+            mRoomConfigDialog = new RoomConfigDialog(getActivity());
+            mRoomConfigDialog.setCallback(new RoomConfigDialog.Callback() {
+                @Override
+                public void onAcceptClicked(String title, int category) {
+                    mTitle = title;
+                    mCategory = category;
+                    if (getEventListener() != null) {
+                        getEventListener().onRoomConfigFinished();
+                    }
+                }
+            });
+        }
+
+        if (!mRoomConfigDialog.isShowing()) {
+            mRoomConfigDialog.show();
+        }
     }
 
     public class GestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -225,17 +260,20 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
 
     @OnCheckedChanged(R.id.live_start)
     void onLiveChecked(boolean checked) {
-        if (checked) {
-            //TODO
-            String uploadUrl = BuildConfig.RTMP_BASE_URI;
-            mRtmpSender.setAddress(uploadUrl);
-            mProgressConnecting.setVisibility(View.VISIBLE);
-            Toast.makeText(getActivity(), "开始推流", Toast.LENGTH_SHORT).show();
-            mRtmpSender.connect();
-        } else {
-            mProgressConnecting.setVisibility(View.GONE);
-            Toast.makeText(getActivity(), "已经关播", Toast.LENGTH_SHORT).show();
-            mLFLiveView.stop();
+
+        if (getEventListener() != null) {
+            getEventListener().onLiveChecked(checked);
         }
+
+        //TODO
+//        if (checked) {
+//            String uploadUrl = BuildConfig.RTMP_BASE_URI;
+//            mRtmpSender.setAddress(uploadUrl);
+//            Toast.makeText(getActivity(), "开始推流", Toast.LENGTH_SHORT).show();
+//            mRtmpSender.connect();
+//        } else {
+//            Toast.makeText(getActivity(), "已经关播", Toast.LENGTH_SHORT).show();
+//            mLFLiveView.stop();
+//        }
     }
 }

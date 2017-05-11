@@ -12,4 +12,6 @@ public interface HomeMainEventListener extends MvpEventListener {
     void onTabReselected(int position);
 
     void onRoomClicked(int position);
+
+    void onOpenBroadcastClicked();
 }

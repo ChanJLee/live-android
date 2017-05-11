@@ -1,5 +1,7 @@
 package com.wenyu.ylive.biz.live;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.wenyu.apt.MvpInjector;
@@ -61,5 +63,9 @@ public class LiveActivity extends YLiveActivity {
     protected void onDestroy() {
         super.onDestroy();
         mLivePresenter.detach();
+    }
+
+    public static Intent newIntent(Context context) {
+        return new Intent(context, LiveActivity.class);
     }
 }

@@ -7,7 +7,7 @@
                 android:background="#ffffff">
 
     <com.wenyu.rtmp.ui.CameraLivingView
-        android:id="@+id/liveView"
+        android:id="@+id/live_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
@@ -19,14 +19,14 @@
         android:layout_alignParentRight="true">
 
         <ImageButton
-            android:id="@+id/btnRecord"
+            android:id="@+id/live_record"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="#fff"/>
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/progressConnecting"
+        android:id="@+id/live_progress_connecting"
         style="?android:progressBarStyleSmall"
         android:layout_width="30dip"
         android:layout_height="30dip"

@@ -24,6 +24,10 @@ public interface IHomeMainView extends IMvpView<HomeMainEventListener> {
 
     void gotoRoom(Room room);
 
+    void goToLive();
+
+    void showLiveErrorDialog();
+
     class Data {
         public String title;
         public String snapshot;

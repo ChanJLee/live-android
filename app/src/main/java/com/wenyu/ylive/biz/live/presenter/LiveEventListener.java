@@ -7,4 +7,7 @@ import com.wenyu.mvp.presenter.MvpEventListener;
  */
 
 public interface LiveEventListener extends MvpEventListener {
+    void onLiveChecked(boolean checked);
+
+    void onRoomConfigFinished();
 }

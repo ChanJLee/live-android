@@ -44,7 +44,7 @@ public class HomeNavPresenterImpl extends BaseMvpPresenter<IHomeNavView, IHomeNa
 
     @Override
     public void init() {
-        render();
+        //render();
     }
 
     private void render() {

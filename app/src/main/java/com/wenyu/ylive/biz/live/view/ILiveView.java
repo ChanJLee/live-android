@@ -14,4 +14,17 @@ public interface ILiveView extends IMvpView<LiveEventListener> {
     void pause();
 
     void resume();
+
+    void render(Data data);
+
+    int fetchCategory();
+
+    String fetchTitle();
+
+    void showRoomConfigDialog();
+
+    class Data {
+        public String liveUrl;
+        public String chatUrl;
+    }
 }

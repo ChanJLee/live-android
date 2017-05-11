@@ -13,8 +13,8 @@
 
     <ImageView
         android:id="@+id/navigation_avatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/height25"
+        android:layout_height="@dimen/height25"
         android:src="@drawable/ic_home_account_circle"/>
 
     <TextView

@@ -3,8 +3,6 @@ package com.wenyu.ylive.test;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +30,6 @@ import com.wenyu.rtmp.video.effect.GrayEffect;
 import com.wenyu.rtmp.video.effect.NullEffect;
 import com.wenyu.ylive.BuildConfig;
 import com.wenyu.ylive.R;
-import com.wenyu.ylive.biz.splash.SplashActivity;
 
 public class RTMPActivity extends AppCompatActivity {
     private static final String TAG = "chan_debug";
@@ -67,9 +64,9 @@ public class RTMPActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        mLFLiveView = (CameraLivingView) findViewById(R.id.liveView);
-        mRecordBtn = (ImageButton) findViewById(R.id.btnRecord);
-        mProgressConnecting = (ProgressBar) findViewById(R.id.progressConnecting);
+        mLFLiveView = (CameraLivingView) findViewById(R.id.live_view);
+        mRecordBtn = (ImageButton) findViewById(R.id.live_record);
+        mProgressConnecting = (ProgressBar) findViewById(R.id.live_progress_connecting);
     }
 
     private void initListeners() {
