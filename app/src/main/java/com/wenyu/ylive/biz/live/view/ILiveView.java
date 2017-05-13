@@ -15,7 +15,7 @@ public interface ILiveView extends IMvpView<LiveEventListener> {
 
     void resume();
 
-    void render(Data data);
+    void render(String liveUrl);
 
     int fetchCategory();
 
@@ -23,8 +23,5 @@ public interface ILiveView extends IMvpView<LiveEventListener> {
 
     void showRoomConfigDialog();
 
-    class Data {
-        public String liveUrl;
-        public String chatUrl;
-    }
+    void renderDanma(String message);
 }

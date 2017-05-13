@@ -3,6 +3,7 @@ package com.wenyu.ylive.biz.live.inject;
 import android.app.Activity;
 
 import com.wenyu.mvp.annotation.ActivityScope;
+import com.wenyu.xmpp.XmppClient;
 import com.wenyu.ylive.biz.live.LiveActivity;
 import com.wenyu.ylive.common.api.service.YLiveApiService;
 
@@ -17,6 +18,8 @@ public interface LiveComponent {
     Activity getActivity();
 
     YLiveApiService getYLiveApiService();
+
+    XmppClient getXmppClient();
 
     void inject(LiveActivity activity);
 }

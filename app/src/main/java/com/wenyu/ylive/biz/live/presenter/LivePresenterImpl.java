@@ -1,12 +1,18 @@
 package com.wenyu.ylive.biz.live.presenter;
 
+import android.util.Log;
+
 import com.google.gson.JsonElement;
 import com.wenyu.mvp.presenter.BaseMvpPresenter;
+import com.wenyu.xmpp.XmppClient;
 import com.wenyu.ylive.biz.live.model.ILiveModel;
 import com.wenyu.ylive.biz.live.view.ILiveView;
 import com.wenyu.ylive.common.bean.Broadcast;
 import com.wenyu.ylive.common.rx.YLiveSubscriber;
 
+import org.jivesoftware.smack.XMPPException;
+
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -45,14 +51,45 @@ public class LivePresenterImpl extends BaseMvpPresenter<ILiveView, ILiveModel> i
 
                             @Override
                             public void onResponseSuccess(Broadcast data) {
-                                ILiveView.Data viewData = new ILiveView.Data();
-                                viewData.chatUrl = data.chatUrl;
-                                viewData.liveUrl = data.liveUrl;
-                                mView.render(viewData);
+                                mView.render(data.liveUrl);
+                                setupChatRoom(data.chatUrl);
                             }
                         }));
             }
         });
+    }
+
+    private void setupChatRoom(String room) {
+        try {
+            getModel().getXmppClient().enterRoom(room,
+                    new XmppClient.Callback() {
+                        @Override
+                        public void onMessageReceived(boolean isToMe, String message) {
+                            if (mView != null) {
+                                mView.renderDanma(message);
+                            }
+                        }
+                    }).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<Void>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(Void aVoid) {
+
+                        }
+                    });
+        } catch (XMPPException e) {
+            e.printStackTrace();
+        }
     }
 
     private void handleOpenBroadcast() {

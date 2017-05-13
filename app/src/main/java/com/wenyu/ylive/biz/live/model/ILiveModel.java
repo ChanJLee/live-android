@@ -2,6 +2,7 @@ package com.wenyu.ylive.biz.live.model;
 
 import com.google.gson.JsonElement;
 import com.wenyu.mvp.model.IMvpModel;
+import com.wenyu.xmpp.XmppClient;
 import com.wenyu.ylive.common.bean.Broadcast;
 
 import rx.Observable;
@@ -14,4 +15,6 @@ public interface ILiveModel extends IMvpModel {
     Observable<Broadcast> openBroadcast(String title, int category);
 
     Observable<JsonElement> closeBroadcast();
+
+    XmppClient getXmppClient();
 }

@@ -1,6 +1,7 @@
 package com.wenyu.ylive.biz.live.view;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.GestureDetector;
@@ -10,6 +11,9 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.wenyu.danmuku.DanMaView;
+import com.wenyu.danmuku.interfaces.IDanMa;
+import com.wenyu.danmuku.type.TextDanMa;
 import com.wenyu.mvp.view.BaseMvpView;
 import com.wenyu.rtmp.camera.CameraListener;
 import com.wenyu.rtmp.configuration.AudioConfiguration;
@@ -43,6 +47,9 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
 
     @Bind(R.id.live_view)
     CameraLivingView mLFLiveView;
+
+    @Bind(R.id.live_danma)
+    DanMaView mDanMaView;
 
     private String mTitle;
     private int mCategory;
@@ -119,8 +126,8 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
     }
 
     @Override
-    public void render(Data data) {
-        mRtmpSender.setAddress(data.liveUrl);
+    public void render(String liveUrl) {
+        mRtmpSender.setAddress(liveUrl);
         Toast.makeText(getActivity(), "开始推流", Toast.LENGTH_SHORT).show();
         mRtmpSender.connect();
 
@@ -157,6 +164,13 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
         if (!mRoomConfigDialog.isShowing()) {
             mRoomConfigDialog.show();
         }
+    }
+
+    @Override
+    public void renderDanma(String message) {
+        TextDanMa text = new TextDanMa(message, mDanMaView.getWidth(), mDanMaView.getHeight() / 2, 16, IDanMa.RIGHT_TO_LEFT);
+        text.setColor(Color.GREEN);
+        mDanMaView.pushDanMa(text);
     }
 
     public class GestureListener extends GestureDetector.SimpleOnGestureListener {

@@ -2,6 +2,7 @@ package com.wenyu.ylive.biz.live.model;
 
 import com.google.gson.JsonElement;
 import com.wenyu.mvp.model.BaseModel;
+import com.wenyu.xmpp.XmppClient;
 import com.wenyu.ylive.common.api.service.YLiveApiService;
 import com.wenyu.ylive.common.bean.Broadcast;
 
@@ -16,10 +17,12 @@ import rx.Observable;
 public class LiveModelImpl extends BaseModel implements ILiveModel {
 
     private YLiveApiService mYLiveApiService;
+    private XmppClient mXmppClient;
 
     @Inject
-    public LiveModelImpl(YLiveApiService liveApiService) {
+    public LiveModelImpl(YLiveApiService liveApiService, XmppClient xmppClient) {
         mYLiveApiService = liveApiService;
+        mXmppClient = xmppClient;
     }
 
     @Override
@@ -30,5 +33,10 @@ public class LiveModelImpl extends BaseModel implements ILiveModel {
     @Override
     public Observable<JsonElement> closeBroadcast() {
         return mYLiveApiService.claseBroadcast();
+    }
+
+    @Override
+    public XmppClient getXmppClient() {
+        return mXmppClient;
     }
 }
