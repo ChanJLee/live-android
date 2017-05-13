@@ -130,9 +130,6 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
         mRtmpSender.setAddress(liveUrl);
         Toast.makeText(getActivity(), "开始推流", Toast.LENGTH_SHORT).show();
         mRtmpSender.connect();
-
-
-        //TODO 链接弹幕
     }
 
     @Override
@@ -169,7 +166,7 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
     @Override
     public void renderDanma(String message) {
         TextDanMa text = new TextDanMa(message, mDanMaView.getWidth(), mDanMaView.getHeight() / 2, 16, IDanMa.RIGHT_TO_LEFT);
-        text.setColor(Color.GREEN);
+        text.setColor(Color.WHITE);
         mDanMaView.pushDanMa(text);
     }
 

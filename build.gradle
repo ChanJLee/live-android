@@ -59,9 +59,10 @@ ext {
 
     ijkVersion = "0.7.5"
 
-    serverIPAddress = "192.168.1.102"
+    serverIPAddress = "192.168.1.105"
     serverHttpPort = "8000"
     serverRTMPPort = "1396"
+    serverXMPPPort = "5222"
 
     eventBusVersion = "3.0.0"
 

@@ -1,5 +1,6 @@
 package com.wenyu.ylive.biz.live.presenter;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.JsonElement;
@@ -60,6 +61,11 @@ public class LivePresenterImpl extends BaseMvpPresenter<ILiveView, ILiveModel> i
     }
 
     private void setupChatRoom(String room) {
+
+        if (TextUtils.isEmpty(room)) {
+            return;
+        }
+
         try {
             getModel().getXmppClient().enterRoom(room,
                     new XmppClient.Callback() {
@@ -69,22 +75,23 @@ public class LivePresenterImpl extends BaseMvpPresenter<ILiveView, ILiveModel> i
                                 mView.renderDanma(message);
                             }
                         }
-                    }).subscribeOn(Schedulers.io())
+                    })
+                    .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<Void>() {
                         @Override
                         public void onCompleted() {
-
+                            Log.d("chan_debug", "complete");
                         }
 
                         @Override
                         public void onError(Throwable e) {
-
+                            Log.d("chan_debug", "error");
                         }
 
                         @Override
                         public void onNext(Void aVoid) {
-
+                            Log.d("chan_debug", "next");
                         }
                     });
         } catch (XMPPException e) {

@@ -24,8 +24,6 @@ import rx.Subscriber;
  * All rights reserved.
  */
 public class XmppClient {
-	public static final int XMPP_PORT = 5222;
-	public static final String XMPP_DOMAIN = "10.21.7.57";
 	private volatile static XmppClient sXmppClient;
 
 	private Context mContext;
@@ -107,7 +105,7 @@ public class XmppClient {
 		}
 
 		if (mXMPPConnection == null) {
-			ConnectionConfiguration connectionConfiguration = new ConnectionConfiguration(XMPP_DOMAIN, XMPP_PORT);
+			ConnectionConfiguration connectionConfiguration = new ConnectionConfiguration(BuildConfig.XMPP_URI, BuildConfig.XMPP_PORT);
 			mXMPPConnection = new XMPPConnection(connectionConfiguration);
 		}
 
@@ -139,13 +137,12 @@ public class XmppClient {
 			@Override
 			public void call(Subscriber<? super Void> subscriber) {
 				try {
-					login();
+					loginAccount();
 					mCallback = callback;
 					mMultiUserChat = new MultiUserChat(mXMPPConnection, room);
-					mMultiUserChat.join(mUsername);
-					mMultiUserChat.removeMessageListener(mPacketListener);
 					mMultiUserChat.addMessageListener(mPacketListener);
 					mCurrentRoom = room;
+					mMultiUserChat.join(mUsername);
 					subscriber.onCompleted();
 				} catch (Exception e) {
 					subscriber.onError(e);
