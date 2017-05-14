@@ -24,4 +24,6 @@ public interface ILiveView extends IMvpView<LiveEventListener> {
     void showRoomConfigDialog();
 
     void renderDanma(String message);
+
+    void closeOpenBroadcast();
 }

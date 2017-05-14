@@ -116,6 +116,7 @@ public class LivePresenterImpl extends BaseMvpPresenter<ILiveView, ILiveModel> i
                     @Override
                     public void onResponseSuccess(JsonElement data) {
                         mView.showToast("关播成功");
+                        mView.closeOpenBroadcast();
                     }
                 }));
     }

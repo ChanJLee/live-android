@@ -170,6 +170,11 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
         mDanMaView.pushDanMa(text);
     }
 
+    @Override
+    public void closeOpenBroadcast() {
+        mLFLiveView.stop();
+    }
+
     public class GestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
@@ -271,20 +276,8 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
 
     @OnCheckedChanged(R.id.live_start)
     void onLiveChecked(boolean checked) {
-
         if (getEventListener() != null) {
             getEventListener().onLiveChecked(checked);
         }
-
-        //TODO
-//        if (checked) {
-//            String uploadUrl = BuildConfig.RTMP_BASE_URI;
-//            mRtmpSender.setAddress(uploadUrl);
-//            Toast.makeText(getActivity(), "开始推流", Toast.LENGTH_SHORT).show();
-//            mRtmpSender.connect();
-//        } else {
-//            Toast.makeText(getActivity(), "已经关播", Toast.LENGTH_SHORT).show();
-//            mLFLiveView.stop();
-//        }
     }
 }
