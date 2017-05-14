@@ -16,6 +16,7 @@ public class Room implements Parcelable {
     public int audienceCount;
     public String liveUrl;
     public int anchorId;
+    public String chatRoom;
 
     public Room() {
     }
@@ -34,6 +35,7 @@ public class Room implements Parcelable {
         dest.writeInt(this.audienceCount);
         dest.writeString(this.liveUrl);
         dest.writeInt(this.anchorId);
+        dest.writeString(this.chatRoom);
     }
 
     protected Room(Parcel in) {
@@ -44,6 +46,7 @@ public class Room implements Parcelable {
         this.audienceCount = in.readInt();
         this.liveUrl = in.readString();
         this.anchorId = in.readInt();
+        this.chatRoom = in.readString();
     }
 
     public static final Creator<Room> CREATOR = new Creator<Room>() {

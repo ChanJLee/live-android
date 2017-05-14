@@ -11,6 +11,12 @@ public interface IVideoView extends IMvpView<VideoEventListener> {
 
     void render(Data data);
 
+    String getInput();
+
+    void clearInput();
+
+    void renderDanma(String message);
+
     class Data {
         public String title;
         public String cover;

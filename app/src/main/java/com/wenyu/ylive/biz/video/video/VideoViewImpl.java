@@ -7,6 +7,7 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.SharedElementCallback;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
@@ -16,10 +17,14 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.wenyu.danmuku.DanMaView;
+import com.wenyu.danmuku.interfaces.IDanMa;
+import com.wenyu.danmuku.type.TextDanMa;
 import com.wenyu.media.cview.VideoView;
 import com.wenyu.mvp.view.BaseMvpView;
 import com.wenyu.ylive.R;
@@ -51,6 +56,12 @@ public class VideoViewImpl extends BaseMvpView<VideoEventListener> implements IV
 
     @Bind(R.id.video_view)
     VideoView mVideoView;
+
+    @Bind(R.id.video_input)
+    EditText mEtInput;
+
+    @Bind(R.id.video_danma)
+    DanMaView mDanMaView;
 
     private ViewGroup mRootView;
 
@@ -125,5 +136,29 @@ public class VideoViewImpl extends BaseMvpView<VideoEventListener> implements IV
         }
 
         mData = data;
+    }
+
+    @Override
+    public String getInput() {
+        return mEtInput.getText().toString();
+    }
+
+    @Override
+    public void clearInput() {
+        mEtInput.setText("");
+    }
+
+    @Override
+    public void renderDanma(String message) {
+        TextDanMa text = new TextDanMa(message, mDanMaView.getWidth(), mDanMaView.getHeight() / 2, 16, IDanMa.RIGHT_TO_LEFT);
+        text.setColor(Color.WHITE);
+        mDanMaView.pushDanMa(text);
+    }
+
+    @OnClick(R.id.video_send)
+    void onSendClicked() {
+        if (getEventListener() != null) {
+            getEventListener().onSendClicked();
+        }
     }
 }

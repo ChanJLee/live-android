@@ -7,4 +7,5 @@ import com.wenyu.mvp.presenter.MvpEventListener;
  */
 
 public interface VideoEventListener extends MvpEventListener {
+    void onSendClicked();
 }
