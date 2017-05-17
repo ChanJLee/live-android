@@ -32,9 +32,28 @@ public class VideoPresenterImpl extends BaseMvpPresenter<IVideoView, IVideoModel
             @Override
             public void onSendClicked() {
                 String input = mView.getInput();
-                if (!TextUtils.isEmpty(input)) {
-
+                if (TextUtils.isEmpty(input)) {
+                    return;
                 }
+                mModel.fetchXmppClient().sendDanma(input)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<Void>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(Void aVoid) {
+
+                            }
+                        });
                 mView.clearInput();
             }
         });
@@ -52,6 +71,7 @@ public class VideoPresenterImpl extends BaseMvpPresenter<IVideoView, IVideoModel
         data.anchor = room.anchor;
         data.cover = room.snapshot;
         data.url = room.liveUrl;
+        setupChatRoom(room.chatRoom);
         mView.render(data);
     }
 

@@ -106,6 +106,7 @@ public class XmppClient {
 
 		if (mXMPPConnection == null) {
 			ConnectionConfiguration connectionConfiguration = new ConnectionConfiguration(BuildConfig.XMPP_URI, BuildConfig.XMPP_PORT);
+			connectionConfiguration.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
 			mXMPPConnection = new XMPPConnection(connectionConfiguration);
 		}
 
