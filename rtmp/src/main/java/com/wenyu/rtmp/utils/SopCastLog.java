@@ -2,15 +2,6 @@ package com.wenyu.rtmp.utils;
 
 import android.util.Log;
 
-/**
- * @Title: SopCastLog
- * @Package com.wenyu.rtmp
- * @Description:
- * @Author Jim
- * @Date 16/6/12
- * @Time 下午3:49
- * @Version
- */
 public class SopCastLog {
     private static boolean open = false;
 

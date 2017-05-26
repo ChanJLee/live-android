@@ -1,14 +1,5 @@
 package com.wenyu.rtmp.camera;
 
-/**
- * @Title: CameraData
- * @Package com.youku.crazytogether.app.modules.livehouse_new.widget.sopCast
- * @Description:
- * @Author Jim
- * @Date 16/3/12
- * @Time 上午10:50
- * @Version
- */
 public class CameraData {
 
     public static final int FACING_FRONT = 1;

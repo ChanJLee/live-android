@@ -4,15 +4,6 @@ import android.media.MediaCodec;
 
 import java.nio.ByteBuffer;
 
-/**
- * @Title: Packer
- * @Package com.wenyu.rtmp.stream.packer.flv
- * @Description:
- * @Author Jim
- * @Date 16/9/14
- * @Time 上午11:19
- * @Version
- */
 public interface Packer {
     interface OnPacketListener {
         //第一个参数为打包后的数据，第二个为自定义打包后的类型

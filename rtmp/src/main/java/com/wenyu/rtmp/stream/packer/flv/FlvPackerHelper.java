@@ -5,16 +5,6 @@ import com.wenyu.rtmp.stream.amf.AmfString;
 
 import java.nio.ByteBuffer;
 
-/**
- * @Title: FlvPackerHelper
- * @Package com.wenyu.rtmp.stream.packer.flv
- * @Description:
- * @Author Jim
- * @Date 16/9/23
- * @Time 下午6:34
- * @Version
- */
-
 public class FlvPackerHelper {
     public static final int FLV_HEAD_SIZE = 9;
     public static final int VIDEO_HEADER_SIZE = 5;
@@ -26,7 +16,8 @@ public class FlvPackerHelper {
 
     /**
      * 生成flv 头信息
-     * @param buffer 需要写入数据的byte buffer
+     *
+     * @param buffer   需要写入数据的byte buffer
      * @param hasVideo 是否有视频
      * @param hasAudio 是否有音频
      * @return byte数组
@@ -42,12 +33,12 @@ public class FlvPackerHelper {
          *  第5个字节的第8位表示是否存在视频Tag。
          *  第6-9个字节为UI32类型的值，表示从File Header开始到File Body开始的字节数，版本1中总为9。
          */
-        byte[] signature = new byte[] {'F', 'L', 'V'};  /* always "FLV" */
+        byte[] signature = new byte[]{'F', 'L', 'V'};  /* always "FLV" */
         byte version = (byte) 0x01;     /* should be 1 */
         byte videoFlag = hasVideo ? (byte) 0x01 : 0x00;
         byte audioFlag = hasAudio ? (byte) 0x04 : 0x00;
         byte flags = (byte) (videoFlag | audioFlag);  /* 4, audio; 1, video; 5 audio+video.*/
-        byte[] offset = new byte[] {(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x09};  /* always 9 */
+        byte[] offset = new byte[]{(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x09};  /* always 9 */
 
         buffer.put(signature);
         buffer.put(version);
@@ -57,9 +48,10 @@ public class FlvPackerHelper {
 
     /**
      * 写flv tag头信息
-     * @param buffer 需要写入数据的byte buffer
-     * @param type 类型：音频（0x8），视频（0x9），脚本（0x12）
-     * @param dataSize 数据大小
+     *
+     * @param buffer    需要写入数据的byte buffer
+     * @param type      类型：音频（0x8），视频（0x9），脚本（0x12）
+     * @param dataSize  数据大小
      * @param timestamp 时间戳
      * @return byte数组
      */
@@ -83,12 +75,13 @@ public class FlvPackerHelper {
 
     /**
      * 生成flv medadata 数据
-     * @param width 视频宽度
-     * @param height 视频高度
-     * @param fps 视频帧率
+     *
+     * @param width     视频宽度
+     * @param height    视频高度
+     * @param fps       视频帧率
      * @param audioRate 音频采样率
      * @param audioSize 音频大小
-     * @param isStereo 音频是否为立体声
+     * @param isStereo  音频是否为立体声
      * @return byte数组
      */
     public static byte[] writeFlvMetaData(int width, int height, int fps, int audioRate, int audioSize, boolean isStereo) {
@@ -100,7 +93,7 @@ public class FlvPackerHelper {
         amfMap.setProperty("videocodecid", FlvVideoCodecID.AVC);
         amfMap.setProperty("audiosamplerate", audioRate);
         amfMap.setProperty("audiosamplesize", audioSize);
-        if(isStereo) {
+        if (isStereo) {
             amfMap.setProperty("stereo", true);
         } else {
             amfMap.setProperty("stereo", false);
@@ -128,6 +121,7 @@ public class FlvPackerHelper {
      * ? bit Sequence Parameter Set NAL Units ------- （sps_size + sps）的数组
      * 8 bit Num of Picture Parameter Sets ------- pps个数，一般为1
      * ? bit Picture Parameter Set NAL Units ------- （pps_size + pps）的数组
+     *
      * @param sps
      * @param pps
      * @return
@@ -136,18 +130,18 @@ public class FlvPackerHelper {
         //写入Flv Video Header
         writeVideoHeader(buffer, FlvVideoFrameType.KeyFrame, FlvVideoCodecID.AVC, FlvVideoAVCPacketType.SequenceHeader);
 
-        buffer.put((byte)0x01);
+        buffer.put((byte) 0x01);
         buffer.put(sps[1]);
         buffer.put(sps[2]);
         buffer.put(sps[3]);
-        buffer.put((byte)0xff);
+        buffer.put((byte) 0xff);
 
-        buffer.put((byte)0xe1);
-        buffer.putShort((short)sps.length);
+        buffer.put((byte) 0xe1);
+        buffer.putShort((short) sps.length);
         buffer.put(sps);
 
-        buffer.put((byte)0x01);
-        buffer.putShort((short)pps.length);
+        buffer.put((byte) 0x01);
+        buffer.putShort((short) pps.length);
         buffer.put(pps);
     }
 
@@ -157,13 +151,14 @@ public class FlvPackerHelper {
      * 4 bit CodecID ------ 视频类型
      * 8 bit AVCPacketType ------ 是NALU 还是 sequence header
      * 24 bit CompositionTime ------ 如果为NALU 则为时间间隔，否则为0
+     *
      * @param flvVideoFrameType 参见 class FlvVideoFrameType
-     * @param codecID 参见 class FlvVideo
-     * @param AVCPacketType 参见 class FlvVideoAVCPacketType
+     * @param codecID           参见 class FlvVideo
+     * @param AVCPacketType     参见 class FlvVideoAVCPacketType
      * @return
      */
     public static void writeVideoHeader(ByteBuffer buffer, int flvVideoFrameType, int codecID, int AVCPacketType) {
-        byte first = (byte) (((flvVideoFrameType & 0x0F) << 4)| (codecID & 0x0F));
+        byte first = (byte) (((flvVideoFrameType & 0x0F) << 4) | (codecID & 0x0F));
         buffer.put(first);
 
         buffer.put((byte) AVCPacketType);
@@ -174,14 +169,15 @@ public class FlvPackerHelper {
 
     /**
      * 写视频tag
-     * @param data 视频数据
+     *
+     * @param data       视频数据
      * @param isKeyFrame 是否为关键帧
      * @return byte数组
      */
     public static void writeH264Packet(ByteBuffer buffer, byte[] data, boolean isKeyFrame) {
         //生成Flv Video Header
         int flvVideoFrameType = FlvVideoFrameType.InterFrame;
-        if(isKeyFrame) {
+        if (isKeyFrame) {
             flvVideoFrameType = FlvVideoFrameType.KeyFrame;
         }
         writeVideoHeader(buffer, flvVideoFrameType, FlvVideoCodecID.AVC, FlvVideoAVCPacketType.NALU);
@@ -192,19 +188,20 @@ public class FlvPackerHelper {
 
     /**
      * 写第一个音频tag
+     *
      * @param audioRate 音频采样率
-     * @param isStereo 是否为立体声
+     * @param isStereo  是否为立体声
      * @return byte数组
      */
     public static void writeFirstAudioTag(ByteBuffer buffer, int audioRate, boolean isStereo, int audioSize) {
         byte[] audioInfo = new byte[2];
         int soundRateIndex = getAudioSimpleRateIndex(audioRate);
         int channelCount = 1;
-        if(isStereo) {
+        if (isStereo) {
             channelCount = 2;
         }
-        audioInfo[0] = (byte) (0x10 | ((soundRateIndex>>1) & 0x7));
-        audioInfo[1] = (byte) (((soundRateIndex & 0x1)<<7) | ((channelCount & 0xF) << 3));
+        audioInfo[0] = (byte) (0x10 | ((soundRateIndex >> 1) & 0x7));
+        audioInfo[1] = (byte) (((soundRateIndex & 0x1) << 7) | ((channelCount & 0xF) << 3));
         writeAudioTag(buffer, audioInfo, true, audioSize);
     }
 
@@ -224,6 +221,7 @@ public class FlvPackerHelper {
      * soundSize 声音采样大小 参加 FlvAudioSampleSize
      * soundType 声音的类别 参加 FlvAudioSampleType
      * AACPacketType 0 ＝ AAC sequence header   1 = AAC raw
+     *
      * @return
      */
     public static void writeAudioHeader(ByteBuffer buffer, boolean isFirst, int audioSize) {
@@ -233,7 +231,7 @@ public class FlvPackerHelper {
         int soundRateIndex = 3;
 
         int soundSize = FlvAudioSampleSize.PCM_16;
-        if(audioSize == 8) {
+        if (audioSize == 8) {
             soundSize = FlvAudioSampleSize.PCM_8;
         }
 
@@ -241,12 +239,12 @@ public class FlvPackerHelper {
         int soundType = FlvAudioSampleType.STEREO;
 
         int AACPacketType = FlvAudioAACPacketType.Raw;
-        if(isFirst) {
+        if (isFirst) {
             AACPacketType = FlvAudioAACPacketType.SequenceHeader;
         }
 
         byte[] header = new byte[2];
-        header[0] = (byte)(((byte) (soundFormat & 0x0F) << 4) | ((byte) (soundRateIndex & 0x03) << 2) | ((byte) (soundSize & 0x01) << 1) | ((byte) (soundType & 0x01)));
+        header[0] = (byte) (((byte) (soundFormat & 0x0F) << 4) | ((byte) (soundRateIndex & 0x03) << 2) | ((byte) (soundSize & 0x01) << 1) | ((byte) (soundType & 0x01)));
         header[1] = (byte) AACPacketType;
         buffer.put(header);
     }
@@ -254,6 +252,7 @@ public class FlvPackerHelper {
 
     /**
      * 根据传入的采样频率获取规定的采样频率的index
+     *
      * @param audioSampleRate
      * @return
      */
@@ -309,60 +308,56 @@ public class FlvPackerHelper {
      * E.4.3.1 VIDEODATA
      * Frame Type UB [4]
      * Type of video frame. The following values are defined:
-     *  1 = key frame (for AVC, a seekable frame)
-     *  2 = inter frame (for AVC, a non-seekable frame)
-     *  3 = disposable inter frame (H.263 only)
-     *  4 = generated key frame (reserved for server use only)
-     *  5 = video info/command frame
+     * 1 = key frame (for AVC, a seekable frame)
+     * 2 = inter frame (for AVC, a non-seekable frame)
+     * 3 = disposable inter frame (H.263 only)
+     * 4 = generated key frame (reserved for server use only)
+     * 5 = video info/command frame
      */
-    public class FlvVideoFrameType
-    {
+    public class FlvVideoFrameType {
         // set to the zero to reserved, for array map.
         public final static int Reserved = 0;
         public final static int Reserved1 = 6;
 
-        public final static int KeyFrame                     = 1;
-        public final static int InterFrame                 = 2;
-        public final static int DisposableInterFrame         = 3;
-        public final static int GeneratedKeyFrame            = 4;
-        public final static int VideoInfoFrame                = 5;
+        public final static int KeyFrame = 1;
+        public final static int InterFrame = 2;
+        public final static int DisposableInterFrame = 3;
+        public final static int GeneratedKeyFrame = 4;
+        public final static int VideoInfoFrame = 5;
     }
 
 
     /**
      * AVCPacketType IF CodecID == 7 UI8
      * The following values are defined:
-     *  0 = AVC sequence header
-     *  1 = AVC NALU
-     *  2 = AVC end of sequence (lower level NALU sequence ender is not required or supported)
+     * 0 = AVC sequence header
+     * 1 = AVC NALU
+     * 2 = AVC end of sequence (lower level NALU sequence ender is not required or supported)
      */
-    public class FlvVideoAVCPacketType
-    {
+    public class FlvVideoAVCPacketType {
         // set to the max value to reserved, for array map.
-        public final static int Reserved                    = 3;
+        public final static int Reserved = 3;
 
-        public final static int SequenceHeader                 = 0;
-        public final static int NALU                         = 1;
-        public final static int SequenceHeaderEOF             = 2;
+        public final static int SequenceHeader = 0;
+        public final static int NALU = 1;
+        public final static int SequenceHeaderEOF = 2;
     }
 
     /**
      * AACPacketType
      * The following values are defined:
-     *  0 = AAC sequence header
-     *  1 = AAC Raw
+     * 0 = AAC sequence header
+     * 1 = AAC Raw
      */
-    public class FlvAudioAACPacketType
-    {
-        public final static int SequenceHeader                 = 0;
-        public final static int Raw                         = 1;
+    public class FlvAudioAACPacketType {
+        public final static int SequenceHeader = 0;
+        public final static int Raw = 1;
     }
 
     /**
      * E.4.1 FLV Tag, page 75
      */
-    public class FlvTag
-    {
+    public class FlvTag {
         // set to the zero to reserved, for array map.
         public final static int Reserved = 0;
         // 8 = audio
@@ -377,29 +372,28 @@ public class FlvPackerHelper {
      * E.4.3.1 VIDEODATA
      * CodecID UB [4]
      * Codec Identifier. The following values are defined:
-     *  2 = Sorenson H.263
-     *  3 = Screen video
-     *  4 = On2 VP6
-     *  5 = On2 VP6 with alpha channel
-     *  6 = Screen video version 2
-     *  7 = AVC
+     * 2 = Sorenson H.263
+     * 3 = Screen video
+     * 4 = On2 VP6
+     * 5 = On2 VP6 with alpha channel
+     * 6 = Screen video version 2
+     * 7 = AVC
      */
-    public class FlvVideoCodecID
-    {
+    public class FlvVideoCodecID {
         // set to the zero to reserved, for array map.
-        public final static int Reserved                = 0;
-        public final static int Reserved1                = 1;
-        public final static int Reserved2                = 9;
+        public final static int Reserved = 0;
+        public final static int Reserved1 = 1;
+        public final static int Reserved2 = 9;
 
         // for user to disable video, for example, use pure audio hls.
-        public final static int Disabled                = 8;
+        public final static int Disabled = 8;
 
-        public final static int SorensonH263             = 2;
-        public final static int ScreenVideo             = 3;
-        public final static int On2VP6                 = 4;
+        public final static int SorensonH263 = 2;
+        public final static int ScreenVideo = 3;
+        public final static int On2VP6 = 4;
         public final static int On2VP6WithAlphaChannel = 5;
-        public final static int ScreenVideoVersion2     = 6;
-        public final static int AVC                     = 7;
+        public final static int ScreenVideoVersion2 = 6;
+        public final static int AVC = 7;
     }
 
     public class FlvAudio {
@@ -424,8 +418,7 @@ public class FlvPackerHelper {
      * for AudioSpecificConfig, @see aac-mp4a-format-ISO_IEC_14496-3+2001.pdf, page 33
      * for audioObjectType, @see aac-mp4a-format-ISO_IEC_14496-3+2001.pdf, page 23
      */
-    public class FlvAacObjectType
-    {
+    public class FlvAacObjectType {
         public final static int Reserved = 0;
 
         // Table 1.1 – Audio Object Type definition
@@ -442,10 +435,10 @@ public class FlvPackerHelper {
 
     /**
      * the aac profile, for ADTS(HLS/TS)
+     *
      * @see "https://github.com/simple-rtmp-server/srs/issues/310"
      */
-    public class FlvAacProfile
-    {
+    public class FlvAacProfile {
         public final static int Reserved = 3;
 
         // @see 7.1 Profiles, aac-iso-13818-7.pdf, page 40
@@ -458,24 +451,23 @@ public class FlvPackerHelper {
      * the FLV/RTMP supported audio sample rate.
      * Sampling rate. The following values are defined:
      */
-    public class FlvAudioSampleRate
-    {
+    public class FlvAudioSampleRate {
         // set to the max value to reserved, for array map.
-        public final static int Reserved                 = 15;
+        public final static int Reserved = 15;
 
-        public final static int R96000                     = 0;
-        public final static int R88200                    = 1;
-        public final static int R64000                    = 2;
-        public final static int R48000                    = 3;
-        public final static int R44100                    = 4;
-        public final static int R32000                    = 5;
-        public final static int R24000                    = 6;
-        public final static int R22050                    = 7;
-        public final static int R16000                    = 8;
-        public final static int R12000                    = 9;
-        public final static int R11025                    = 10;
-        public final static int R8000                    = 11;
-        public final static int R7350                    = 12;
+        public final static int R96000 = 0;
+        public final static int R88200 = 1;
+        public final static int R64000 = 2;
+        public final static int R48000 = 3;
+        public final static int R44100 = 4;
+        public final static int R32000 = 5;
+        public final static int R24000 = 6;
+        public final static int R22050 = 7;
+        public final static int R16000 = 8;
+        public final static int R12000 = 9;
+        public final static int R11025 = 10;
+        public final static int R8000 = 11;
+        public final static int R7350 = 12;
     }
 
     /**
@@ -484,10 +476,9 @@ public class FlvPackerHelper {
      * 0 = 8-bit samples
      * 1 = 16-bit samples
      */
-    public class FlvAudioSampleSize
-    {
-        public final static int PCM_8                     = 0;
-        public final static int PCM_16                    = 1;
+    public class FlvAudioSampleSize {
+        public final static int PCM_8 = 0;
+        public final static int PCM_16 = 1;
     }
 
     /**
@@ -496,10 +487,9 @@ public class FlvPackerHelper {
      * 0 = Mono sound
      * 1 = Stereo sound
      */
-    public class FlvAudioSampleType
-    {
-        public final static int MONO                     = 0;
-        public final static int STEREO                   = 1;
+    public class FlvAudioSampleType {
+        public final static int MONO = 0;
+        public final static int STEREO = 1;
     }
 
     /**
@@ -513,8 +503,7 @@ public class FlvPackerHelper {
      * Table 7-1 – NAL unit type codes, syntax element categories, and NAL unit type classes
      * H.264-AVC-ISO_IEC_14496-10-2012.pdf, page 83.
      */
-    public class FlvAvcNaluType
-    {
+    public class FlvAvcNaluType {
         // Unspecified
         public final static int Reserved = 0;
 

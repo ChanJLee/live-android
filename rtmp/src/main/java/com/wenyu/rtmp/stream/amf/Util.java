@@ -4,15 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-/**
- * @Title: Util
- * @Package com.jimfengfly.rtmppublisher.amf
- * @Description:
- * @Author Jim
- * @Date 2016/11/28
- * @Time 下午12:53
- * @Version
- */
 public class Util {
 
     private static final String HEXES = "0123456789ABCDEF";

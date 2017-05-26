@@ -13,15 +13,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
-/**
- * @Title: RenderScreen
- * @Package com.wenyu.rtmp.video
- * @Description:
- * @Author Jim
- * @Date 16/9/14
- * @Time 下午2:15
- * @Version
- */
 public class RenderScreen {
     private final FloatBuffer mNormalVtxBuf = GlUtil.createVertexBuffer();
     private final FloatBuffer mNormalTexCoordBuf = GlUtil.createTexCoordBuffer();

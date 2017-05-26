@@ -5,11 +5,6 @@ import android.content.Context;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * @author AleXQ
- * @Date 16/3/15
- */
-
 public class GLSLFileUtils {
 
 	public static String getFileContextFromAssets(Context context, String fileName) {

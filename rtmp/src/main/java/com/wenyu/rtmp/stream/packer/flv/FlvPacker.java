@@ -16,15 +16,6 @@ import static com.wenyu.rtmp.stream.packer.flv.FlvPackerHelper.PRE_SIZE;
 import static com.wenyu.rtmp.stream.packer.flv.FlvPackerHelper.VIDEO_HEADER_SIZE;
 import static com.wenyu.rtmp.stream.packer.flv.FlvPackerHelper.VIDEO_SPECIFIC_CONFIG_EXTEND_SIZE;
 
-/**
- * @Title: FlvPacker
- * @Package com.wenyu.rtmp.stream.packer
- * @Description:
- * @Author Jim
- * @Date 16/9/13
- * @Time 上午11:51
- * @Version
- */
 @TargetApi(18)
 public class FlvPacker implements Packer, AnnexbHelper.AnnexbNaluListener{
 

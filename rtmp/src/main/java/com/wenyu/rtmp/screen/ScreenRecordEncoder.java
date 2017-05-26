@@ -19,15 +19,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 
-/**
- * @Title: ScreenRecordEncoder
- * @Package com.wenyu.rtmp.screen
- * @Description:
- * @Author Jim
- * @Date 2016/11/2
- * @Time 下午3:36
- * @Version
- */
 @TargetApi(LOLLIPOP)
 public class ScreenRecordEncoder {
     private MediaCodec mMediaCodec;

@@ -7,11 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-/**
- * A "Abort" RTMP control message, received on chunk stream ID 2 (control channel)
- * 
- * @author francois
- */
 public class Abort extends Chunk {
 
     private int chunkStreamId;

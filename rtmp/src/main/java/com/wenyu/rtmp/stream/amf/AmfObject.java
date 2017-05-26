@@ -8,16 +8,6 @@ import java.nio.ByteBuffer;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * @Title: AmfObject
- * @Package com.jimfengfly.rtmppublisher.amf
- * @Description:
- * @Author Jim
- * @Date 2016/11/28
- * @Time 下午1:58
- * @Version
- */
-
 public class AmfObject implements AmfData {
     protected Map<String, AmfData> properties = new LinkedHashMap<>();
     protected int size = -1;

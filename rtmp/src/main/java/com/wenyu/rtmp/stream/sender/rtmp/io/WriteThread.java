@@ -8,11 +8,6 @@ import com.wenyu.rtmp.stream.sender.sendqueue.ISendQueue;
 import java.io.IOException;
 import java.io.OutputStream;
 
-/**
- * RTMPConnection's write thread
- * 
- * @author francois, leo
- */
 public class WriteThread extends Thread {
 
     private static final String TAG = "WriteThread";

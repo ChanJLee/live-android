@@ -10,15 +10,6 @@ import com.wenyu.rtmp.video.MyRecorder;
 import com.wenyu.rtmp.video.MyRenderer;
 import com.wenyu.rtmp.video.OnVideoEncodeListener;
 
-/**
- * @Title: CameraVideoController
- * @Package com.wenyu.rtmp.controller.video
- * @Description:
- * @Author Jim
- * @Date 16/9/14
- * @Time 下午12:54
- * @Version
- */
 public class CameraVideoController implements IVideoController {
     private MyRecorder mRecorder;
     private MyRenderer mRenderer;

@@ -4,19 +4,6 @@ import com.wenyu.rtmp.stream.sender.rtmp.Util;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @Title: MessageType
- * @Package com.wenyu.rtmp.stream.sender.rtmp.packets
- * @Description:
- * RTMP packet/message type definitions.
- * Note: docstrings are adapted from the official Adobe RTMP spec:
- * http://www.adobe.com/devnet/rtmp/
- * @Author Jim
- * @Date 2016/12/2
- * @Time 下午3:07
- * @Version
- */
-
 public enum MessageType {
     /**
      * Protocol control message 1

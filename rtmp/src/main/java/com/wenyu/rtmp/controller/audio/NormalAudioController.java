@@ -11,15 +11,6 @@ import com.wenyu.rtmp.audio.AudioUtils;
 import com.wenyu.rtmp.controller.audio.IAudioController;
 import com.wenyu.rtmp.utils.SopCastLog;
 
-/**
- * @Title: NormalAudioController
- * @Package com.wenyu.rtmp.controller.audio
- * @Description:
- * @Author Jim
- * @Date 16/9/14
- * @Time 下午12:53
- * @Version
- */
 public class NormalAudioController implements IAudioController {
     private OnAudioEncodeListener mListener;
     private AudioRecord mAudioRecord;

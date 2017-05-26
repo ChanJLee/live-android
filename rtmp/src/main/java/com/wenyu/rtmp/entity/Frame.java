@@ -1,15 +1,5 @@
 package com.wenyu.rtmp.entity;
 
-/**
- * @Title: Frame
- * @Package com.wenyu.rtmp.entity
- * @Description:
- * @Author Jim
- * @Date 2016/11/21
- * @Time 上午11:27
- * @Version
- */
-
 public class Frame<T> {
     public static final int FRAME_TYPE_AUDIO = 1;
     public static final int FRAME_TYPE_KEY_FRAME = 2;

@@ -16,9 +16,5 @@
 
 package com.wenyu.rtmp.camera.exception;
 
-/**
- * This class represents the condition that device policy manager has disabled
- * the camera.
- */
 public class NoCameraException extends Exception {
 }

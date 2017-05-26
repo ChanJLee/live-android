@@ -5,16 +5,6 @@ import com.wenyu.rtmp.stream.sender.rtmp.Util;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @Title: ChunkType
- * @Package com.wenyu.rtmp.stream.sender.rtmp.packets
- * @Description:
- * @Author Jim
- * @Date 2016/12/2
- * @Time 下午3:11
- * @Version
- */
-
 public enum  ChunkType {
     /** Full 11-byte RTMP chunk header */
     TYPE_0_FULL(0x00),

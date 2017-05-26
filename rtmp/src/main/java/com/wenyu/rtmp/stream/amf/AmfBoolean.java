@@ -4,16 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-/**
- * @Title: AmfBoolean
- * @Package com.jimfengfly.rtmppublisher.amf
- * @Description:
- * @Author Jim
- * @Date 2016/11/28
- * @Time 上午11:39
- * @Version
- */
-
 public class AmfBoolean implements AmfData{
     public static final int SIZE = 2;
 

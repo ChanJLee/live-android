@@ -19,15 +19,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
-/**
- * @Title: RenderSrfTex
- * @Package com.wenyu.rtmp.video
- * @Description:
- * @Author Jim
- * @Date 16/9/14
- * @Time 下午2:17
- * @Version
- */
 @TargetApi(18)
 public class RenderSrfTex {
     private final FloatBuffer mNormalVtxBuf = GlUtil.createVertexBuffer();

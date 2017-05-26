@@ -4,15 +4,6 @@ import android.content.Context;
 
 import com.wenyu.rtmp.video.GLSLFileUtils;
 
-/**
- * @Title: GrayEffect
- * @Package com.wenyu.rtmp.video.effect
- * @Description:
- * @Author Jim
- * @Date 16/9/18
- * @Time 下午2:11
- * @Version
- */
 public class GrayEffect extends Effect{
 
     private static final String GRAY_EFFECT_VERTEX = "gray/vertexshader.glsl";

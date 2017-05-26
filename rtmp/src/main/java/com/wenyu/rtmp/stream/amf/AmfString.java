@@ -5,16 +5,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 
-/**
- * @Title: AmfString
- * @Package com.jimfengfly.rtmppublisher.amf
- * @Description:
- * @Author Jim
- * @Date 2016/11/28
- * @Time 下午2:08
- * @Version
- */
-
 public class AmfString implements AmfData {
     private static final String TAG = "AmfString";
 

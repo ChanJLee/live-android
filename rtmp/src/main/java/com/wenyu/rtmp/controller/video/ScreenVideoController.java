@@ -19,15 +19,6 @@ import com.wenyu.rtmp.video.OnVideoEncodeListener;
 
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 
-/**
- * @Title: ScreenVideoController
- * @Package com.wenyu.rtmp.controller.video
- * @Description:
- * @Author Jim
- * @Date 2016/11/2
- * @Time 下午2:20
- * @Version
- */
 @TargetApi(LOLLIPOP)
 public class ScreenVideoController implements IVideoController {
     private MediaProjectionManager mManager;

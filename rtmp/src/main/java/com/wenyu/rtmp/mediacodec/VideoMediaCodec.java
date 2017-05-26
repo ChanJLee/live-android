@@ -10,15 +10,6 @@ import com.wenyu.rtmp.constant.SopCastConstant;
 import com.wenyu.rtmp.blacklist.BlackListHelper;
 import com.wenyu.rtmp.utils.SopCastLog;
 
-/**
- * @Title: VideoMediaCodec
- * @Package com.wenyu.rtmp.hw
- * @Description:
- * @Author Jim
- * @Date 16/6/2
- * @Time 下午6:07
- * @Version
- */
 @TargetApi(18)
 public class VideoMediaCodec {
 

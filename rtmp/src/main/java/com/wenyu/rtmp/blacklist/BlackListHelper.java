@@ -6,16 +6,6 @@ import android.text.TextUtils;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @Title: BlackListHelper
- * @Package com.wenyu.rtmp.blacklist
- * @Description:
- * @Author Jim
- * @Date 2016/10/27
- * @Time 上午10:40
- * @Version
- */
-
 public class BlackListHelper {
     private static final String[] BLACKLISTED_AEC_MODELS = new String[] {
             "Nexus 5", // Nexus 5

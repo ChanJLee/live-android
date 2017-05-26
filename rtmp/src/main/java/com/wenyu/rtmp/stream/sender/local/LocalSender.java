@@ -9,15 +9,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-/**
- * @Title: LocalSender
- * @Package com.wenyu.rtmp.stream.sender.local
- * @Description:
- * @Author Jim
- * @Date 16/9/18
- * @Time 下午5:10
- * @Version
- */
 public class LocalSender implements Sender{
     private File mTestFile;
     private FileOutputStream mOutStream;

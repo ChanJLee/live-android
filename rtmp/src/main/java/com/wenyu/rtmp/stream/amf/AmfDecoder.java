@@ -3,16 +3,6 @@ package com.wenyu.rtmp.stream.amf;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * @Title: AmfDecoder
- * @Package com.jimfengfly.rtmppublisher.amf
- * @Description:
- * @Author Jim
- * @Date 2016/11/28
- * @Time 下午12:51
- * @Version
- */
-
 public class AmfDecoder {
     public static AmfData readFrom(InputStream in) throws IOException {
 

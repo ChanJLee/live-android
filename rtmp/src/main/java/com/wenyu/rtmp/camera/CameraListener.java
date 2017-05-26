@@ -1,14 +1,5 @@
 package com.wenyu.rtmp.camera;
 
-/**
- * @Title: CameraListener
- * @Package com.wenyu.rtmp.camera
- * @Description:
- * @Author Jim
- * @Date 16/7/18
- * @Time 上午10:42
- * @Version
- */
 public interface CameraListener {
     int CAMERA_NOT_SUPPORT = 1;
     int NO_CAMERA = 2;

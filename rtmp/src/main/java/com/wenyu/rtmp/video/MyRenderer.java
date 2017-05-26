@@ -24,15 +24,6 @@ import com.wenyu.rtmp.utils.WeakHandler;
 import com.wenyu.rtmp.video.effect.Effect;
 import com.wenyu.rtmp.video.effect.NullEffect;
 
-/**
- * @Title: MyRenderer
- * @Package com.wenyu.rtmp.video
- * @Description:
- * @Author Jim
- * @Date 16/9/14
- * @Time 下午2:06
- * @Version
- */
 @TargetApi(18)
 public class MyRenderer implements GLSurfaceView.Renderer, SurfaceTexture.OnFrameAvailableListener{
     private int mSurfaceTextureId = -1;

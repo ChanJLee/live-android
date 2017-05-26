@@ -10,9 +10,6 @@ import com.wenyu.rtmp.R;
 import com.wenyu.rtmp.camera.CameraData;
 import com.wenyu.rtmp.camera.CameraHolder;
 
-/**
- * Focus ring HUD that lets user select focus point (tap to focus)
- */
 @TargetApi(18)
 public class FocusPieView extends ImageView {
 

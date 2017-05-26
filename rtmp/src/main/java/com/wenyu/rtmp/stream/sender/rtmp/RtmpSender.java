@@ -9,15 +9,6 @@ import com.wenyu.rtmp.stream.sender.sendqueue.NormalSendQueue;
 import com.wenyu.rtmp.stream.sender.sendqueue.SendQueueListener;
 import com.wenyu.rtmp.utils.WeakHandler;
 
-/**
- * @Title: RtmpSender
- * @Package com.wenyu.rtmp.stream.sender.rtmp
- * @Description:
- * @Author Jim
- * @Date 16/9/21
- * @Time 上午11:16
- * @Version
- */
 public class RtmpSender implements Sender, SendQueueListener {
     private RtmpConnection rtmpConnection;
     private String mRtmpUrl;

@@ -11,15 +11,6 @@ import java.util.Arrays;
 
 import com.laifeng.sopcastsdk.audio.AudioResample;
 
-/**
- * @Title: AudioProcessor
- * @Package com.wenyu.rtmp.audio
- * @Description:
- * @Author Jim
- * @Date 16/9/19
- * @Time 上午9:56
- * @Version
- */
 public class AudioProcessor extends Thread {
 	private volatile boolean mPauseFlag;
 	private volatile boolean mStopFlag;

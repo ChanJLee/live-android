@@ -4,16 +4,6 @@ import android.annotation.TargetApi;
 import android.media.MediaCodecInfo;
 import android.media.MediaCodecList;
 
-/**
- * @Title: MediaCodecHelper
- * @Package com.wenyu.rtmp.mediacodec
- * @Description:
- * @Author Jim
- * @Date 2016/10/31
- * @Time 上午11:56
- * @Version
- */
-
 @TargetApi(18)
 public class MediaCodecHelper {
 

@@ -6,16 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * @Title: SessionInfo
- * @Package com.jimfengfly.rtmppublisher.packets
- * @Description:
- * @Author Jim
- * @Date 2016/11/29
- * @Time 上午10:49
- * @Version
- */
-
 public class SessionInfo {
 
     public static final byte RTMP_STREAM_CHANNEL = 0x05;

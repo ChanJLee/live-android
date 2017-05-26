@@ -1,18 +1,11 @@
 package com.wenyu.rtmp.stream.sender.rtmp.io;
 
-import android.util.Log;
-
 import com.wenyu.rtmp.stream.sender.rtmp.packets.Chunk;
 
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * RTMPConnection's read thread
- * 
- * @author francois, leo
- */
 public class ReadThread extends Thread {
 
     private static final String TAG = "ReadThread";
@@ -37,17 +30,17 @@ public class ReadThread extends Thread {
         while (startFlag) {
             try {
                 Chunk chunk = rtmpDecoder.readPacket(in);
-                if(chunk != null && listener != null) {
+                if (chunk != null && listener != null) {
                     listener.onChunkRead(chunk);
                 }
             } catch (EOFException e) {
                 startFlag = false;
-                if(listener != null) {
+                if (listener != null) {
                     listener.onStreamEnd();
                 }
             } catch (IOException e) {
                 startFlag = false;
-                if(listener != null) {
+                if (listener != null) {
                     listener.onDisconnect();
                 }
             }

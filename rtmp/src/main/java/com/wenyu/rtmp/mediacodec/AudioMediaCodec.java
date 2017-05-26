@@ -10,15 +10,6 @@ import com.wenyu.rtmp.configuration.AudioConfiguration;
 
 import java.io.IOException;
 
-/**
- * @Title: AudioMediaCodec
- * @Package com.wenyu.rtmp.hw
- * @Description:
- * @Author Jim
- * @Date 16/6/2
- * @Time 下午6:07
- * @Version
- */
 @TargetApi(18)
 public class AudioMediaCodec {
 

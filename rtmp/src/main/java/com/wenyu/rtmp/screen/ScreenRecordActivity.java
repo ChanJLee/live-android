@@ -18,16 +18,6 @@ import com.wenyu.rtmp.stream.sender.Sender;
 import com.wenyu.rtmp.utils.SopCastUtils;
 import com.wenyu.rtmp.utils.SopCastLog;
 
-/**
- * @Title: ScreenRecordActivity
- * @Package com.wenyu.rtmp.screen
- * @Description:
- * @Author Jim
- * @Date 2016/11/2
- * @Time 下午2:45
- * @Version
- */
-
 public class ScreenRecordActivity extends Activity {
     private static final String TAG = SopCastConstant.TAG;
     private static final int RECORD_REQUEST_CODE = 101;

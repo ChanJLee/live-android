@@ -19,10 +19,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 
-/**
- *
- * @author francois
- */
 public class RtmpDecoder {
 
     private static final String TAG = "RtmpDecoder";

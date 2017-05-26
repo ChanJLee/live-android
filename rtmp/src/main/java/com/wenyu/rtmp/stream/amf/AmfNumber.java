@@ -5,16 +5,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 
-/**
- * @Title: AmfNumber
- * @Package com.jimfengfly.rtmppublisher.amf
- * @Description:
- * @Author Jim
- * @Date 2016/11/28
- * @Time 上午11:46
- * @Version
- */
-
 public class AmfNumber implements AmfData{
     double value;
     /** Size of an AMF number, in bytes (including type bit) */

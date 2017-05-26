@@ -7,16 +7,6 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Title: AmfArray
- * @Package com.jimfengfly.rtmppublisher.amf
- * @Description:
- * @Author Jim
- * @Date 2016/11/28
- * @Time 下午2:51
- * @Version
- */
-
 public class AmfArray implements AmfData {
 
     private List<AmfData> items;

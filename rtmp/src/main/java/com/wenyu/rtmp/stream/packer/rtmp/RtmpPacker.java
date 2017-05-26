@@ -5,6 +5,7 @@ import android.media.MediaCodec;
 import com.wenyu.rtmp.stream.packer.AnnexbHelper;
 import com.wenyu.rtmp.stream.packer.Packer;
 import com.wenyu.rtmp.stream.packer.flv.FlvPackerHelper;
+
 import java.nio.ByteBuffer;
 
 import static com.wenyu.rtmp.stream.packer.flv.FlvPackerHelper.AUDIO_HEADER_SIZE;
@@ -12,16 +13,7 @@ import static com.wenyu.rtmp.stream.packer.flv.FlvPackerHelper.AUDIO_SPECIFIC_CO
 import static com.wenyu.rtmp.stream.packer.flv.FlvPackerHelper.VIDEO_HEADER_SIZE;
 import static com.wenyu.rtmp.stream.packer.flv.FlvPackerHelper.VIDEO_SPECIFIC_CONFIG_EXTEND_SIZE;
 
-/**
- * @Title: FlvPacker
- * @Package com.wenyu.rtmp.stream.packer
- * @Description:
- * @Author Jim
- * @Date 16/9/13
- * @Time 上午11:51
- * @Version
- */
-public class RtmpPacker implements Packer, AnnexbHelper.AnnexbNaluListener{
+public class RtmpPacker implements Packer, AnnexbHelper.AnnexbNaluListener {
 
     public static final int FIRST_VIDEO = 1;
     public static final int FIRST_AUDIO = 2;
@@ -60,7 +52,7 @@ public class RtmpPacker implements Packer, AnnexbHelper.AnnexbNaluListener{
 
     @Override
     public void onAudioData(ByteBuffer bb, MediaCodec.BufferInfo bi) {
-        if(packetListener == null || !isHeaderWrite || !isKeyFrameWrite) {
+        if (packetListener == null || !isHeaderWrite || !isKeyFrameWrite) {
             return;
         }
         bb.position(bi.offset);
@@ -83,16 +75,16 @@ public class RtmpPacker implements Packer, AnnexbHelper.AnnexbNaluListener{
 
     @Override
     public void onVideo(byte[] video, boolean isKeyFrame) {
-        if(packetListener == null || !isHeaderWrite) {
+        if (packetListener == null || !isHeaderWrite) {
             return;
         }
         int packetType = INTER_FRAME;
-        if(isKeyFrame) {
+        if (isKeyFrame) {
             isKeyFrameWrite = true;
             packetType = KEY_FRAME;
         }
         //确保第一帧是关键帧，避免一开始出现灰色模糊界面
-        if(!isKeyFrameWrite) {
+        if (!isKeyFrameWrite) {
             return;
         }
         int size = VIDEO_HEADER_SIZE + video.length;
@@ -103,7 +95,7 @@ public class RtmpPacker implements Packer, AnnexbHelper.AnnexbNaluListener{
 
     @Override
     public void onSpsPps(byte[] sps, byte[] pps) {
-        if(packetListener == null) {
+        if (packetListener == null) {
             return;
         }
         //写入第一个视频信息

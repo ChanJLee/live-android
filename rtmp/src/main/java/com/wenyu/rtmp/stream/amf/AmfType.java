@@ -3,16 +3,6 @@ package com.wenyu.rtmp.stream.amf;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @Title: AmfType
- * @Package com.jimfengfly.rtmppublisher.amf
- * @Description:
- * @Author Jim
- * @Date 2016/11/28
- * @Time 上午11:13
- * @Version
- */
-
 public enum AmfType {
     /** Number (encoded as IEEE 64-bit double precision floating point number) */
     NUMBER(0x00),

@@ -17,16 +17,6 @@ import com.wenyu.rtmp.utils.SopCastLog;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * @Title: CameraUtils
- * @Package com.youku.crazytogether.app.modules.sopCastV2
- * @Description:
- * @Author Jim
- * @Date 16/3/23
- * @Time 下午12:01
- * @Version
- */
 @TargetApi(14)
 public class CameraUtils {
 

@@ -35,11 +35,6 @@ import java.net.SocketException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Main RTMP connection implementation class
- * 
- * @author francois, leoma
- */
 public class RtmpConnection implements OnReadListener, OnWriteListener {
 
     private static final String TAG = "RtmpConnection";

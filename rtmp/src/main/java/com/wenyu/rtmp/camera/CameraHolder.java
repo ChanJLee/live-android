@@ -14,15 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Title: CameraHolder
- * @Package com.youku.crazytogether.app.modules.sopCastV2
- * @Description:
- * @Author Jim
- * @Date 16/3/23
- * @Time 上午11:57
- * @Version
- */
 @TargetApi(14)
 public class CameraHolder {
     private static final String TAG = "CameraHolder";

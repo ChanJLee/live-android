@@ -3,12 +3,9 @@ package com.wenyu.ylive.biz.live.view;
 import android.app.Activity;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.wenyu.danmuku.DanMaView;
@@ -22,10 +19,8 @@ import com.wenyu.rtmp.configuration.VideoConfiguration;
 import com.wenyu.rtmp.stream.packer.rtmp.RtmpPacker;
 import com.wenyu.rtmp.stream.sender.rtmp.RtmpSender;
 import com.wenyu.rtmp.ui.CameraLivingView;
-import com.wenyu.rtmp.utils.SopCastLog;
 import com.wenyu.rtmp.video.effect.GrayEffect;
 import com.wenyu.rtmp.video.effect.NullEffect;
-import com.wenyu.ylive.BuildConfig;
 import com.wenyu.ylive.R;
 import com.wenyu.ylive.biz.live.dialog.RoomConfigDialog;
 import com.wenyu.ylive.biz.live.presenter.LiveEventListener;
@@ -175,22 +170,6 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
         mLFLiveView.stop();
     }
 
-    public class GestureListener extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if (e1.getX() - e2.getX() > 100
-                    && Math.abs(velocityX) > 200) {
-                // Fling left
-                Toast.makeText(getActivity(), "Fling Left", Toast.LENGTH_SHORT).show();
-            } else if (e2.getX() - e1.getX() > 100
-                    && Math.abs(velocityX) > 200) {
-                // Fling right
-                Toast.makeText(getActivity(), "Fling Right", Toast.LENGTH_SHORT).show();
-            }
-            return super.onFling(e1, e2, velocityX, velocityY);
-        }
-    }
-
     @Inject
     public LiveViewImpl(@NonNull Activity activity) {
         super(activity);
@@ -201,7 +180,6 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
         View root = activity.findViewById(R.id.live_container);
         ButterKnife.bind(this, root);
 
-        SopCastLog.isOpen(true);
         mLFLiveView.init();
         CameraConfiguration.Builder cameraBuilder = new CameraConfiguration.Builder();
         cameraBuilder.setOrientation(CameraConfiguration.Orientation.LANDSCAPE)
@@ -223,22 +201,22 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
         mLFLiveView.setCameraOpenListener(new CameraListener() {
             @Override
             public void onOpenSuccess() {
-                Toast.makeText(getActivity(), "camera open success", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "摄像头已经打开", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onOpenFail(int error) {
-                Toast.makeText(getActivity(), "camera open fail", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "摄像头打开失败", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onCameraChange() {
-                Toast.makeText(getActivity(), "camera switch", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "切换摄像头", Toast.LENGTH_LONG).show();
             }
         });
 
         //设置手势识别
-        mGestureDetector = new GestureDetector(getActivity(), new GestureListener());
+        mGestureDetector = new GestureDetector(getActivity(), new GestureDetector.SimpleOnGestureListener());
         mLFLiveView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -262,14 +240,14 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
             @Override
             public void startError(int error) {
                 //直播失败
-                Toast.makeText(getActivity(), "start living fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "推流失败", Toast.LENGTH_SHORT).show();
                 mLFLiveView.stop();
             }
 
             @Override
             public void startSuccess() {
                 //直播成功
-                Toast.makeText(getActivity(), "start living", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "推流成功", Toast.LENGTH_SHORT).show();
             }
         });
     }

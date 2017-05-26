@@ -3,15 +3,6 @@ package com.wenyu.rtmp.configuration;
 import android.media.AudioFormat;
 import android.media.MediaCodecInfo;
 
-/**
- * @Title: AudioConfiguration
- * @Package com.wenyu.rtmp.configuration
- * @Description:
- * @Author Jim
- * @Date 16/9/14
- * @Time 下午3:20
- * @Version
- */
 public final class AudioConfiguration {
     public static final int DEFAULT_FREQUENCY = 44100;
     public static final int DEFAULT_MAX_BPS = 64;

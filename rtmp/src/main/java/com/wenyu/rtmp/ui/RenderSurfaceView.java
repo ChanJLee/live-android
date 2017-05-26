@@ -13,15 +13,6 @@ import com.wenyu.rtmp.utils.SopCastLog;
 import com.wenyu.rtmp.video.MyRenderer;
 import com.wenyu.rtmp.video.effect.Effect;
 
-/**
- * @Title: RenderSurfaceView
- * @Package com.wenyu.rtmp.ui
- * @Description:
- * @Author Jim
- * @Date 16/9/18
- * @Time 下午5:12
- * @Version
- */
 public class RenderSurfaceView extends GLSurfaceView {
     private MyRenderer mRenderer;
 

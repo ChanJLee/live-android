@@ -11,16 +11,6 @@ import static com.wenyu.rtmp.entity.Frame.FRAME_TYPE_AUDIO;
 import static com.wenyu.rtmp.entity.Frame.FRAME_TYPE_INTER_FRAME;
 import static com.wenyu.rtmp.entity.Frame.FRAME_TYPE_KEY_FRAME;
 
-/**
- * @Title: NormalSendQueue
- * @Package com.wenyu.rtmp.stream.sender.sendqueue
- * @Description:
- * @Author Jim
- * @Date 2016/11/21
- * @Time 上午10:33
- * @Version
- */
-
 public class NormalSendQueue implements ISendQueue {
     private static final int NORMAL_FRAME_BUFFER_SIZE = 800;
     private ArrayBlockingQueue<Frame> mFrameBuffer;

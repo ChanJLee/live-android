@@ -7,16 +7,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * @Title: StoreChunk
- * @Package com.wenyu.rtmp.stream.sender.rtmp.io
- * @Description:
- * @Author Jim
- * @Date 2016/12/2
- * @Time 下午3:43
- * @Version
- */
-
 public class StoreChunk {
     private ByteArrayOutputStream baos = new ByteArrayOutputStream(1024 * 128);
 

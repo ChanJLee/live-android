@@ -6,16 +6,6 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.util.Map;
 
-/**
- * @Title: AmfMap
- * @Package com.jimfengfly.rtmppublisher.amf
- * @Description:
- * @Author Jim
- * @Date 2016/11/28
- * @Time 下午2:48
- * @Version
- */
-
 public class AmfMap extends AmfObject {
     @Override
     public void writeTo(OutputStream out) throws IOException {

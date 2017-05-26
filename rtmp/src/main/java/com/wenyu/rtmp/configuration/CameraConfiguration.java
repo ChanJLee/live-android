@@ -1,14 +1,5 @@
 package com.wenyu.rtmp.configuration;
 
-/**
- * @Title: CameraConfiguration
- * @Package ccom.wenyu.rtmp.configuration
- * @Description:
- * @Author Jim
- * @Date 16/9/12
- * @Time 下午3:26
- * @Version
- */
 public final class CameraConfiguration {
     public static final int DEFAULT_HEIGHT = 1280;
     public static final int DEFAULT_WIDTH = 720;
