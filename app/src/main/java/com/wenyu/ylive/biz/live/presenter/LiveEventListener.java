@@ -10,4 +10,8 @@ public interface LiveEventListener extends MvpEventListener {
     void onLiveChecked(boolean checked);
 
     void onRoomConfigFinished();
+
+    void onSwitchChecked(boolean checked);
+
+    void onMagicChecked(boolean checked);
 }

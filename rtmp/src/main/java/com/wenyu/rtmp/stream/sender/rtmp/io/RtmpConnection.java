@@ -21,7 +21,6 @@ import com.wenyu.rtmp.stream.sender.rtmp.packets.UserControl;
 import com.wenyu.rtmp.stream.sender.rtmp.packets.Video;
 import com.wenyu.rtmp.stream.sender.rtmp.packets.WindowAckSize;
 import com.wenyu.rtmp.stream.sender.sendqueue.ISendQueue;
-import com.wenyu.rtmp.stream.sender.sendqueue.NormalSendQueue;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -38,7 +37,7 @@ import java.util.regex.Pattern;
 public class RtmpConnection implements OnReadListener, OnWriteListener {
 
     private static final String TAG = "RtmpConnection";
-    private static final Pattern rtmpUrlPattern = Pattern.compile("^rtmp://([^/:]+)(:(\\d+))*/([^/]+)(/(.*))*$");
+    private static final Pattern URL_PATTERN = Pattern.compile("^rtmp://([^/:]+)(:(\\d+))*/([^/]+)(/(.*))*$");
 
     private RtmpConnectListener listener;
     private Socket socket;
@@ -145,7 +144,7 @@ public class RtmpConnection implements OnReadListener, OnWriteListener {
 
     private ConnectData parseRtmpUrl(String url) {
         ConnectData connectData = null;
-        Matcher matcher = rtmpUrlPattern.matcher(url);
+        Matcher matcher = URL_PATTERN.matcher(url);
         if (matcher.matches()) {
             connectData = new ConnectData();
             connectData.tcUrl = url.substring(0, url.lastIndexOf('/'));

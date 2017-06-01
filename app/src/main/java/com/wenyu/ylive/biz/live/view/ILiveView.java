@@ -26,4 +26,8 @@ public interface ILiveView extends IMvpView<LiveEventListener> {
     void renderDanma(String message);
 
     void closeOpenBroadcast();
+
+    void switchCamera(boolean front);
+
+    void enableMagic(boolean enable);
 }

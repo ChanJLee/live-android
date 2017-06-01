@@ -57,6 +57,16 @@ public class LivePresenterImpl extends BaseMvpPresenter<ILiveView, ILiveModel> i
                             }
                         }));
             }
+
+            @Override
+            public void onSwitchChecked(boolean checked) {
+                mView.switchCamera(checked);
+            }
+
+            @Override
+            public void onMagicChecked(boolean checked) {
+                mView.enableMagic(checked);
+            }
         });
     }
 

@@ -16,7 +16,6 @@ import java.io.OutputStream;
  * (Number) <Transaction ID>
  * (Mixed) <Argument> ex. Null, String, Object: {key1:value1, key2:value2 ... }
  * 
- * @author francois
  */
 public class Command extends VariableBodyRtmpPacket {
 

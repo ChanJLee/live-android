@@ -170,6 +170,16 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
         mLFLiveView.stop();
     }
 
+    @Override
+    public void switchCamera(boolean front) {
+        mLFLiveView.switchCamera();
+    }
+
+    @Override
+    public void enableMagic(boolean enable) {
+        mLFLiveView.setEffect(enable ? mGrayEffect : mNullEffect);
+    }
+
     @Inject
     public LiveViewImpl(@NonNull Activity activity) {
         super(activity);
@@ -191,11 +201,6 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
         videoBuilder.setSize(640, 360);
         mVideoConfiguration = videoBuilder.build();
         mLFLiveView.setVideoConfiguration(mVideoConfiguration);
-
-        //设置水印
-//		Bitmap watermarkImg = BitmapFactory.decodeResource(getResources(), R.mipmap.watermark);
-//		Watermark watermark = new Watermark(watermarkImg, 50, 25, WatermarkPosition.WATERMARK_ORIENTATION_BOTTOM_RIGHT, 8, 8);
-//		mLFLiveView.setWatermark(watermark);
 
         //设置预览监听
         mLFLiveView.setCameraOpenListener(new CameraListener() {
@@ -256,6 +261,20 @@ public class LiveViewImpl extends BaseMvpView<LiveEventListener> implements ILiv
     void onLiveChecked(boolean checked) {
         if (getEventListener() != null) {
             getEventListener().onLiveChecked(checked);
+        }
+    }
+
+    @OnCheckedChanged(R.id.live_switch)
+    void onSwitchChecked(boolean checked) {
+        if (getEventListener() != null) {
+            getEventListener().onSwitchChecked(checked);
+        }
+    }
+
+    @OnCheckedChanged(R.id.live_magic)
+    void onMagicChecked(boolean checked) {
+        if (getEventListener() != null) {
+            getEventListener().onMagicChecked(checked);
         }
     }
 }
